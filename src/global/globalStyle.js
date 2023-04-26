@@ -9,6 +9,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   html {
+    --purple: #754e92;
     --pink: #ff408e;
     --white: #ffffff;
     --burnt-white: #fff6ef;
