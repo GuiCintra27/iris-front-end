@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import MyCarousel from "../../../components/testimonial-carousel";
+import TestimonialCarousel from "../../../components/testimonial-carousel";
 
 export default function TestimonialSection(props) {
     return (
@@ -40,7 +40,7 @@ export default function TestimonialSection(props) {
                 </div>
                 <div className="right-side-container">
                     <div className="carousel">
-                        <MyCarousel />
+                        <TestimonialCarousel />
                     </div>
                 </div>
             </StyledTestimonialSection>

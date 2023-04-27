@@ -1,6 +1,8 @@
 import { Carousel } from "react-responsive-carousel";
 import styled from "styled-components";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import OpenQuotes from "../../assets/Icons/open-quotes.svg";
+import CloseQuotes from "../../assets/Icons/close-quotes.svg";
 
 const customPrevArrow = ({ onClick }) => (
     <button onClick={onClick} className="custom-arrow prev-arrow">
@@ -39,7 +41,51 @@ const customIndicator = (onClickHandler, isSelected, index, label) => {
     );
 };
 
-export default function MyCarousel() {
+export default function TestimonialCarousel() {
+    const testimonialCards = [
+        {
+            profilePicturePath: "../../../assets/Fundadores/luiza.png",
+            name: "Luiza Guimarães",
+            testimonial: `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est, fugit? Quas blanditiis libero cumque atque officiis suscipit provident rerum molestiae aut quod. Optio suscipit rerum autem corporis totam a aperiam?
+                Dolore amet ipsa deleniti veniam? Ut porro libero nisi obcaecati exercitationem? Quis numquam unde maiores aperiam soluta excepturi hic voluptatem quibusdam blanditiis maxime architecto mollitia, temporibus placeat error? Accusantium, id!
+                Delectus vero eius quis velit, unde libero exercitationem fugit sequi vel ullam quas mollitia minus? Id hic consequuntur, dolor aliquam sit quae et, error maxime eos quidem non exercitationem atque.`,
+        },
+        {
+            profilePicturePath: "../../../assets/Fundadores/luiza.png",
+            name: "Luiza Guimarães",
+            testimonial: `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est, fugit? Quas blanditiis libero cumque atque officiis suscipit provident rerum molestiae aut quod. Optio suscipit rerum autem corporis totam a aperiam?
+                Dolore amet ipsa deleniti veniam? Ut porro libero nisi obcaecati exercitationem? Quis numquam unde maiores aperiam soluta excepturi hic voluptatem quibusdam blanditiis maxime architecto mollitia, temporibus placeat error? Accusantium, id!
+                Delectus vero eius quis velit, unde libero exercitationem fugit sequi vel ullam quas mollitia minus? Id hic consequuntur, dolor aliquam sit quae et, error maxime eos quidem non exercitationem atque.`,
+        },
+        {
+            profilePicturePath: "../../../assets/Fundadores/luiza.png",
+            name: "Luiza Guimarães",
+            testimonial: `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est, fugit? Quas blanditiis libero cumque atque officiis suscipit provident rerum molestiae aut quod. Optio suscipit rerum autem corporis totam a aperiam?
+                Dolore amet ipsa deleniti veniam? Ut porro libero nisi obcaecati exercitationem? Quis numquam unde maiores aperiam soluta excepturi hic voluptatem quibusdam blanditiis maxime architecto mollitia, temporibus placeat error? Accusantium, id!
+                Delectus vero eius quis velit, unde libero exercitationem fugit sequi vel ullam quas mollitia minus? Id hic consequuntur, dolor aliquam sit quae et, error maxime eos quidem non exercitationem atque.`,
+        },
+        {
+            profilePicturePath: "../../../assets/Fundadores/luiza.png",
+            name: "Luiza Guimarães",
+            testimonial: `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est, fugit? Quas blanditiis libero cumque atque officiis suscipit provident rerum molestiae aut quod. Optio suscipit rerum autem corporis totam a aperiam?
+                Dolore amet ipsa deleniti veniam? Ut porro libero nisi obcaecati exercitationem? Quis numquam unde maiores aperiam soluta excepturi hic voluptatem quibusdam blanditiis maxime architecto mollitia, temporibus placeat error? Accusantium, id!
+                Delectus vero eius quis velit, unde libero exercitationem fugit sequi vel ullam quas mollitia minus? Id hic consequuntur, dolor aliquam sit quae et, error maxime eos quidem non exercitationem atque.`,
+        },
+        {
+            profilePicturePath: "../../../assets/Fundadores/luiza.png",
+            name: "Luiza Guimarães",
+            testimonial: `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est, fugit? Quas blanditiis libero cumque atque officiis suscipit provident rerum molestiae aut quod. Optio suscipit rerum autem corporis totam a aperiam?
+                Dolore amet ipsa deleniti veniam? Ut porro libero nisi obcaecati exercitationem? Quis numquam unde maiores aperiam soluta excepturi hic voluptatem quibusdam blanditiis maxime architecto mollitia, temporibus placeat error? Accusantium, id!
+                Delectus vero eius quis velit, unde libero exercitationem fugit sequi vel ullam quas mollitia minus? Id hic consequuntur, dolor aliquam sit quae et, error maxime eos quidem non exercitationem atque.`,
+        },
+        {
+            profilePicturePath: "../../../assets/Fundadores/luiza.png",
+            name: "Luiza Guimarães",
+            testimonial: `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est, fugit? Quas blanditiis libero cumque atque officiis suscipit provident rerum molestiae aut quod. Optio suscipit rerum autem corporis totam a aperiam?
+                Dolore amet ipsa deleniti veniam? Ut porro libero nisi obcaecati exercitationem? Quis numquam unde maiores aperiam soluta excepturi hic voluptatem quibusdam blanditiis maxime architecto mollitia, temporibus placeat error? Accusantium, id!
+                Delectus vero eius quis velit, unde libero exercitationem fugit sequi vel ullam quas mollitia minus? Id hic consequuntur, dolor aliquam sit quae et, error maxime eos quidem non exercitationem atque.`,
+        },
+    ];
     return (
         <CarouselContainer id="carousel-container">
             <Carousel
@@ -49,6 +95,19 @@ export default function MyCarousel() {
                 // renderIndicator={customIndicator}
                 // showThumbs={false}
             >
+                {testimonialCards.map((testimonialCard) => (
+                    <CarouselElement className="profile-ball">
+                        <div className="testimonial-header">
+                            <img src={testimonialCard.profilePicturePath} alt="profile-icon" />
+                            <p>{testimonialCard.name}</p>
+                        </div>
+                        <div className="testimonial-text">
+                            <img width={"20px"} height={"20px"} src={OpenQuotes} alt="chat quotes" />
+                            <p>{testimonialCard.testimonial}</p>
+                            <img src={CloseQuotes} alt="chat quotes" />
+                        </div>
+                    </CarouselElement>
+                ))}
                 <CarouselElement className="test">
                     <p>1eweff</p>
                 </CarouselElement>

@@ -30,10 +30,8 @@ export default function Home({ page }) {
 
 const Main = styled.main`
     display: grid;
-    width: 100%;
-    grid-template-columns: 1fr;
+    grid-template-columns: 100%;
     grid-template-rows: 84vh 65vh 110vh 230vh;
 
-    
 
 `;
