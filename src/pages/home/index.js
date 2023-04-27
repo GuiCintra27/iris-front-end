@@ -5,6 +5,7 @@ import InstagramSection from "./instagram-section";
 import ParallaxBackground from "./background-section";
 import StatisticNumbers from "./statistic-numbers-section";
 import AboutSection from "./about-section";
+import TestimonialSection from "./testimonials-section";
 
 export default function Home({ page }) {
     return (
@@ -18,6 +19,8 @@ export default function Home({ page }) {
                 <InstagramSection />
 
                 <AboutSection />
+
+                <TestimonialSection />
             </Main>
 
             <Footer />
@@ -26,12 +29,11 @@ export default function Home({ page }) {
 }
 
 const Main = styled.main`
-    width: 100%;
     display: grid;
+    width: 100%;
     grid-template-columns: 1fr;
     grid-template-rows: 84vh 65vh 110vh 230vh;
+
     
-    div{
-        width: 99.3vw;
-    }
+
 `;

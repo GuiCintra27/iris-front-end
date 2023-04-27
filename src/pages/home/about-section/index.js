@@ -144,6 +144,7 @@ const About = styled.div`
             display: flex;
             justify-content: space-around;
             margin-bottom: 10vh;
+            gap: 10%;
         }
         .information-bottom {
             width: 100%;
@@ -153,7 +154,10 @@ const About = styled.div`
     }
 
     .Text {
-        width: 31.6vw;
+        width: 50% !important;
+        height: 50%;
+        max-width: 600px;
+        max-height: 600px;
         display: grid;
         grid-template-rows: 2fr 9fr;
         padding: 1rem;
