@@ -4,16 +4,18 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import OpenQuotes from "../../assets/Icons/open-quotes.svg";
 import CloseQuotes from "../../assets/Icons/close-quotes.svg";
 import LuizaPng from "../../assets/Fundadores/luiza.png";
+import NextArrow from "../../assets/Icons/next-arrow.svg";
+import PreviousArrow from "../../assets/Icons/previous-arrow.svg";
 
 const customPrevArrow = (onClickHandler, hasPrev, label) => (
-    <ArrowStyle onClick={onClickHandler} title={label} style={{ left: 15 }}>
-        -
+    <ArrowStyle onClick={onClickHandler} title={label}>
+        <img width={"20px;"} height={"20px;"} src={PreviousArrow} alt="previous-testimonial-arrow"></img>
     </ArrowStyle>
 );
 
 const customNextArrow = (onClickHandler, hasNext, label) => (
-    <ArrowStyle onClick={onClickHandler} title={label} style={{ right: 15 }}>
-        +
+    <ArrowStyle onClick={onClickHandler} title={label}>
+        <img width={"20px;"} height={"20px;"} src={NextArrow} alt="next-testimonial-arrow"></img>
     </ArrowStyle>
 );
 
@@ -102,7 +104,12 @@ export default function TestimonialCarousel() {
             {testimonialCards.map((testimonialCard) => (
                 <CarouselElement>
                     <div className="testimonial-header">
-                        <img src={testimonialCard.profilePicturePath} alt="profile-icon" />
+                        <img
+                            width={"30px"}
+                            height={"30px"}
+                            src={testimonialCard.profilePicturePath}
+                            alt="profile-icon"
+                        />
                         <p>{testimonialCard.name}</p>
                     </div>
                     <div className="testimonial-text">
@@ -159,14 +166,14 @@ const CarouselElement = styled.div`
         .open-quotes {
             position: absolute;
             width: 20px;
-            top:0;
-            left:0;
+            top: 0;
+            left: 0;
         }
         .close-quotes {
             position: absolute;
             width: 20px;
-            bottom:0;
-            right:0;
+            bottom: 0;
+            right: 0;
         }
     }
 `;
