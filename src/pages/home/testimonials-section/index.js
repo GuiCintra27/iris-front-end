@@ -39,9 +39,7 @@ export default function TestimonialSection(props) {
                     </div>
                 </div>
                 <div className="right-side-container">
-                    <div className="carousel">
-                        <TestimonialCarousel />
-                    </div>
+                    <TestimonialCarousel />
                 </div>
             </StyledTestimonialSection>
         </>
@@ -52,9 +50,11 @@ const StyledTestimonialSection = styled.div`
     display: flex;
     height: 865px;
     width: 100%;
+    padding: 8% 10% 8% 10%;
+    gap: 10%;
     .left-side-container {
-        width: 50%;
         display: flex;
+        width: 40%;
         flex-wrap: wrap;
         .introduction {
             width: 100%;
@@ -62,11 +62,22 @@ const StyledTestimonialSection = styled.div`
     }
     .right-side-container {
         width: 50%;
+        flex-grow: 1;
         position: relative;
         display: flex;
         overflow-x: hidden;
-        .carousel {
+        .testimonial-carousel {
             width: 100%;
+            aspect-ratio: 1 / 1;
+            .carousel {
+                height: 100%;
+                .slider-wrapper{
+                    border-radius: 15px;
+                    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+                }
+
+            }
         }
     }
 `;
