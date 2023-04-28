@@ -4,26 +4,29 @@ import TopicsFilter from "../../components/blogFilter/topicsFilter";
 import Header from "../../components/header/header";
 import { useFilteredPosts } from "../../hooks/api/usePosts";
 import Post from "./post";
+import { useQueryParam, ArrayParam, withDefault } from "use-query-params";
+
+const Filters = withDefault(ArrayParam, []);
 
 export default function Blog({ page }) {
-    const [filteredArray, setFilteredArray] = useState([]);
+    const [filteredArray, setFilteredArray] = useQueryParam("filter", Filters);
     const [status, setStatus] = useState(true);
     const { postsAct, posts } = useFilteredPosts();
 
     useEffect(() => {
-        postsAct(filteredArray);
-    }, [status]);
-    
+        const parsedFilteredArray = filteredArray.map((item) => Number(item));
+        postsAct(parsedFilteredArray);
+    }, [status, filteredArray]);
+
     return (
         <>
             <Header page={page} />
 
             <TopicsFilter filteredArray={filteredArray} setFilteredArray={setFilteredArray} setStatus={setStatus} />
 
-            {posts?.length === 0
-                ?
+            {posts?.length === 0 ? (
                 <AlertSpan>Nenhum post foi encontrado seguindo esta filtragem!</AlertSpan>
-                :
+            ) : (
                 posts?.map((item, index) => (
                     <Post
                         key={index}
@@ -32,7 +35,8 @@ export default function Blog({ page }) {
                         text={item.text}
                         postImg={item.image}
                     />
-                ))}
+                ))
+            )}
         </>
     );
 }
@@ -40,7 +44,7 @@ export default function Blog({ page }) {
 //Styled Component
 const AlertSpan = styled.span`
     margin-top: 50px;
-    font-family: 'Poppins';
+    font-family: "Poppins";
     font-style: normal;
     font-weight: 600;
     font-size: 25px;
