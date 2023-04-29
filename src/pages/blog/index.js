@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import TopicsFilter from "../../components/blogFilter/topicsFilter";
+import TopicsFilter from "../../components/blog/topicsFilter";
 import Header from "../../components/header/header";
 import { useFilteredPosts } from "../../hooks/api/usePosts";
 import Post from "./post";
 import { useQueryParam, ArrayParam, withDefault } from "use-query-params";
+import CustomSearchBar from "../../components/blog/searchBar";
 
 const Filters = withDefault(ArrayParam, []);
 
@@ -21,6 +22,8 @@ export default function Blog({ page }) {
     return (
         <>
             <Header page={page} />
+
+            <CustomSearchBar />
 
             <TopicsFilter filteredArray={filteredArray} setFilteredArray={setFilteredArray} setStatus={setStatus} />
 
