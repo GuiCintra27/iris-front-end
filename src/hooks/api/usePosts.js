@@ -2,7 +2,7 @@ import useAsync from "../useAsync";
 
 import * as postsApi from "../../services/postsApi";
 
-export default function usePosts() {
+export function usePosts() {
     const {
         data: posts,
         loading: postsLoading,
@@ -13,5 +13,21 @@ export default function usePosts() {
         posts,
         postsLoading,
         postsError,
+    };
+}
+
+export function useFilteredPosts() {
+    const {
+        data: posts,
+        loading: postsLoading,
+        error: postsError,
+        act: postsAct
+    } = useAsync(postsApi.getFilteredPosts, true);
+
+    return {
+        posts,
+        postsLoading,
+        postsError,
+        postsAct
     };
 }
