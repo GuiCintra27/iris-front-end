@@ -1,16 +1,22 @@
 import styled from "styled-components";
 import Paragraph from "./paragraph";
 
-export default function Post({ author, authorImg, text, postImg }) {
+export default function Post({ author, authorImg, text, postImg, likes, title, topicName }) {
     const formatedText = text.split("\n");
     return (
         <Main authorImg={authorImg} postImg={postImg}>
             <div className="Image Post-one" />
             <div className="Post-caption">
-                <h2>titulos</h2>
-                <div className="Author">
-                    <div className="Author-img" />
-                    <p>{author}</p>
+                <div className="Post-titles">
+                    <h2>{title}</h2>
+                    <div className="Author">
+                        <div className="Author-img" />
+                        <p>{author}</p>
+                    </div>
+                </div>
+                <div className="Post-description">
+                    <p>#{topicName}</p>
+                    <div>{likes}</div>
                 </div>
                 <div className="Text">
                     <p>
@@ -51,17 +57,32 @@ const Main = styled.div`
         padding: 4% 9% 3% 9%;
     }
 
+    .Post-titles {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .Post-description {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        
+        p {
+            padding-right: 15px;
+        }
+    }
+
     .Author {
         height: 7vh;
         display: flex;
         align-items: center;
-        flex-direction: row-reverse;
         gap: 1rem;
     }
 
     .Author-img {
-        height: 7.1vh;
-        width: 7.1vh;
+        height: 5.1vh;
+        width: 5.1vh;
         clip-path: circle(50% at 50% 50%);
         background: url(${(props) => props.authorImg});
         background-size: 100% 100%;
@@ -76,6 +97,7 @@ const Main = styled.div`
         &::-webkit-scrollbar {
             width: 5px;
         }
+
 
         & p {
             font-weight: 300;

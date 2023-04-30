@@ -13,7 +13,7 @@ export default function Blog({ page }) {
     useEffect(() => {
         postsAct(filteredArray);
     }, [status]);
-    
+    console.log(posts);
     return (
         <>
             <Header page={page} />
@@ -31,6 +31,9 @@ export default function Blog({ page }) {
                         authorImg={item.admins.photo}
                         text={item.text}
                         postImg={item.image}
+                        likes={item.likes}
+                        title={item.title}
+                        topicName={item.topics.name}
                     />
                 ))}
         </>
