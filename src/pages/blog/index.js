@@ -13,17 +13,16 @@ export default function Blog({ page }) {
     useEffect(() => {
         postsAct(filteredArray);
     }, [status]);
-    
+
     return (
         <>
             <Header page={page} />
 
             <TopicsFilter filteredArray={filteredArray} setFilteredArray={setFilteredArray} setStatus={setStatus} />
 
-            {posts?.length === 0
-                ?
+            {posts?.length === 0 ? (
                 <AlertSpan>Nenhum post foi encontrado seguindo esta filtragem!</AlertSpan>
-                :
+            ) : (
                 posts?.map((item, index) => (
                     <Post
                         key={index}
@@ -32,7 +31,10 @@ export default function Blog({ page }) {
                         text={item.text}
                         postImg={item.image}
                     />
-                ))}
+                ))
+            )}
+
+            <MarginBottom />
         </>
     );
 }
@@ -40,7 +42,7 @@ export default function Blog({ page }) {
 //Styled Component
 const AlertSpan = styled.span`
     margin-top: 50px;
-    font-family: 'Poppins';
+    font-family: "Poppins";
     font-style: normal;
     font-weight: 600;
     font-size: 25px;
@@ -48,4 +50,8 @@ const AlertSpan = styled.span`
     display: flex;
     justify-content: center;
     color: #000000;
+`;
+
+const MarginBottom = styled.div`
+    margin-bottom: 100px;
 `;
