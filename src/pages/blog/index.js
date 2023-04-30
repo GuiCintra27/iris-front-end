@@ -53,5 +53,5 @@ const AlertSpan = styled.span`
 `;
 
 const MarginBottom = styled.div`
-    margin-bottom: 100px;
+    margin-bottom: 75px;
 `;
