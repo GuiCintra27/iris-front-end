@@ -16,14 +16,9 @@ export default function Blog({ page }) {
     const { postsAct, posts } = useFilteredPosts();
 
     useEffect(() => {
-<<<<<<< HEAD
         const parsedFilteredArray = filteredArray.map((item) => Number(item));
         postsAct(parsedFilteredArray, inputFilterValue);
     }, [status, filteredArray, inputFilterValue]);
-=======
-        postsAct(filteredArray);
-    }, [status]);
->>>>>>> 0876498c42bbce03799cea7a63c510e8c0c0ebb3
 
     return (
         <>
@@ -50,11 +45,8 @@ export default function Blog({ page }) {
                     />
                 ))
             )}
-<<<<<<< HEAD
-=======
 
             <MarginBottom />
->>>>>>> 0876498c42bbce03799cea7a63c510e8c0c0ebb3
         </>
     );
 }
