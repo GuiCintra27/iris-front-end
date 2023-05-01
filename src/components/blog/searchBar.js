@@ -1,44 +1,55 @@
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
 import styled from "styled-components";
 import SearchIcon from "../../assets/Icons/search-icon.svg";
+import { useState, useRef } from "react";
+import { useFilteredPosts } from "../../hooks/api/usePosts";
+import { useNavigate } from "react-router-dom";
+import { Tooltip, tooltipClasses } from "@mui/material";
 
-export default function CustomSearchBar(props) {
-    const items = [
-        {
-            id: 0,
-            name: "Cobol",
-        },
-        {
-            id: 1,
-            name: "JavaScript",
-        },
-        {
-            id: 2,
-            name: "Basic",
-        },
-        {
-            id: 3,
-            name: "PHP",
-        },
-        {
-            id: 4,
-            name: "Java",
-        },
-    ];
+export default function CustomSearchBar({ setInputFilterValue, topicFilter, inputFilterValue }) {
+    const { postsAct } = useFilteredPosts();
+    const [itemsSuggestions, setItemsSuggestions] = useState([]);
+    const inputElementRef = useRef();
+    const navigate = useNavigate();
+
+    async function handleOnSearch() {
+        const parsedFilteredArray = topicFilter.map((item) => Number(item));
+        try {
+            const posts = await postsAct(parsedFilteredArray, inputElementRef.current.value);
+            setItemsSuggestions(posts);
+        } catch (err) {}
+    }
+
+    function handleOnSelect(card) {
+        setInputFilterValue(inputElementRef.current.value);
+        navigate(`${card.id}`);
+    }
 
     return (
         <SearchBarContainer>
             <CustomStyledSearchBar
-                items={items}
-                // onSearch={handleOnSearch}
-                // onHover={handleOnHover}
-                // onSelect={handleOnSelect}
-                // onFocus={handleOnFocus}
-                // autoFocus
-                // formatResult={formatResult}
+                items={itemsSuggestions}
+                onSearch={handleOnSearch}
+                fuseOptions={{ keys: ["title"] }}
+                inputSearchString={inputFilterValue}
+                onSelect={handleOnSelect}
+                resultStringKeyName="title"
+                onFocus={(e) => {
+                    inputElementRef.current = e.target;
+                    e.target.onkeydown = (e) => {
+                        if (e.key === "Enter") {
+                            setInputFilterValue(inputElementRef.current.value);
+                        }
+                    };
+                }}
+                styling={{
+                    zIndex: 2,
+                }}
             />
-            <SearchIconContainer>
-                <img src={SearchIcon} alt="" />
+            <SearchIconContainer onClick={() => setInputFilterValue(inputElementRef.current.value)}>
+                <TopicTooltip title={"Pesquisar"} arrow classes={{ popper: tooltipClasses.tooltip }}>
+                    <img src={SearchIcon} alt="" />
+                </TopicTooltip>
             </SearchIconContainer>
         </SearchBarContainer>
     );
@@ -65,8 +76,12 @@ const CustomStyledSearchBar = styled(ReactSearchAutocomplete)`
         border: 0;
     }
 
-    .wrapper:has(div:nth-child(2)){
+    .wrapper:has(div:nth-child(2)) {
         border-radius: 50px 10px 50px 50px;
+    }
+
+    .wrapper li:has([Title]) {
+        cursor: pointer;
     }
 
     .wrapper > div:first-child {
@@ -87,19 +102,28 @@ const CustomStyledSearchBar = styled(ReactSearchAutocomplete)`
     }
 `;
 
-const SearchIconContainer = styled("div")`
+const SearchIconContainer = styled("button")`
     position: absolute;
     right: 0;
     width: 70px;
     height: 96%;
+    z-index: 3;
     background-color: var(--blue);
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 50px;
-    img{
+    img {
         width: 15px;
         height: 15px;
         margin-right: 10px;
     }
 `;
+const TopicTooltip = styled(({ className, ...props }) => <Tooltip {...props} classes={{ popper: className }} />)(
+    () => ({
+        [`& .${tooltipClasses.tooltip}`]: {
+            color: "white",
+            fontSize: 13,
+        },
+    }),
+);

@@ -6,16 +6,17 @@ export async function getPosts() {
     return response.data;
 }
 
-export async function getFilteredPosts(filteredArray) {
+export async function getFilteredPosts(filteredArray, inputFilterValue) {
     const body = {
-        filterIds: {
-            topicId: filteredArray
-        }
+        topicFilterIds: {
+            topicId: filteredArray,
+        },
+        inputFilterValue,
     };
 
     try {
         const response = await api.post("/posts/filter", body, {});
-    
+
         return response.data;
     } catch (error) {
         return [];

@@ -11,19 +11,24 @@ const Filters = withDefault(ArrayParam, []);
 
 export default function Blog({ page }) {
     const [filteredArray, setFilteredArray] = useQueryParam("filter", Filters);
+    const [inputFilterValue, setInputFilterValue] = useQueryParam("search", String);
     const [status, setStatus] = useState(true);
     const { postsAct, posts } = useFilteredPosts();
 
     useEffect(() => {
         const parsedFilteredArray = filteredArray.map((item) => Number(item));
-        postsAct(parsedFilteredArray);
-    }, [status, filteredArray]);
+        postsAct(parsedFilteredArray, inputFilterValue);
+    }, [status, filteredArray, inputFilterValue]);
 
     return (
         <>
             <Header page={page} />
 
-            <CustomSearchBar />
+            <CustomSearchBar
+                setInputFilterValue={setInputFilterValue}
+                topicFilter={filteredArray}
+                inputFilterValue={inputFilterValue}
+            />
 
             <TopicsFilter filteredArray={filteredArray} setFilteredArray={setFilteredArray} setStatus={setStatus} />
 
