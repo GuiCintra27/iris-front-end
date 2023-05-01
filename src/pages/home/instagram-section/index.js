@@ -33,14 +33,17 @@ export default function InstagramSection() {
 }
 
 const Instagram = styled.div`
-    width: 100%;
+    position: relative;
     display: grid;
     grid-template-columns: 59vw 40vw;
     grid-template-rows: 9fr 1fr;
 
     #Divisor{
+        position: absolute;
+        bottom: 0;
+        left: 0;
         display: flex;
-        width: 99.3vw;
+        width: 100%;
         justify-content: center;
         background: linear-gradient(to bottom, var(--soft-grey), var(--soft-grey) 50%, var(--black) 50%);
         align-items: center;
@@ -80,9 +83,9 @@ const Instagram = styled.div`
 
 
     #Ig-posts{
-        width: 100%;
+        width: 90%;
         display: flex;
-        padding-left: 4.9vw;
+        /* padding-left: 4.9vw; */
         align-items: center;
 
         div div{

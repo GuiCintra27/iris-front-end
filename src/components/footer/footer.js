@@ -29,7 +29,6 @@ export default function Footer() {
 const PageFooter = styled.div`
     width: 99.3vw;
     display: block;
-    padding-top: 6%;
     padding-bottom: 4%;
     background: var(--soft-grey);
 
