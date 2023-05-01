@@ -100,6 +100,8 @@ export default function TestimonialCarousel() {
             autoPlay={true}
             interval={5000}
             showThumbs={false}
+            swipeable={true}
+            emulateTouch={true}
         >
             {testimonialCards.map((testimonialCard) => (
                 <CarouselElement>
