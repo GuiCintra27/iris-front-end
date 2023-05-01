@@ -1,11 +1,28 @@
 import styled from "styled-components";
-import Paragraph from "./paragraph";
+import { BsHeartFill } from "react-icons/bs";
 
-export default function Post({ author, authorImg, text, postImg, likes, title, topicName }) {
-    const formatedText = text.split("\n");
+export default function Post({ author, authorImg, text, postImg, likes, title, topicName, publishedAt }) {
+    const textToFormat = text.split("\n")[0].split(" ");
+    const formatedText = [];
+
+    for (let i = 0; i < textToFormat.length; i++) {
+        if (i < 30 && textToFormat[i] !== "") {
+            if (i === 29 || i === 28) {
+                formatedText.push(textToFormat[i].replace(".", "").replace(",", ""));
+            } else {
+                formatedText.push(textToFormat[i]);
+            };
+        } else {
+            break;
+        }
+    }
+
+    console.log(formatedText[29]);
+
     return (
         <Main authorImg={authorImg} postImg={postImg}>
             <div className="Image Post-one" />
+
             <div className="Post-caption">
                 <div className="Post-titles">
                     <h2>{title}</h2>
@@ -14,24 +31,29 @@ export default function Post({ author, authorImg, text, postImg, likes, title, t
                         <p>{author}</p>
                     </div>
                 </div>
+
                 <div className="Post-description">
-                    <p>#{topicName}</p>
-                    <div>{likes}</div>
+                    <p># {topicName}</p>
+                    <div> 
+                        <BsHeartFill />
+                        {likes}
+                    </div>
                 </div>
+
                 <div className="Text">
                     <p>
-                        {formatedText.map((item, index) => (
-                            <Paragraph key={index} text={item} />
-                        ))}
+                        { formatedText.join(" ") + "..." }
                     </p>
                 </div>
+
+                <span className="Published-at">{publishedAt}</span>
             </div>
         </Main>
     );
 }
 
 const Main = styled.div`
-    width: clamp(520px, 52vw, 52vw);
+    max-width: 998px;
     height: 30rem;
     background-color: var(--white);
     border-radius: 10px;
@@ -51,25 +73,66 @@ const Main = styled.div`
         border-radius: 10px 0 0 10px;
         background-size: 100% 100% !important;
         background: url(${(props) => props.postImg});
+        cursor: pointer;
     }
 
     .Post-caption {
-        padding: 4% 9% 3% 9%;
+        padding: 4% 5% 3% 3%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
     }
 
     .Post-titles {
         display: flex;
         align-items: center;
         justify-content: space-between;
+        font-family: 'Poppins';
+        font-style: normal;
+        color: #000000;
+
+        // A estilização desse h2 (cursor pointer e hover com underline) já acontece naturalmente quando ele é um link para outra página do site, então quando implementarmos essa funcionalidade, podemos tirar essa estilização.
+        h2 {
+            font-weight: 700;
+            font-size: 20px;
+            line-height: 30px;
+            cursor: pointer;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+
+        p {
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 21px;
+        }
     }
 
     .Post-description {
         display: flex;
         align-items: center;
         justify-content: flex-start;
+        font-size: 14px;
+
+        div {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
         
         p {
             padding-right: 15px;
+            font-family: 'Poppins';
+            font-style: normal;
+            font-weight: 500;
+            line-height: 21px;
+            color: #000000;
+        }
+
+        svg {
+            color: red;
         }
     }
 
@@ -89,10 +152,10 @@ const Main = styled.div`
     }
 
     .Text {
-        margin-top: 4%;
-        overflow-y: scroll;
-        word-break: break-word;
         height: 35vh;
+        max-height: 100px;
+        max-width: 445px;
+        display: flex;
 
         &::-webkit-scrollbar {
             width: 5px;
@@ -100,8 +163,27 @@ const Main = styled.div`
 
 
         & p {
+            font-family: 'Poppins';
+            font-style: normal;
             font-weight: 300;
-            font-size: clamp(0.7em, 0.3em + 0.65vw, 2vw);
+            line-height: 21px;
+            display: flex;
+            align-items: center;
+            color: #000000;
+            font-weight: 300;
+            font-size: clamp(0.7em, 0.3em + 0.65vw, 14px);
         }
+    }
+
+    .Published-at {
+        font-family: 'Poppins';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 17.28px;
+        line-height: 26px;
+        display: flex;
+        align-items: center;
+        justify-content: end;
+        color: #A9A9A9;
     }
 `;
