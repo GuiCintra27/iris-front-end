@@ -13,10 +13,12 @@ import FacebookOauth from "../../components/open-authorization/facebook";
 import { useContext } from "react";
 import UserContext from "../../contexts/UserContext";
 import useSignIn from "../../hooks/api/useSignIn";
+import TempContext from "../../contexts/TempContext";
 
 export default function SignIn() {
     const { signInLoading, signIn } = useSignIn();
     const { setUserData } = useContext(UserContext);
+    const { setTempData } = useContext(TempContext);
     const navigate = useNavigate();
 
     const { handleSubmit, handleChange, data, errors, setErrors } = useForm({
@@ -87,7 +89,7 @@ export default function SignIn() {
             <main>
                 <div>
                     <h4>
-                        Ainda não possui uma conta? <Link to={"/sign-up"}>Cadastre-se</Link>
+                        Ainda não possui uma conta? <Link to={"/sign-up"} onClick={() => setTempData({})}>Cadastre-se</Link>
                     </h4>
                 </div>
                 <div>
@@ -118,7 +120,6 @@ export default function SignIn() {
                     </button>
 
                     <GoogleOauth />
-
                     <FacebookOauth />
                 </form>
             </main>

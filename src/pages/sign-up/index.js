@@ -165,6 +165,7 @@ export default function SignUp() {
                                     name={"email"}
                                     value={data?.email || ""}
                                     onChange={handleChange("email")}
+                                    disabled={tempData.email}
                                     label={"Email"}
                                     required
                                 />
@@ -243,8 +244,7 @@ export default function SignUp() {
                         )}
 
                         {!tempData.name && <GoogleOauth />}
-
-                        <FacebookOauth />
+                        {!tempData.name && <FacebookOauth />}
                     </form>
                 </MuiPickersUtilsProvider>
             </main>

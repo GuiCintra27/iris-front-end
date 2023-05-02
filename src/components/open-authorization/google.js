@@ -15,7 +15,6 @@ export default function GoogleOauth() {
     const { setTempData } = useContext(TempContext);
     const navigate = useNavigate();
     const location = useLocation();
-    console.log(location.pathname);
 
     const Toast = useMemo(() => Swal.mixin({
         toast: true,
