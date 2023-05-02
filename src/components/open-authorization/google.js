@@ -7,13 +7,15 @@ import TempContext from "../../contexts/TempContext";
 import { useContext } from "react";
 import { useMemo } from "react";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function GoogleOauth() {
     const { signIn } = useSignInGoogle();
     const { setUserData } = useContext(UserContext);
     const { setTempData } = useContext(TempContext);
     const navigate = useNavigate();
+    const location = useLocation();
+    console.log(location.pathname);
 
     const Toast = useMemo(() => Swal.mixin({
         toast: true,
@@ -56,7 +58,7 @@ export default function GoogleOauth() {
             <Container id="signInDiv" onClick={handleClick}>
                 <GoogleLogin onSuccess={onSuccess} onError={onError}/>
                 <img src={googleIcon} alt="google icon" />
-                <p>Entre com Google</p>
+                <p>{location.pathname === "/sign-in" ? "Entrar" : "Cadastrar"} com Google</p>
             </Container>
         </>
     );
