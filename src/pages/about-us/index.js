@@ -74,4 +74,5 @@ export default function AboutUs({ page }) {
 
 const MainSection = styled.div`
     display: flex;    
+    margin-bottom: 8rem;
 `;

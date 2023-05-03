@@ -10,6 +10,7 @@ import Buttons from "../../components/formulary/buttons";
 import { useContext } from "react";
 import UserContext from "../../contexts/UserContext";
 import useDonate from "../../hooks/api/useDonate";
+import styled from "styled-components";
 
 export default function Donate({ page }) {
     const { userData } = useContext(UserContext);
@@ -18,7 +19,7 @@ export default function Donate({ page }) {
     const { handleSubmit, handleChange, data, setData, errors, setErrors } = useForm({
         validations: FormValidations,
 
-        onSubmit: async(data) => {
+        onSubmit: async (data) => {
             const newData = {
                 amount: data.amount,
             };
@@ -116,7 +117,13 @@ export default function Donate({ page }) {
                 </form>
             </FormContainer>
 
+            <Margin />
+
             <Footer />
         </>
     );
 }
+
+const Margin = styled.div`
+    margin-bottom: 17rem;
+`;
