@@ -4,6 +4,7 @@ import TopicsFilter from "../../components/blogFilter/topicsFilter";
 import Header from "../../components/header/header";
 import { useFilteredPosts } from "../../hooks/api/usePosts";
 import Post from "./post";
+import dayjs from "dayjs";
 
 export default function Blog({ page }) {
     const [filteredArray, setFilteredArray] = useState([]);
@@ -30,6 +31,10 @@ export default function Blog({ page }) {
                         authorImg={item.admins.photo}
                         text={item.text}
                         postImg={item.image}
+                        likes={item.likes}
+                        title={item.title}
+                        topicName={item.topics.name}
+                        publishedAt={dayjs(item.created_at).format("DD/MM/YYYY")}
                     />
                 ))
             )}
