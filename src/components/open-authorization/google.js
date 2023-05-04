@@ -45,7 +45,7 @@ export default function GoogleOauth() {
             }
         }
     }
-
+    // eslint-disable-next-line
     const onError = () => console.log("Login Failed");
 
     function handleClick() {
