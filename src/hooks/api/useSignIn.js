@@ -11,3 +11,17 @@ export default function useSignIn() {
         signIn,
     };
 }
+
+export function useSignInGoogle() {
+    const {
+        loading: signInLoading,
+        error: signInError,
+        act: signIn
+    } = useAsync(authApi.signInGoogle, false);
+
+    return {
+        signInLoading,
+        signInError,
+        signIn,
+    };
+}
