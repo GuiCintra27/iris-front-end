@@ -13,6 +13,7 @@ import Buttons from "../../components/formulary/buttons";
 import TextArea from "../../components/formulary/textArea";
 import Select from "../../components/formulary/select";
 import useVolunteer from "../../hooks/api/useVolunteer";
+import styled from "styled-components";
 
 export default function VolunteerForm({ page }) {
     const { userData } = useContext(UserContext);
@@ -207,7 +208,13 @@ export default function VolunteerForm({ page }) {
                 </form>
             </FormContainer>
 
+            <Margin />
+
             <Footer />
         </>
     );
 }
+
+const Margin = styled.div`
+    margin-bottom: 17rem;
+`;

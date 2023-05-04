@@ -15,9 +15,9 @@ export default function AboutSection() {
     }
 
     if (contour) {
-        document.addEventListener("mousemove", function(e) {
-            //eslint-disable-line
-            let eye = document.getElementById("Eye"); //eslint-disable-line
+        //eslint-disable-next-line
+        document.addEventListener("mousemove", function (e) {
+            let eye = document.getElementById("Eye");
             if (eye) {
                 var x = e.clientX;
                 var y = e.clientY;
@@ -38,40 +38,62 @@ export default function AboutSection() {
             </div>
 
             <div id="projectInformations">
-                <div className="Text">
-                    <div>
-                        <h1>INSTAGRAM</h1>
-                        <div id="Instagram-icon"></div>
+                <div className="information-top">
+                    <div className="Text">
+                        <div>
+                            <h1>INSTAGRAM</h1>
+                            <div id="Instagram-icon"></div>
+                        </div>
+
+                        <p>
+                            Semanalmente são lançadas três postagens sobre assuntos relevantes para o movimento
+                            LGBTQIA+. Como o foco é ultrapassar barreiras e alcançar um público fora da bolha, os
+                            conteúdos utilizam linguagem simples e engajante, passando por temas complexos como "O que
+                            fazer quando seu filho se assumir", a questões que geram dúvidas em muitos como "Qual a
+                            diferença entre Bi e Pan?" e chegando a assuntos aparentemente triviais, mas que geram
+                            ótimas oportunidades de ampliar os espaços de discussão, como a participação da Linn da
+                            Quebrada, uma travesti, no Big Brother Brasil, o maior reality show do país.
+                        </p>
                     </div>
 
-                    <p>
-                        Semanalmente são lançadas três postagens sobre assuntos relevantes para o movimento LGBTQIA+.
-                        Como o foco é ultrapassar barreiras e alcançar um público fora da bolha, os conteúdos utilizam
-                        linguagem simples e engajante, passando por temas complexos como "O que fazer quando seu filho
-                        se assumir", a questões que geram dúvidas em muitos como "Qual a diferença entre Bi e Pan?" e
-                        chegando a assuntos aparentemente triviais, mas que geram ótimas oportunidades de ampliar os
-                        espaços de discussão, como a participação da Linn da Quebrada, uma travesti, no Big Brother
-                        Brasil, o maior reality show do país.
-                    </p>
+                    <div className="Text">
+                        <div>
+                            <h1>MENTORIA</h1>
+                            <div id="Mentorship"></div>
+                        </div>
+
+                        <p>
+                            Na mentoria, selecionamos uma comunidade de 30 jovens LGBTQIA+ para capacitá-los em três
+                            pilares principais: Oportunidades, Habilidades Socioemocionais e Saúde Mental. <br />
+                            No primeiro pilar capacitamos os jovens para alcançarem experiências educacionais
+                            transformadoras através de encontros temáticos. <br />
+                            No pilar de Socioemocionais estimulamos tudo que é essencial para que as emoções cotidianas
+                            presentes em desafios e vivências sejam lidadas com equilíbrio. <br />
+                            Já no pilar de saúde mental, conectamos os jovens com psicólogos voluntários para que os
+                            participantes recebam o apoio e as ferramentas necessárias para enfrentarem as adversidades
+                            de suas vidas.
+                        </p>
+                    </div>
                 </div>
+                <div className="information-bottom">
+                    <div className="Text">
+                        <div>
+                            <h1>MENTORIA</h1>
+                            <div id="Mentorship"></div>
+                        </div>
 
-                <div className="Text">
-                    <div>
-                        <h1>MENTORIA</h1>
-                        <div id="Mentorship"></div>
+                        <p>
+                            Na mentoria, selecionamos uma comunidade de 30 jovens LGBTQIA+ para capacitá-los em três
+                            pilares principais: Oportunidades, Habilidades Socioemocionais e Saúde Mental. <br />
+                            No primeiro pilar capacitamos os jovens para alcançarem experiências educacionais
+                            transformadoras através de encontros temáticos. <br />
+                            No pilar de Socioemocionais estimulamos tudo que é essencial para que as emoções cotidianas
+                            presentes em desafios e vivências sejam lidadas com equilíbrio. <br />
+                            Já no pilar de saúde mental, conectamos os jovens com psicólogos voluntários para que os
+                            participantes recebam o apoio e as ferramentas necessárias para enfrentarem as adversidades
+                            de suas vidas.
+                        </p>
                     </div>
-
-                    <p>
-                        Na mentoria, selecionamos uma comunidade de 30 jovens LGBTQIA+ para capacitá-los em três pilares
-                        principais: Oportunidades, Habilidades Socioemocionais e Saúde Mental. <br />
-                        No primeiro pilar capacitamos os jovens para alcançarem experiências educacionais
-                        transformadoras através de encontros temáticos. <br />
-                        No pilar de Socioemocionais estimulamos tudo que é essencial para que as emoções cotidianas
-                        presentes em desafios e vivências sejam lidadas com equilíbrio. <br />
-                        Já no pilar de saúde mental, conectamos os jovens com psicólogos voluntários para que os
-                        participantes recebam o apoio e as ferramentas necessárias para enfrentarem as adversidades de
-                        suas vidas.
-                    </p>
                 </div>
             </div>
         </About>
@@ -111,16 +133,31 @@ const About = styled.div`
         width: 2.9vw;
     }
 
-    && :nth-child(3) {
+    && #projectInformations {
         margin-top: 28vh;
-        padding-left: 11.95vw;
-        display: flex;
-        gap: 9.8vw;
+        width: 100%;
         text-align: left;
+        box-sizing: border-box;
+        padding: 0 100px 0 100px;
+        .information-top {
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 10vh;
+            gap: 10%;
+        }
+        .information-bottom {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
     }
 
     .Text {
-        width: 31.6vw;
+        width: 50% !important;
+        height: 50%;
+        max-width: 600px;
+        max-height: 600px;
         display: grid;
         grid-template-rows: 2fr 9fr;
         padding: 1rem;

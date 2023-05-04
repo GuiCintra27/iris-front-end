@@ -21,10 +21,9 @@ export default function Blog({ page }) {
 
             <TopicsFilter filteredArray={filteredArray} setFilteredArray={setFilteredArray} setStatus={setStatus} />
 
-            {posts?.length === 0
-                ?
+            {posts?.length === 0 ? (
                 <AlertSpan>Nenhum post foi encontrado seguindo esta filtragem!</AlertSpan>
-                :
+            ) : (
                 posts?.map((item, index) => (
                     <Post
                         key={index}
@@ -37,7 +36,10 @@ export default function Blog({ page }) {
                         topicName={item.topics.name}
                         publishedAt={dayjs(item.created_at).format("DD/MM/YYYY")}
                     />
-                ))}
+                ))
+            )}
+
+            <MarginBottom />
         </>
     );
 }
@@ -53,4 +55,8 @@ const AlertSpan = styled.span`
     display: flex;
     justify-content: center;
     color: #000000;
+`;
+
+const MarginBottom = styled.div`
+    margin-bottom: 75px;
 `;

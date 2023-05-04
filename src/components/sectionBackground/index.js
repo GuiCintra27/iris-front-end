@@ -28,6 +28,7 @@ const Bg = styled.div`
         display: flex;
         width: 20vw;
         gap: 1rem;
+        align-items: center;
         transform: translate(35.8vw, 50vh);
     }
 
@@ -37,7 +38,6 @@ const Bg = styled.div`
         border: 3px solid var(--white);
         border-radius: 100%;
         opacity: .3;
-        margin-top: 4px;
     }
 
     #Circle ~ p{

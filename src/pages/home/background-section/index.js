@@ -19,11 +19,11 @@ export default function ParallaxBackground() {
 }
 
 const Background = styled.div`
-    width: 100%;
     display: flex;
     align-items: center;
     background: url(${backgroundImage});
     background-size: 100% 150%;
+    
 
     & > div{
         display: flex;

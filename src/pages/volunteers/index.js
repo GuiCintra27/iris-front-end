@@ -99,5 +99,6 @@ export default function Volunteers({ page }) {
 }
 
 const MainSection = styled.div`
-    display: flex;    
+    display: flex;   
+    margin-bottom: 8rem;
 `;
