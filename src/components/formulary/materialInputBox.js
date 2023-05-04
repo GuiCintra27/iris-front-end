@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
-export default function MaterialInputBox({ type, name, value, onChange = () => 0, label }) {
+export default function MaterialInputBox({ type, name, value, onChange = () => 0, label, disabled }) {
     return (
         <Box>
-            <input type={type} name={name} value={value} onChange={onChange} required />
+            <input type={type} name={name} value={value} onChange={onChange} required disabled={disabled} />
             <span className="highlight"></span>
             <span className="bar"></span>
             <label>{label}</label>

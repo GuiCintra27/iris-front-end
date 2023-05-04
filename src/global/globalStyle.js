@@ -23,6 +23,7 @@ const GlobalStyle = createGlobalStyle`
     --blue: #0081cc;
     --grey: #a0abb1;
     --dark-grey: #838c90;
+    --shadow: #393F48;
     font-size: 62.5%;
   }
 
