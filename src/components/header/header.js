@@ -112,12 +112,6 @@ const Nav = styled.nav`
         font-size: 42px;
     }
 
-    #Login ion-icon {
-        font-size: 3vw;
-        margin-bottom: 0.5rem;
-        margin-left: 1rem;
-    }
-
     & a {
         color: var(--black);
         padding-inline: 1rem;
@@ -127,10 +121,31 @@ const Nav = styled.nav`
         border-radius: 40px;
     }
 
+    #Login ion-icon {
+        font-size: 3vw;
+        margin-bottom: 0.5rem;
+        margin-left: 1rem;
+    }
+
     #Menu a:hover {
         border: 3px solid var(--pink);
         transition: 0.5s;
     }
+
+    
+    #Login a {
+        height: 60px;
+        display: flex;
+        margin-top: 0.25rem;
+        align-items: center;
+        justify-content: center;
+        border: none;
+    }
+
+    #Login a:hover{
+        border: none;
+    }
+
 `;
 
 const Menu = styled.div`
