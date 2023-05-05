@@ -1,23 +1,35 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import TopicsFilter from "../../components/blogFilter/topicsFilter";
+import TopicsFilter from "../../components/blog/topicsFilter";
 import Header from "../../components/header/header";
 import { useFilteredPosts } from "../../hooks/api/usePosts";
 import Post from "./post";
 import dayjs from "dayjs";
+import { useQueryParam, ArrayParam, withDefault } from "use-query-params";
+import CustomSearchBar from "../../components/blog/searchBar";
+
+const Filters = withDefault(ArrayParam, []);
 
 export default function Blog({ page }) {
-    const [filteredArray, setFilteredArray] = useState([]);
+    const [filteredArray, setFilteredArray] = useQueryParam("filter", Filters);
+    const [inputFilterValue, setInputFilterValue] = useQueryParam("search", String);
     const [status, setStatus] = useState(true);
     const { postsAct, posts } = useFilteredPosts();
 
     useEffect(() => {
-        postsAct(filteredArray);
-    }, [status]);
+        const parsedFilteredArray = filteredArray.map((item) => Number(item));
+        postsAct(parsedFilteredArray, inputFilterValue);
+    }, [status, filteredArray, inputFilterValue]);
 
     return (
         <>
             <Header page={page} />
+
+            <CustomSearchBar
+                setInputFilterValue={setInputFilterValue}
+                topicFilter={filteredArray}
+                inputFilterValue={inputFilterValue}
+            />
 
             <TopicsFilter filteredArray={filteredArray} setFilteredArray={setFilteredArray} setStatus={setStatus} />
 
