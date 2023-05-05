@@ -18,16 +18,16 @@ export default function Blog({ page }) {
     const [pageCount, setPageCount] = useState(1);
     const { posts, postsAct, postsLoading, setPosts } = useFilteredPosts();
 
-    useEffect(() => {
-        console.log(pageCount);
-    }, [pageCount]);
-
     useEffect(async () => {
         const filteredArray = parseFilteredArray();
         const responsePosts = await postsAct(filteredArray, inputFilterValue);
         setPosts(responsePosts);
-        setPageCount(1);
+        // setPageCount(1);
     }, [status, filteredArray, inputFilterValue]);
+
+    useEffect(() => {
+        console.log(pageCount);
+    }, [pageCount]);
 
     function parseFilteredArray() {
         const parsedFilteredArray = filteredArray.map((item) => Number(item));
@@ -35,18 +35,16 @@ export default function Blog({ page }) {
     }
 
     async function handleInfiniteScroll() {
-        console.log("Apareci!!");
+        console.log("Apareci!! e ", pageCount + 1);
         const requestNewPage = pageCount + 1;
         const configurateHeaders = {
             headers: {
-                params: {
-                    page: requestNewPage,
-                },
+                page: String(requestNewPage),
             },
         };
         const filteredArray = parseFilteredArray();
-        const newPosts = await postsAct(filteredArray, inputFilterValue, configurateHeaders);
         setPageCount(requestNewPage);
+        const newPosts = await postsAct(filteredArray, inputFilterValue, configurateHeaders);
         setPosts((posts) => [...posts, ...newPosts]);
     }
 
