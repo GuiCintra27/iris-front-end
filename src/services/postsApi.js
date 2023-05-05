@@ -6,7 +6,7 @@ export async function getPosts() {
     return response.data;
 }
 
-export async function getFilteredPosts(filteredArray, inputFilterValue) {
+export async function getFilteredPosts(filteredArray, inputFilterValue, config = {}) {
     const body = {
         topicFilterIds: {
             topicId: filteredArray,
@@ -15,7 +15,7 @@ export async function getFilteredPosts(filteredArray, inputFilterValue) {
     };
 
     try {
-        const response = await api.post("/posts/filter", body, {});
+        const response = await api.post("/posts/filter", body, config);
 
         return response.data;
     } catch (error) {

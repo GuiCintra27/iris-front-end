@@ -2,11 +2,12 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import TopicsFilter from "../../components/blog/topicsFilter";
 import Header from "../../components/header/header";
-import { useFilteredPosts } from "../../hooks/api/usePosts";
 import Post from "./post";
 import dayjs from "dayjs";
 import { useQueryParam, ArrayParam, withDefault } from "use-query-params";
 import CustomSearchBar from "../../components/blog/searchBar";
+import UIInfiniteScroll from "../../components/blog/infiniteScroller";
+import { useFilteredPosts } from "../../hooks/api/usePosts";
 
 const Filters = withDefault(ArrayParam, []);
 
@@ -14,12 +15,40 @@ export default function Blog({ page }) {
     const [filteredArray, setFilteredArray] = useQueryParam("filter", Filters);
     const [inputFilterValue, setInputFilterValue] = useQueryParam("search", String);
     const [status, setStatus] = useState(true);
-    const { postsAct, posts } = useFilteredPosts();
+    const [pageCount, setPageCount] = useState(1);
+    const { posts, postsAct, postsLoading, setPosts } = useFilteredPosts();
 
     useEffect(() => {
-        const parsedFilteredArray = filteredArray.map((item) => Number(item));
-        postsAct(parsedFilteredArray, inputFilterValue);
+        console.log(pageCount);
+    }, [pageCount]);
+
+    useEffect(async () => {
+        const filteredArray = parseFilteredArray();
+        const responsePosts = await postsAct(filteredArray, inputFilterValue);
+        setPosts(responsePosts);
+        setPageCount(1);
     }, [status, filteredArray, inputFilterValue]);
+
+    function parseFilteredArray() {
+        const parsedFilteredArray = filteredArray.map((item) => Number(item));
+        return parsedFilteredArray;
+    }
+
+    async function handleInfiniteScroll() {
+        console.log("Apareci!!");
+        const requestNewPage = pageCount + 1;
+        const configurateHeaders = {
+            headers: {
+                params: {
+                    page: requestNewPage,
+                },
+            },
+        };
+        const filteredArray = parseFilteredArray();
+        const newPosts = await postsAct(filteredArray, inputFilterValue, configurateHeaders);
+        setPageCount(requestNewPage);
+        setPosts((posts) => [...posts, ...newPosts]);
+    }
 
     return (
         <>
@@ -33,22 +62,29 @@ export default function Blog({ page }) {
 
             <TopicsFilter filteredArray={filteredArray} setFilteredArray={setFilteredArray} setStatus={setStatus} />
 
-            {posts?.length === 0 ? (
-                <AlertSpan>Nenhum post foi encontrado seguindo esta filtragem!</AlertSpan>
+            {posts && posts.length !== 0 ? (
+                <>
+                    {posts.map((item, index) => (
+                        <Post
+                            key={index}
+                            author={item.admins.name}
+                            authorImg={item.admins.photo}
+                            text={item.text}
+                            postImg={item.image}
+                            likes={item.likes}
+                            title={item.title}
+                            topicName={item.topics.name}
+                            publishedAt={dayjs(item.created_at).format("DD/MM/YYYY")}
+                        />
+                    ))}
+                    {postsLoading ? (
+                        <p>Carregando...</p>
+                    ) : (
+                        <UIInfiniteScroll fetchMore={() => handleInfiniteScroll()} />
+                    )}
+                </>
             ) : (
-                posts?.map((item, index) => (
-                    <Post
-                        key={index}
-                        author={item.admins.name}
-                        authorImg={item.admins.photo}
-                        text={item.text}
-                        postImg={item.image}
-                        likes={item.likes}
-                        title={item.title}
-                        topicName={item.topics.name}
-                        publishedAt={dayjs(item.created_at).format("DD/MM/YYYY")}
-                    />
-                ))
+                <AlertSpan>Nenhum post foi encontrado seguindo esta filtragem!</AlertSpan>
             )}
 
             <MarginBottom />
