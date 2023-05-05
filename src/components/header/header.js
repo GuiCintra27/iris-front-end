@@ -37,19 +37,20 @@ export default function Header({ page }) {
                     {pages.map((item, index) => (
                         <Pages key={index} onPage={page} page={item} index={index} />
                     ))}
-                </Menu>
 
-                {userData?.token ? (
-                    <div id="Login">
-                        <ion-icon name="log-out-outline" onClick={logOut}></ion-icon>
-                    </div>
-                ) : (
-                    <div id="Login">
-                        <Link to={"/sign-in"}>
-                            <ion-icon name="log-in-outline"></ion-icon>
-                        </Link>
-                    </div>
-                )}
+                    {userData?.token ? (
+                        <div id="Login">
+                            <ion-icon name="log-out-outline" onClick={logOut}></ion-icon>
+                        </div>
+                    ) : (
+                        <div id="Login">
+                            <Link to={"/sign-in"}>
+                                <ion-icon name="log-in-outline"></ion-icon>
+                            </Link>
+                        </div>
+                    )}
+
+                </Menu>
             </Nav>
         </PageHeader>
     );
@@ -120,10 +121,31 @@ const Nav = styled.nav`
         border-radius: 40px;
     }
 
+    #Login ion-icon {
+        font-size: 3vw;
+        margin-bottom: 0.5rem;
+        margin-left: 1rem;
+    }
+
     #Menu a:hover {
         border: 3px solid var(--pink);
         transition: 0.5s;
     }
+
+    
+    #Login a {
+        height: 60px;
+        display: flex;
+        margin-top: 0.25rem;
+        align-items: center;
+        justify-content: center;
+        border: none;
+    }
+
+    #Login a:hover{
+        border: none;
+    }
+
 `;
 
 const Menu = styled.div`

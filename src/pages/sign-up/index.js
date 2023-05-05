@@ -26,6 +26,8 @@ import useSaveSignUp from "../../hooks/api/useSaveSignUp";
 import { useContext } from "react";
 import UserContext from "../../contexts/UserContext";
 import useSignIn from "../../hooks/api/useSignIn";
+import TempContext from "../../contexts/TempContext";
+import { useEffect } from "react";
 
 dayjs.extend(CustomParseFormat);
 
@@ -36,6 +38,14 @@ export default function SignUp() {
     const { setUserData } = useContext(UserContext);
     const [secondPage, setSecondPage] = useState(false);
     const navigate = useNavigate();
+    const { tempData } = useContext(TempContext);
+
+    useEffect(() => {
+        if (tempData.name) {
+            data.name = tempData.name;
+            data.email = tempData.email;
+        }
+    }, [tempData]);
 
     const { handleSubmit, handleChange, phoneHandleChange, customHandleChange, data, errors, setErrors } = useForm({
         validations: FormValidations,
@@ -92,8 +102,8 @@ export default function SignUp() {
         },
 
         initialValues: {
-            name: "",
-            email: "",
+            name: tempData.name || "",
+            email: tempData.email || "",
             phoneNumber: "",
             birthDay: null,
             password: "",
@@ -155,6 +165,7 @@ export default function SignUp() {
                                     name={"email"}
                                     value={data?.email || ""}
                                     onChange={handleChange("email")}
+                                    disabled={tempData.email}
                                     label={"Email"}
                                     required
                                 />
@@ -232,9 +243,8 @@ export default function SignUp() {
                             </>
                         )}
 
-                        <GoogleOauth />
-
-                        <FacebookOauth />
+                        {!tempData.name && <GoogleOauth />}
+                        {!tempData.name && <FacebookOauth />}
                     </form>
                 </MuiPickersUtilsProvider>
             </main>
