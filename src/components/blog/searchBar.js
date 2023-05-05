@@ -34,11 +34,19 @@ export default function CustomSearchBar({ setInputFilterValue, topicFilter, inpu
                 inputSearchString={inputFilterValue}
                 onSelect={handleOnSelect}
                 resultStringKeyName="title"
+                onClear={() => {
+                    setInputFilterValue("");
+                    setItemsSuggestions([]);
+                }}
                 onFocus={(e) => {
                     inputElementRef.current = e.target;
                     e.target.onkeydown = (e) => {
+                        console.log(e.key);
                         if (e.key === "Enter") {
                             setInputFilterValue(inputElementRef.current.value);
+                        }
+                        if (e.key === "Escape") {
+                            inputElementRef.current.blur();
                         }
                     };
                 }}

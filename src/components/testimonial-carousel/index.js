@@ -103,8 +103,8 @@ export default function TestimonialCarousel() {
             swipeable={true}
             emulateTouch={true}
         >
-            {testimonialCards.map((testimonialCard) => (
-                <CarouselElement>
+            {testimonialCards.map((testimonialCard, ind) => (
+                <CarouselElement key={testimonialCard + ind}>
                     <div className="testimonial-header">
                         <img
                             width={"30px"}
