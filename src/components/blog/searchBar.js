@@ -41,7 +41,6 @@ export default function CustomSearchBar({ setInputFilterValue, topicFilter, inpu
                 onFocus={(e) => {
                     inputElementRef.current = e.target;
                     e.target.onkeydown = (e) => {
-                        console.log(e.key);
                         if (e.key === "Enter") {
                             setInputFilterValue(inputElementRef.current.value);
                         }

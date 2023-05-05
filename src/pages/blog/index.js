@@ -8,7 +8,7 @@ import { useQueryParam, ArrayParam, withDefault } from "use-query-params";
 import CustomSearchBar from "../../components/blog/searchBar";
 import UIInfiniteScroll from "../../components/blog/infiniteScroller";
 import { useFilteredPosts } from "../../hooks/api/usePosts";
-import { Audio } from "react-loader-spinner";
+import { ColorRing } from "react-loader-spinner";
 
 const Filters = withDefault(ArrayParam, []);
 
@@ -20,6 +20,7 @@ export default function Blog({ page }) {
     const [throttle, setThrottle] = useState(true);
     const { posts, postsAct, postsLoading, setPosts } = useFilteredPosts();
 
+    //eslint-disable-next-line
     useEffect(async () => {
         const filteredArray = parseFilteredArray();
         const responsePosts = await postsAct(filteredArray, inputFilterValue);
@@ -29,7 +30,8 @@ export default function Blog({ page }) {
 
     useEffect(() => {
         if (throttle) return;
-        setTimeout(() => setThrottle(true), 2000);
+        const THROTTLE_TIME = 4000; //ms
+        setTimeout(() => setThrottle(true), THROTTLE_TIME);
     }, [throttle]);
 
     function parseFilteredArray() {
@@ -38,6 +40,7 @@ export default function Blog({ page }) {
     }
 
     async function handleInfiniteScroll() {
+        if (!throttle) return;
         setThrottle(false);
         const requestNewPage = pageCount + 1;
         const configurateHeaders = {
@@ -80,14 +83,14 @@ export default function Blog({ page }) {
                             />
                         ))}
                         {postsLoading ? (
-                            <Audio
+                            <ColorRing
+                                visible={true}
                                 height="80"
                                 width="80"
-                                radius="9"
-                                color="green"
-                                ariaLabel="three-dots-loading"
-                                wrapperStyle
-                                wrapperClass="loader"
+                                ariaLabel="blocks-loading"
+                                wrapperStyle={{}}
+                                wrapperClass="blocks-wrapper"
+                                colors={["#429EA6", "#429EA6", "#429EA6", "#429EA6", "#429EA6"]}
                             />
                         ) : (
                             throttle && <UIInfiniteScroll fetchMore={() => handleInfiniteScroll()} />
@@ -120,5 +123,7 @@ const MarginBottom = styled.div`
 `;
 
 const PostScrollerWrapper = styled.div`
-    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 `;

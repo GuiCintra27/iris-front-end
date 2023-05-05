@@ -5,6 +5,7 @@ export default function usePostsAsync(handler, immediate = true) {
     const [loading, setLoading] = useState(immediate);
     const [error, setError] = useState(null);
 
+    //eslint-disable-next-line
     const act = async (...args) => {
         setLoading(true);
         setError(null);
@@ -19,7 +20,7 @@ export default function usePostsAsync(handler, immediate = true) {
             throw err;
         }
     };
-
+    //eslint-disable-next-line
     useEffect(async () => {
         if (immediate) {
             const newData = await act();
