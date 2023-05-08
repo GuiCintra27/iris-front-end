@@ -115,7 +115,7 @@ const About = styled.div`
 
     #Contour {
         position: relative;
-        margin-left: 46.8%;
+        margin: auto;
         height: 4.35vw;
         width: 7.1vw;
         background: url(${eyeCountour});
@@ -133,12 +133,13 @@ const About = styled.div`
         width: 2.9vw;
     }
 
-    && #projectInformations {
+    & #projectInformations {
         margin-top: 28vh;
         width: 100%;
         text-align: left;
         box-sizing: border-box;
         padding: 0 100px 0 100px;
+
         .information-top {
             width: 100%;
             display: flex;
@@ -154,10 +155,10 @@ const About = styled.div`
     }
 
     .Text {
-        width: 50% !important;
+        width: 50%;
+        max-width: 606px;
         height: 50%;
-        max-width: 600px;
-        max-height: 600px;
+        height: 591px;
         display: grid;
         grid-template-rows: 2fr 9fr;
         padding: 1rem;
@@ -181,6 +182,7 @@ const About = styled.div`
             padding-inline: 2vw;
             display: flex;
             justify-content: space-between;
+            align-items: center;
         }
 
         & h1 {
@@ -190,16 +192,21 @@ const About = styled.div`
 
         #Instagram-icon {
             border-radius: 5px;
-            height: 3.4vw;
             width: 4vw;
+            scale: 0.9;
+            max-width: 65px;
+            min-width: 50px;
+            aspect-ratio: 76 / 65;
             background: url(${instagram});
             background-size: 360% 240%;
         }
 
         #Mentorship {
             border-radius: 5px;
-            height: 3.4vw;
             width: 4vw;
+            max-width: 65px;
+            min-width: 50px;
+            aspect-ratio: 76 / 65;
             background: url(${mentory});
             background-size: 190% 140%;
             transform: translateY(0.24vw);
@@ -208,8 +215,21 @@ const About = styled.div`
         & > p {
             margin-top: 7.5%;
             margin-inline: auto;
-            width: 29.4vw;
-            font-size: clamp(0.4em, 0.3em + 0.65vw, 5vw);
+            width: 90%;
+        }
+    }
+    @media screen {
+        @media (max-width: 1280px) {
+            .information-top {
+                flex-direction: column;
+                align-items: center;
+                margin-bottom: 0 !important;                
+            }
+            
+            .Text {
+                width: 606px;
+                margin-bottom: 60px;
+            }
         }
     }
 `;
