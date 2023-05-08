@@ -8,7 +8,7 @@ export default function ParallaxBackground() {
             <div>
                 <div id="Bg_filter"></div>
                 <div className="Iniciative-container">
-                    <div className="Bg_content"></div>
+                    <div className="Bg_content Upper_bar"></div>
                     <span id="Img_frase">
                         Tome uma <br /> iniciativa!
                     </span>
@@ -48,44 +48,46 @@ const Background = styled.div`
     }
 
     #Img_frase {
-        width: 28vw;
-        font-size: clamp(2em, 1.6em + 2vw, 10vw);
         display: flex;
         color: var(--soft-grey);
-        transform: translate(8.3vw);
+        font-size: 64px;
     }
 
     .Iniciative-container {
         margin: auto;
+        position: relative;
     }
 
     .Bg_content {
         position: absolute;
         border-top: 5px solid var(--white);
-        width: 29.3vw;
+        width: 562px;
     }
 
     .Bg_content.Down_bar {
-        border-top: 5px solid var(--white);
-        margin-left: 13vw;
-        width: 29.3vw;
+        bottom: 0;
+        transform: translate(-5%);
+    }
+
+    .Bg_content.Upper_bar {
+        transform: translate(-30%);
     }
 
     #Subscribe {
-        bottom: -5vh;
+        bottom: -4vh;
         right: 40px;
         position: absolute;
         color: var(--white);
         background: var(--black);
-        height: 8vh;
-        width: 22.8vw;
+        height: 118px;
+        width: 437px;
         display: flex;
         align-items: center;
         justify-content: center;
 
         & span {
             text-align: center;
-            font-size: clamp(1em, 0.6em + 2vw, 4vw);
+            font-size: 48px;
             font-weight: 700;
         }
 
@@ -95,4 +97,5 @@ const Background = styled.div`
             transition: 0.5s;
         }
     }
+    
 `;
