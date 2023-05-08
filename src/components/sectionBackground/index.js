@@ -16,9 +16,9 @@ const Bg = styled.div`
     background: url(${props => props.background}) no-repeat;
     background-size: cover;
     background-position: ${props => props.position};
-    -webkit-box-shadow: 0px -50px 35px rgba(0, 0, 0, 0.5);
-    -moz-box-shadow: 0px -50px 35px rgba(0, 0, 0, 0.5);
-    box-shadow: inset 0px -200px 35px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: inset 0px -200px 100px rgba(0, 0, 0, 0.4);
+    -moz-box-shadow: inset 0px -200px 100px rgba(0, 0, 0, 0.4);
+    box-shadow: inset 0px -200px 100px rgba(0, 0, 0, 0.4);
     width: 100%;
     height: 55vh;
     color: var(--white);
