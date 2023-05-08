@@ -1,9 +1,17 @@
 import styled from "styled-components";
 import { BsHeartFill } from "react-icons/bs";
+import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { useLikes } from "../../hooks/api/usePosts";
 
-export default function Post({ author, authorImg, text, postImg, likes, title, topicName, publishedAt }) {
+export default function Post({ author, authorImg, text, postImg, title, topicName, publishedAt, postId, status }) {
     const textToFormat = text.split("\n")[0].split(" ");
     const formatedText = [];
+    const { likesAct, likes } = useLikes();
+
+    useEffect(() => {
+        likesAct(postId);
+    }, [status]);
 
     for (let i = 0; i < textToFormat.length; i++) {
         if (i < 30 && textToFormat[i] !== "") {
@@ -17,15 +25,15 @@ export default function Post({ author, authorImg, text, postImg, likes, title, t
         }
     }
 
-    console.log(formatedText[29]);
-
     return (
         <Main authorImg={authorImg} postImg={postImg}>
-            <div className="Image Post-one" />
+            <Link to={`/blog/post/${postId}`}>
+                <div className="Image Post-one" />
+            </Link>
 
             <div className="Post-caption">
                 <div className="Post-titles">
-                    <h2>{title}</h2>
+                    <Link to={`/blog/post/${postId}`}>{title}</Link>
                     <div className="Author">
                         <div className="Author-img" />
                         <p>{author}</p>
@@ -36,7 +44,7 @@ export default function Post({ author, authorImg, text, postImg, likes, title, t
                     <p># {topicName}</p>
                     <div> 
                         <BsHeartFill />
-                        {likes}
+                        {likes?.length}
                     </div>
                 </div>
 
@@ -91,12 +99,11 @@ const Main = styled.div`
         font-style: normal;
         color: #000000;
 
-        // A estilização desse h2 (cursor pointer e hover com underline) já acontece naturalmente quando ele é um link para outra página do site, então quando implementarmos essa funcionalidade, podemos tirar essa estilização.
-        h2 {
+        a {
             font-weight: 700;
             font-size: 20px;
             line-height: 30px;
-            cursor: pointer;
+            color: #000000;
 
             &:hover {
                 text-decoration: underline;

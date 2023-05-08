@@ -31,10 +31,11 @@ export default function Blog({ page }) {
                         authorImg={item.admins.photo}
                         text={item.text}
                         postImg={item.image}
-                        likes={item.likes}
                         title={item.title}
                         topicName={item.topics.name}
                         publishedAt={dayjs(item.created_at).format("DD/MM/YYYY")}
+                        postId={item.id}
+                        status={status}
                     />
                 ))
             )}
