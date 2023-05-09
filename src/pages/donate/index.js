@@ -19,7 +19,7 @@ export default function Donate({ page }) {
     const { handleSubmit, handleChange, data, setData, errors, setErrors } = useForm({
         validations: FormValidations,
 
-        onSubmit: async(data) => {
+        onSubmit: async (data) => {
             const newData = {
                 amount: data.amount,
             };
