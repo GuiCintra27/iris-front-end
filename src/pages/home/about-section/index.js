@@ -19,8 +19,8 @@ export default function AboutSection() {
         document.addEventListener("mousemove", function (e) {
             let eye = document.getElementById("Eye");
             if (eye) {
-                var x = e.clientX;
-                var y = e.clientY;
+                const x = e.clientX;
+                const y = e.clientY;
                 eye.style.left = x * 0.015 + 22.5 + "px";
                 eye.style.top = y * 0.0145 + 7 + "px";
             }
@@ -223,9 +223,9 @@ const About = styled.div`
             .information-top {
                 flex-direction: column;
                 align-items: center;
-                margin-bottom: 0 !important;                
+                margin-bottom: 0 !important;
             }
-            
+
             .Text {
                 width: 606px;
                 margin-bottom: 60px;
