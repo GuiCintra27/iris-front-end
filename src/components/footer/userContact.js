@@ -3,6 +3,7 @@ import { useContext } from "react";
 import { useForm } from "../../hooks/useForm";
 import UserContext from "../../contexts/UserContext";
 import FormValidations from "./userContactFormValidations";
+import TextareaAutosize from "react-textarea-autosize";
 import Swal from "sweetalert2";
 import useUserContact from "../../hooks/api/useUserContact";
 
@@ -13,7 +14,8 @@ export default function UserContact() {
     const { handleSubmit, handleChange, phoneHandleChange, data, setData, errors, setErrors } = useForm({
         validations: FormValidations,
 
-        onSubmit: async(data) => {
+        //eslint-disable-next-line
+        onSubmit: async (data) => {
             const newData = {
                 name: data.name,
                 email: data.email,
@@ -101,7 +103,7 @@ export default function UserContact() {
                 />
 
                 <label htmlFor="message">Deixe sua mensagem aqui...</label>
-                <textarea
+                <TextareaAutosize
                     type="text"
                     value={data?.message}
                     name="message"
@@ -146,10 +148,12 @@ const UserContactBox = styled.div`
         border-bottom: 1px solid var(--black);
         width: 18vw;
         background: none;
+        font-size: 1em;
     }
 
     textArea {
         padding-inline: 0.5rem;
+        resize: none;
         height: 8rem;
 
         ::-webkit-scrollbar {
@@ -162,7 +166,7 @@ const UserContactBox = styled.div`
     }
 
     button {
-        margin-top: 7.5%;
+        margin-top: 5.5%;
         border: none;
         background: none;
         margin-left: 19.5vw;
