@@ -3,29 +3,27 @@ import eyeCountour from "../../../assets/Icons/contour.png";
 import eye from "../../../assets/Icons/eye.png";
 import instagram from "../../../assets/Icons/instagram-icon.png";
 import mentory from "../../../assets/Icons/mentory-icon.png";
-import { useState } from "react";
+import { useEffect, useRef } from "react";
 
 export default function AboutSection() {
-    const [contour, setContour] = useState(undefined);
+    const eyeRef = useRef();
 
-    if (!contour) {
-        setInterval(() => {
-            setContour(document.getElementById("Contour"));
-        }, 1000);
-    }
-
-    if (contour) {
-        //eslint-disable-next-line
-        document.addEventListener("mousemove", function (e) {
-            let eye = document.getElementById("Eye");
-            if (eye) {
+    useEffect(() => {
+        const handleMouseMove = function (e) {
+            console.log("eventListener");
+            if (eyeRef.current) {
                 const x = e.clientX;
                 const y = e.clientY;
-                eye.style.left = x * 0.015 + 22.5 + "px";
-                eye.style.top = y * 0.0145 + 7 + "px";
+                eyeRef.current.style.left = x * 0.015 + 22.5 + "px";
+                eyeRef.current.style.top = y * 0.0145 + 7 + "px";
             }
-        });
-    }
+        };
+        document.addEventListener("mousemove", handleMouseMove);
+
+        return () => {
+            document.removeEventListener("mousemove", handleMouseMove);
+        };
+    }, []);
 
     return (
         <About id="about-us-home-page">
@@ -34,7 +32,7 @@ export default function AboutSection() {
             </div>
 
             <div id="Contour">
-                <div id="Eye"></div>
+                <div id="Eye" ref={eyeRef}></div>
             </div>
 
             <div id="projectInformations">
