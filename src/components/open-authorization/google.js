@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import googleIcon from "../../assets/Icons/google-oauth.svg";
-import { GoogleLogin } from "@react-oauth/google";
+import { useGoogleLogin } from "@react-oauth/google";
 import { useSignInGoogle } from "../../hooks/api/useSignIn";
 import UserContext from "../../contexts/UserContext";
 import TempContext from "../../contexts/TempContext";
@@ -30,7 +30,7 @@ export default function GoogleOauth() {
 
     async function onSuccess(res) {
         try {
-            const userData = await signIn(res.credential);
+            const userData = await signIn(res.access_token);
             setUserData(userData);
             Toast.fire({
                 icon: "success",
@@ -45,17 +45,24 @@ export default function GoogleOauth() {
             }
         }
     }
-    // eslint-disable-next-line
-    const onError = () => console.log("Login Failed");
 
-    function handleClick() {
-        document.querySelector("#signInDiv div[role=button]").click();
+    function onError() {
+        Toast.fire({
+            icon: "error",
+            title: "Houve um problema ao se conectar ao Google",
+            customClass: "sweet-toast",
+        });
     }
+
+    const login = useGoogleLogin({
+        onSuccess,
+        onError,
+        scope: "https://www.googleapis.com/auth/user.birthday.read"
+    });
 
     return (
         <>
-            <Container id="signInDiv" onClick={handleClick}>
-                <GoogleLogin onSuccess={onSuccess} onError={onError}/>
+            <Container id="signInDiv" onClick={login}>
                 <img src={googleIcon} alt="google icon" />
                 <p>{location.pathname === "/sign-in" ? "Entrar" : "Cadastrar"} com Google</p>
             </Container>
