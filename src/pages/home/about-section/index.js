@@ -9,7 +9,7 @@ export default function AboutSection() {
     const eyeRef = useRef();
 
     useEffect(() => {
-        const handleMouseMove = function (e) {
+        const handleMouseMove = function(e) {
             console.log("eventListener");
             if (eyeRef.current) {
                 const x = e.clientX;

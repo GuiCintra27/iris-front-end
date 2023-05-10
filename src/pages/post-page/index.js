@@ -8,6 +8,7 @@ import whiteArrow from "../../assets/Icons/white-arrow.png";
 import dayjs from "dayjs";
 import { BsHeartFill, BsHeart } from "react-icons/bs";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 export default function PostPage() {
     const localData = localStorage.getItem("userData");
@@ -39,7 +40,13 @@ export default function PostPage() {
             }
 
             setStatus([]);
-        } catch (error) {}
+        } catch (error) {
+            Swal.fire({
+                icon: "error",
+                title: "Você precisa estar logado!",
+                text: "Como vamos saber quem deixou o like? :)",
+            });
+        }
     }
 
     function likeAnimation() {
@@ -145,7 +152,7 @@ const CoverDiv = styled.div`
     }
 
     h1 {
-        font-family: 'Poppins';
+        font-family: "Poppins";
         font-style: normal;
         font-weight: 700;
         font-size: 45px;

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import TopicsFilter from "../../components/blog/topicsFilter";
+import DataFilter from "../../components/blog/createdAtFilter";
 import Header from "../../components/header/header";
 import Post from "./post";
 import dayjs from "dayjs";
@@ -9,6 +10,7 @@ import CustomSearchBar from "../../components/blog/searchBar";
 import UIInfiniteScroll from "../../components/blog/infiniteScroller";
 import { useFilteredPosts } from "../../hooks/api/usePosts";
 import { ColorRing } from "react-loader-spinner";
+import filterImg from "../../assets/Icons/filters.png";
 
 const Filters = withDefault(ArrayParam, []);
 
@@ -58,32 +60,20 @@ export default function Blog({ page }) {
         <>
             <Header page={page} />
 
-            <CustomSearchBar
-                setInputFilterValue={setInputFilterValue}
-                topicFilter={filteredArray}
-                inputFilterValue={inputFilterValue}
-            />
-                  
-            <TopicsFilter filteredArray={filteredArray} setFilteredArray={setFilteredArray} setStatus={setStatus} />
+            <FilterArea>
+                <CustomSearchBar
+                    setInputFilterValue={setInputFilterValue}
+                    topicFilter={filteredArray}
+                    inputFilterValue={inputFilterValue}
+                />
 
-            {posts?.length === 0 ? (
-                <AlertSpan>Nenhum post foi encontrado seguindo esta filtragem!</AlertSpan>
-            ) : (
-                posts?.map((item, index) => (
-                    <Post
-                        key={index}
-                        author={item.admins.name}
-                        authorImg={item.admins.photo}
-                        text={item.text}
-                        postImg={item.image}
-                        title={item.title}
-                        topicName={item.topics.name}
-                        publishedAt={dayjs(item.created_at).format("DD/MM/YYYY")}
-                        postId={item.id}
-                        status={status}
-                    />
-                ))
-            )}
+                <img className="filterImg" src={filterImg} alt="Filtro dos posts" />
+            </FilterArea>
+
+            <div>
+                <DataFilter filteredArray={filteredArray} setFilteredArray={setFilteredArray} setStatus={setStatus} />
+                <TopicsFilter filteredArray={filteredArray} setFilteredArray={setFilteredArray} setStatus={setStatus} />
+            </div>
 
             <PostScrollerWrapper>
                 {posts && posts.length !== 0 ? (
@@ -99,6 +89,8 @@ export default function Blog({ page }) {
                                 title={item.title}
                                 topicName={item.topics.name}
                                 publishedAt={dayjs(item.created_at).format("DD/MM/YYYY")}
+                                postId={item.id}
+                                status={status}
                             />
                         ))}
                         {postsLoading ? (
@@ -145,4 +137,18 @@ const PostScrollerWrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+`;
+
+const FilterArea = styled.div`
+    margin-top: 50px;
+    gap: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .filterImg {
+        height: 40px;
+        width: 40px;
+        cursor: pointer;
+    }
 `;

@@ -1,16 +1,20 @@
-import { useEffect, useState } from "react";
 import styled from "styled-components";
-import useTopics from "../../hooks/api/useTopics";
 import { Tooltip, tooltipClasses } from "@mui/material";
 import React from "react";
 
-export default function TopicFilter({ filteredArray, setFilteredArray, setStatus }) {
-    const [topics, setTopics] = useState([]);
-    const { topicsData } = useTopics();
-
-    useEffect(() => {
-        setTopics(topicsData);
-    }, [topicsData]);
+export default function DataFilter({ filteredArray, setFilteredArray, setStatus }) {
+    const dataArray = [
+        {
+            id: 1,
+            value: "asc",
+            name: "Mais Recente"
+        }, 
+        {
+            id: 2,
+            value: "desc",
+            name: "Mais Antigo"
+        },
+    ];
 
     function selectFilter(topicId) {
         if (!filteredArray.includes(String(topicId))) {
@@ -26,7 +30,7 @@ export default function TopicFilter({ filteredArray, setFilteredArray, setStatus
         }
     }
 
-    const TopicTooltip = styled(({ className, ...props }) => <Tooltip {...props} classes={{ popper: className }} />)(
+    const DataTooltip = styled(({ className, ...props }) => <Tooltip {...props} classes={{ popper: className }} />)(
         ({ theme }) => ({
             [`& .${tooltipClasses.tooltip}`]: {
                 color: "white",
@@ -37,19 +41,19 @@ export default function TopicFilter({ filteredArray, setFilteredArray, setStatus
 
     return (
         <Container>
-            <TopicList>
-                {topics?.map((t, idx) => {
+            <DataList>
+                {dataArray.map((d, idx) => {
                     return (
-                        <TopicTooltip key={idx} title={"Filtrar por " + t.name} arrow>
-                            <Topic onClick={() => selectFilter(t.id)} filteredArray={filteredArray} topicId={t.id}>
+                        <DataTooltip key={idx} title={"Filtrar por " + d.name} arrow>
+                            <Data onClick={() => selectFilter(d.id)} filteredArray={filteredArray} dataId={d.id}>
                                 <div className="horizontal" />
                                 <div className="vertical" />
-                                <span>{t.name}</span>
-                            </Topic>
-                        </TopicTooltip>
+                                <span>{d.name}</span>
+                            </Data>
+                        </DataTooltip>
                     );
                 })}
-            </TopicList>
+            </DataList>
         </Container>
     );
 }
@@ -64,7 +68,7 @@ const Container = styled.div`
     justify-content: center;
 `;
 
-const TopicList = styled.ul`
+const DataList = styled.ul`
     display: flex;
     align-items: center;
     justify-content: center;
@@ -74,7 +78,7 @@ const TopicList = styled.ul`
     flex-wrap: wrap;
 `;
 
-const Topic = styled.li`
+const Data = styled.li`
     display: flex;
     align-items: center;
     justify-content: center;
@@ -90,7 +94,7 @@ const Topic = styled.li`
     gap: 11px;
     box-sizing: border-box;
     padding: 10px;
-    background: ${(props) => (props.filteredArray.includes(String(props.topicId)) ? "var(--blue)" : "var(--grey)")};
+    background: ${(props) => (props.filteredArray.includes(String(props.dataId)) ? "var(--blue)" : "var(--grey)")};
     border-radius: 4px;
     cursor: pointer;
     position: relative;
@@ -105,12 +109,12 @@ const Topic = styled.li`
     }
 
     .vertical {
-        transform: ${(props) => (props.filteredArray.includes(String(props.topicId)) ? "rotate(0deg)" : "rotate(-90deg)")};
+        transform: ${(props) => (props.filteredArray.includes(String(props.dataId)) ? "rotate(0deg)" : "rotate(-90deg)")};
         transition: 0.3s;
     }
 
     .horizontal {
-        transform: ${(props) => (props.filteredArray.includes(String(props.topicId)) ? "rotate(0deg)" : "rotate(-180deg)")};
+        transform: ${(props) => (props.filteredArray.includes(String(props.dataId)) ? "rotate(0deg)" : "rotate(-180deg)")};
         transition: 0.3s;
     }
 `;
