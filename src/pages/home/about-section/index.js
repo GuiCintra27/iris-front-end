@@ -10,7 +10,6 @@ export default function AboutSection() {
 
     useEffect(() => {
         const handleMouseMove = function(e) {
-            console.log("eventListener");
             if (eyeRef.current) {
                 const x = e.clientX;
                 const y = e.clientY;

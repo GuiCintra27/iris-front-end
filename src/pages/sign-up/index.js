@@ -44,6 +44,10 @@ export default function SignUp() {
         if (tempData.name) {
             data.name = tempData.name;
             data.email = tempData.email;
+            if (tempData.birthday) {
+                const { year, month, day } = tempData.birthday;
+                data.birthDay = `${year}-${month}-${day}`;
+            }
         }
     }, [tempData]);
 
@@ -133,7 +137,7 @@ export default function SignUp() {
                     </h4>
                 </div>
                 <div>
-                    <h2>Cadastre-se em segundos!</h2>
+                    <h2>{tempData.email ? "Nos Conte Mais Sobre Você" : "Cadastre-se em segundos!"}</h2>
                     <div id="page-counter">
                         <div>
                             <p id={!secondPage && "black"}>{!secondPage ? "1" : "2"}</p>
@@ -160,7 +164,7 @@ export default function SignUp() {
                                     required
                                 />
 
-                                <MaterialInputBox
+                                {!tempData.email && <MaterialInputBox
                                     type={"email"}
                                     name={"email"}
                                     value={data?.email || ""}
@@ -168,7 +172,7 @@ export default function SignUp() {
                                     disabled={tempData.email}
                                     label={"Email"}
                                     required
-                                />
+                                />}
 
                                 <MaterialInputBox
                                     type={"tel"}
@@ -187,9 +191,9 @@ export default function SignUp() {
                                     label="Data de Nascimento"
                                     inputVariant="outlined"
                                     clearable
-                                    value={dayjs(data.birthDay).format("YYYY-MM-DD").toString()}
+                                    value={dayjs(data.birthDay)}
                                     onChange={(date) => {
-                                        customHandleChange("birthDay", (d) => d && dayjs(d).format("YYYY-MM-DD"))(date);
+                                        customHandleChange("birthDay", (d) => d && dayjs(d))(date);
                                     }}
                                 />
 
