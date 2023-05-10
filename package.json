@@ -23,6 +23,7 @@
     "react-router-dom": "^6.3.0",
     "react-scripts": "4.0.3",
     "react-search-autocomplete": "^8.5.2",
+    "react-textarea-autosize": "^8.4.1",
     "sort-by": "^1.2.0",
     "styled-components": "^5.3.9",
     "sweetalert2": "^11.6.15",

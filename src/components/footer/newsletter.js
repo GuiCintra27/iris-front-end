@@ -10,7 +10,8 @@ export default function Newsletter() {
     const { handleSubmit, handleChange, data, errors } = useForm({
         validations: FormValidations,
 
-        onSubmit: async(data) => {
+        //eslint-disable-next-line
+        onSubmit: async (data) => {
             const newData = {
                 email: data.email,
             };
@@ -89,12 +90,13 @@ export default function Newsletter() {
 }
 
 const MailLetterBox = styled.div`
-    display: block;
-    background: linear-gradient(to bottom, var(--blue), var(--blue) 90%, var(--soft-grey) 90%);
+    position: relative;
+    background-color: var(--blue);
     text-align: center;
     width: 100%;
     color: var(--white);
     padding-top: 15rem;
+    height: 493px;
 
     h1 {
         font-size: 450%;
@@ -106,16 +108,26 @@ const MailLetterBox = styled.div`
         font-weight: 500;
     }
 
+    form {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+    }
+
     div {
         display: flex;
+        width: 50%;
+        min-width: 600px;
+        margin: auto;
+        aspect-ratio: 1143 / 118;
         justify-content: center;
-        margin-top: 6.1%;
-        background: linear-gradient(to bottom, var(--blue), var(--blue) 50%, var(--soft-grey) 50%);
+        transform: translate(0, +50%);
     }
 
     div input {
-        height: 11vh;
-        width: 50%;
+        width: 100%;
+        height: 100%;
         border-radius: 10px 0 0 10px;
         border: none;
         padding-left: 3rem;
@@ -127,8 +139,7 @@ const MailLetterBox = styled.div`
     }
 
     div button {
-        height: 11vh;
-        width: 10%;
+        width: 26%;
         border: 2px solid var(--white);
         background: var(--pink);
         color: var(--white);

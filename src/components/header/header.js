@@ -37,20 +37,19 @@ export default function Header({ page }) {
                     {pages.map((item, index) => (
                         <Pages key={index} onPage={page} page={item} index={index} />
                     ))}
-
-                    {userData?.token ? (
-                        <div id="Login">
-                            <ion-icon name="log-out-outline" onClick={logOut}></ion-icon>
-                        </div>
-                    ) : (
-                        <div id="Login">
-                            <Link to={"/sign-in"}>
-                                <ion-icon name="log-in-outline"></ion-icon>
-                            </Link>
-                        </div>
-                    )}
-
                 </Menu>
+
+                {userData?.token ? (
+                    <div id="Login-Logout">
+                        <ion-icon name="log-out-outline" onClick={logOut}></ion-icon>
+                    </div>
+                ) : (
+                    <div id="Login-Logout">
+                        <Link to={"/sign-in"}>
+                            <ion-icon name="log-in-outline"></ion-icon>
+                        </Link>
+                    </div>
+                )}
             </Nav>
         </PageHeader>
     );
@@ -92,24 +91,12 @@ const PageHeader = styled.header`
 `;
 
 const Nav = styled.nav`
-    margin-right: 2.5vw;
     display: flex;
     align-items: center;
     list-style: none;
 
     #Menu-Mobile {
         display: none;
-    }
-
-    #Login {
-        margin-top: 0.5rem;
-        width: 5rem;
-        height: 4rem;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        cursor: pointer;
-        font-size: 42px;
     }
 
     & a {
@@ -121,10 +108,8 @@ const Nav = styled.nav`
         border-radius: 40px;
     }
 
-    #Login ion-icon {
-        font-size: 3vw;
-        margin-bottom: 0.5rem;
-        margin-left: 1rem;
+    #Menu {
+        margin: 0;
     }
 
     #Menu a:hover {
@@ -132,8 +117,27 @@ const Nav = styled.nav`
         transition: 0.5s;
     }
 
-    
-    #Login a {
+    #Login-Logout {
+        width: 5rem;
+        height: 4rem;
+        margin-inline: 3vw;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        font-size: 42px;
+        ion-icon {
+            font-size: 3vw;
+        }
+        ion-icon[name="log-out-outline"] {
+            color: var(--pink);
+        }
+        ion-icon[name="log-in-outline"] {
+            color: var(--blue);
+        }
+    }
+
+    #Login-Logout a {
         height: 60px;
         display: flex;
         margin-top: 0.25rem;
@@ -142,10 +146,9 @@ const Nav = styled.nav`
         border: none;
     }
 
-    #Login a:hover{
+    #Login-Logout a:hover {
         border: none;
     }
-
 `;
 
 const Menu = styled.div`
