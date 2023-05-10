@@ -10,6 +10,7 @@ import VolunteerForm from "./pages/volunteers/form";
 import SignUp from "./pages/sign-up";
 import SignIn from "./pages/sign-in";
 import { TempProvider } from "./contexts/TempContext";
+import PostPage from "./pages/post-page";
 
 export default function App() {
     /* Baixar a fonte para o próprio projeto */
@@ -24,6 +25,7 @@ export default function App() {
                             <Route path="/sign-in" element={<SignIn/>} />
                             <Route path="/sign-up" element={<SignUp/>} />
                             <Route path="/blog" element={<Blog page='/blog' />} />
+                            <Route path="/blog/post/:postId" element={<PostPage page='/blog/post' />} />
                             <Route path="/donate" element={<Donate page='/donate' />} />
                             <Route path="/about-us" element={<AboutUs page='/about-us' />} />
                             <Route path="/volunteers" element={<Volunteers page='/volunteers' />} />

@@ -1,7 +1,13 @@
 import api from "./api";
 
-export async function getPosts() {
-    const response = await api.get("/posts");
+export async function getPost(postId) {
+    const response = await api.get(`/posts/${postId}`);
+
+    return response.data;
+}
+
+export async function getLikes(postId) {
+    const response = await api.get(`/posts/likes/${postId}`);
 
     return response.data;
 }
