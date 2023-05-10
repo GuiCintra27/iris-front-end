@@ -35,7 +35,7 @@ const Formulary = styled.div`
             h4 {
                 font-size: 12px;
                 font-weight: 400;
-                color: var(--dark-grey);
+                color: #838c90;
             }
         }
 
