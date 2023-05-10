@@ -2,6 +2,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import GlobalStyle from "./global/globalStyle";
 import { UserProvider } from "./contexts/UserContext";
 import Home from "./pages/home";
+import { QueryParamProvider } from "use-query-params";
+import { ReactRouter6Adapter } from "use-query-params/adapters/react-router-6";
 import Blog from "./pages/blog";
 import Donate from "./pages/donate";
 import AboutUs from "./pages/about-us";
