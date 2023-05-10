@@ -1,12 +1,23 @@
 import api from "./api";
 
 export async function getPost(postId) {
+    if (postId === undefined) {
+        return {
+            text: "undefined",
+            title: "undefined"
+        };
+    }
+
     const response = await api.get(`/posts/${postId}`);
 
     return response.data;
 }
 
 export async function getLikes(postId) {
+    if (postId === undefined) {
+        return [];
+    }
+
     const response = await api.get(`/posts/likes/${postId}`);
 
     return response.data;

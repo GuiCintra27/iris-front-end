@@ -22,17 +22,19 @@ export default function App() {
             <UserProvider>
                 <TempProvider>
                     <BrowserRouter>
-                        <Routes>
-                            <Route path="/" element={<Home page='/' />} />
-                            <Route path="/sign-in" element={<SignIn/>} />
-                            <Route path="/sign-up" element={<SignUp/>} />
-                            <Route path="/blog" element={<Blog page='/blog' />} />
-                            <Route path="/blog/post/:postId" element={<PostPage page='/blog/post' />} />
-                            <Route path="/donate" element={<Donate page='/donate' />} />
-                            <Route path="/about-us" element={<AboutUs page='/about-us' />} />
-                            <Route path="/volunteers" element={<Volunteers page='/volunteers' />} />
-                            <Route path="/volunteers/form" element={<VolunteerForm page='/volunteers' />} />
-                        </Routes>
+                        <QueryParamProvider adapter={ReactRouter6Adapter}>
+                            <Routes>
+                                <Route path="/" element={<Home page='/' />} />
+                                <Route path="/sign-in" element={<SignIn/>} />
+                                <Route path="/sign-up" element={<SignUp/>} />
+                                <Route path="/blog" element={<Blog page='/blog' />} />
+                                <Route path="/blog/post/:postId" element={<PostPage page='/blog/post' />} />
+                                <Route path="/donate" element={<Donate page='/donate' />} />
+                                <Route path="/about-us" element={<AboutUs page='/about-us' />} />
+                                <Route path="/volunteers" element={<Volunteers page='/volunteers' />} />
+                                <Route path="/volunteers/form" element={<VolunteerForm page='/volunteers' />} />
+                            </Routes>
+                        </QueryParamProvider>
                     </BrowserRouter>
                 </TempProvider>
             </UserProvider>

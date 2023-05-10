@@ -66,9 +66,7 @@ const SearchBarContainer = styled("div")`
     display: flex;
     width: 50%;
     height: 46px;
-    margin: auto;
     position: relative;
-    margin-top: 50px;
 `;
 
 const CustomStyledSearchBar = styled(ReactSearchAutocomplete)`
