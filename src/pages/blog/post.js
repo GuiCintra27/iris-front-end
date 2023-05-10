@@ -19,7 +19,7 @@ export default function Post({ author, authorImg, text, postImg, title, topicNam
                 formatedText.push(textToFormat[i].replace(".", "").replace(",", ""));
             } else {
                 formatedText.push(textToFormat[i]);
-            };
+            }
         } else {
             break;
         }
@@ -42,16 +42,14 @@ export default function Post({ author, authorImg, text, postImg, title, topicNam
 
                 <div className="Post-description">
                     <p># {topicName}</p>
-                    <div> 
+                    <div>
                         <BsHeartFill />
                         {likes?.length}
                     </div>
                 </div>
 
                 <div className="Text">
-                    <p>
-                        { formatedText.join(" ") + "..." }
-                    </p>
+                    <p>{formatedText.join(" ") + "..."}</p>
                 </div>
 
                 <span className="Published-at">{publishedAt}</span>
@@ -95,7 +93,7 @@ const Main = styled.div`
         display: flex;
         align-items: center;
         justify-content: space-between;
-        font-family: 'Poppins';
+        font-family: "Poppins";
         font-style: normal;
         color: #000000;
 
@@ -128,10 +126,10 @@ const Main = styled.div`
             align-items: center;
             gap: 4px;
         }
-        
+
         p {
             padding-right: 15px;
-            font-family: 'Poppins';
+            font-family: "Poppins";
             font-style: normal;
             font-weight: 500;
             line-height: 21px;
@@ -168,9 +166,8 @@ const Main = styled.div`
             width: 5px;
         }
 
-
         & p {
-            font-family: 'Poppins';
+            font-family: "Poppins";
             font-style: normal;
             font-weight: 300;
             line-height: 21px;
@@ -183,7 +180,7 @@ const Main = styled.div`
     }
 
     .Published-at {
-        font-family: 'Poppins';
+        font-family: "Poppins";
         font-style: normal;
         font-weight: 400;
         font-size: 17.28px;
@@ -191,6 +188,6 @@ const Main = styled.div`
         display: flex;
         align-items: center;
         justify-content: end;
-        color: #A9A9A9;
+        color: #a9a9a9;
     }
 `;

@@ -18,7 +18,8 @@ export default function Donate({ page }) {
 
     const { handleSubmit, handleChange, data, setData, errors, setErrors } = useForm({
         validations: FormValidations,
-
+        
+        //eslint-disable-next-line
         onSubmit: async (data) => {
             const newData = {
                 amount: data.amount,

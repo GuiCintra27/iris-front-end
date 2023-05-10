@@ -12,16 +12,17 @@ export async function getLikes(postId) {
     return response.data;
 }
 
-export async function getFilteredPosts(filteredArray) {
+export async function getFilteredPosts(filteredArray, inputFilterValue, config = {}) {
     const body = {
-        filterIds: {
-            topicId: filteredArray
-        }
+        topicFilterIds: {
+            topicId: filteredArray,
+        },
+        inputFilterValue,
     };
 
     try {
-        const response = await api.post("/posts/filter", body, {});
-    
+        const response = await api.post("/posts/filter", body, config);
+
         return response.data;
     } catch (error) {
         return [];
