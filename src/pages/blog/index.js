@@ -63,8 +63,27 @@ export default function Blog({ page }) {
                 topicFilter={filteredArray}
                 inputFilterValue={inputFilterValue}
             />
-
+                  
             <TopicsFilter filteredArray={filteredArray} setFilteredArray={setFilteredArray} setStatus={setStatus} />
+
+            {posts?.length === 0 ? (
+                <AlertSpan>Nenhum post foi encontrado seguindo esta filtragem!</AlertSpan>
+            ) : (
+                posts?.map((item, index) => (
+                    <Post
+                        key={index}
+                        author={item.admins.name}
+                        authorImg={item.admins.photo}
+                        text={item.text}
+                        postImg={item.image}
+                        title={item.title}
+                        topicName={item.topics.name}
+                        publishedAt={dayjs(item.created_at).format("DD/MM/YYYY")}
+                        postId={item.id}
+                        status={status}
+                    />
+                ))
+            )}
 
             <PostScrollerWrapper>
                 {posts && posts.length !== 0 ? (
