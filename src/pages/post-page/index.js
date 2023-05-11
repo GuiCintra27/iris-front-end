@@ -1,14 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import Footer from "../../components/footer/footer";
 import Header from "../../components/header/header";
-import { useLikes, usePosts } from "../../hooks/api/usePosts";
+import { useLikes, usePosts, useRecentlyVisited } from "../../hooks/api/usePosts";
 import whiteArrow from "../../assets/Icons/white-arrow.png";
 import dayjs from "dayjs";
 import { BsHeartFill, BsHeart } from "react-icons/bs";
 import axios from "axios";
 import Swal from "sweetalert2";
+import useToken from "../../hooks/useToken";
 
 export default function PostPage() {
     const localData = localStorage.getItem("userData");
@@ -18,13 +19,21 @@ export default function PostPage() {
     const [likeStatus, setLikeStatus] = useState(false);
     const { postAct, post } = usePosts();
     const { likesAct, likes } = useLikes();
-    const isLiked = likes?.filter((l) => l.userId === userId);
     const formatedText = post?.text.split("\n");
-    const config = {
-        headers: {
-            Authorization: `Bearer ${JSON.parse(localData).token} `
-        }
-    };
+    const { recentlyVisitedAct } = useRecentlyVisited();
+    const tokenRef = useRef(useToken());
+    const configRef = useRef({
+        headers: { Authorization: `Bearer ${tokenRef.current}` },
+    });
+    const isLiked = likes?.filter((l) => l.userId === userId);
+
+    useEffect(async () => {
+        try {
+            if (tokenRef.current) {
+                await recentlyVisitedAct(postId, configRef.current);
+            }
+        } catch (err) {}
+    }, []);
 
     useEffect(() => {
         postAct(postId);
@@ -34,9 +43,9 @@ export default function PostPage() {
     async function setLikeOrDislike() {
         try {
             if (isLiked?.length === 0) {
-                await axios.post(`${process.env.REACT_APP_BACK_END_URL}/posts/likes`, { postId }, config);
+                await axios.post(`${process.env.REACT_APP_BACK_END_URL}/posts/likes`, { postId }, configRef.current);
             } else {
-                await axios.delete(`${process.env.REACT_APP_BACK_END_URL}/posts/likes/${postId}`, config);
+                await axios.delete(`${process.env.REACT_APP_BACK_END_URL}/posts/likes/${postId}`, configRef.current);
             }
 
             setStatus([]);
@@ -63,17 +72,21 @@ export default function PostPage() {
 
             <PostContainer>
                 <CoverDiv postCover={post?.postCover}>
-                    <img onClick={() => { 
-                        // eslint-disable-next-line no-restricted-globals
-                        history.back();
-                    }} src={whiteArrow} alt={"seta branca para voltar de página"}/>
+                    <img
+                        onClick={() => {
+                            // eslint-disable-next-line no-restricted-globals
+                            history.back();
+                        }}
+                        src={whiteArrow}
+                        alt={"seta branca para voltar de página"}
+                    />
                     <h1>{post?.title.toUpperCase()}</h1>
                 </CoverDiv>
 
                 <PostContent>
                     <PostInfos isLiked={isLiked?.length} likeStatus={likeStatus}>
                         <div className="authorDiv">
-                            <img src={post?.admins?.photo} alt={"imagem do perfil do autor do post"}/>
+                            <img src={post?.admins?.photo} alt={"imagem do perfil do autor do post"} />
 
                             <div className="author">
                                 <h2>Escrito por {post?.admins?.name}</h2>
@@ -82,17 +95,27 @@ export default function PostPage() {
                         </div>
 
                         <div className="topicAndLikesDiv">
-                            <h2># <span> {post?.topics?.name}</span></h2>
+                            <h2>
+                                # <span> {post?.topics?.name}</span>
+                            </h2>
 
                             <div className="heartDiv">
-                                { isLiked?.length === 0 
-                                    ? 
-                                    <BsHeart onClick={() => { likeAnimation(); setLikeOrDislike(); }}/> 
-                                    : 
-                                    <BsHeartFill onClick={() => { setLikeOrDislike(); }}/> 
-                                }
+                                {isLiked?.length === 0 ? (
+                                    <BsHeart
+                                        onClick={() => {
+                                            likeAnimation();
+                                            setLikeOrDislike();
+                                        }}
+                                    />
+                                ) : (
+                                    <BsHeartFill
+                                        onClick={() => {
+                                            setLikeOrDislike();
+                                        }}
+                                    />
+                                )}
 
-                                <div className="heart"/>
+                                <div className="heart" />
 
                                 <span>{likes?.length}</span>
                             </div>
@@ -103,8 +126,8 @@ export default function PostPage() {
                         {formatedText?.map((item, index) => (
                             <span key={index}>
                                 {item}
-                                <br/>
-                            </span> 
+                                <br />
+                            </span>
                         ))}
                     </PostText>
                 </PostContent>
@@ -143,7 +166,7 @@ const CoverDiv = styled.div`
         width: 50px;
         transform: rotate(180deg);
         cursor: pointer;
-        transition: .5s ease-in;
+        transition: 0.5s ease-in;
 
         &:hover {
             height: 55px;
@@ -159,7 +182,7 @@ const CoverDiv = styled.div`
         height: 50px;
         display: flex;
         align-items: center;
-        color: #FFFFFF;
+        color: #ffffff;
         opacity: 0.9;
     }
 `;
@@ -185,7 +208,7 @@ const PostInfos = styled.div`
     }
 
     .heart {
-        display: ${props => props.likeStatus ? "initial" : "none"};
+        display: ${(props) => (props.likeStatus ? "initial" : "none")};
         position: absolute;
         width: 17px;
         height: 17px;
@@ -203,7 +226,7 @@ const PostInfos = styled.div`
         }
 
         80% {
-            transform: rotate(-45deg) scale(1.0);
+            transform: rotate(-45deg) scale(1);
         }
 
         100% {
@@ -212,7 +235,7 @@ const PostInfos = styled.div`
     }
 
     .heart:before {
-        content: '';
+        content: "";
         position: absolute;
         background-color: red;
         width: 17px;
@@ -222,7 +245,7 @@ const PostInfos = styled.div`
     }
 
     .heart:after {
-        content: '';
+        content: "";
         position: absolute;
         background-color: red;
         width: 17px;
@@ -236,7 +259,7 @@ const PostInfos = styled.div`
         align-items: center;
         position: relative;
         gap: 8px;
-        font-family: 'Poppins';
+        font-family: "Poppins";
         font-style: normal;
         font-weight: 400;
         font-size: 26.4253px;
@@ -247,8 +270,8 @@ const PostInfos = styled.div`
 
         svg {
             cursor: pointer;
-            color: ${props => props.isLiked ? "red" : "#374957"};
-            animation: heart 
+            color: ${(props) => (props.isLiked ? "red" : "#374957")};
+            animation: heart;
         }
     }
 
@@ -261,7 +284,7 @@ const PostInfos = styled.div`
         h2 {
             display: flex;
             gap: 5px;
-            font-family: 'Poppins';
+            font-family: "Poppins";
             font-style: normal;
             font-weight: 700;
             font-size: 24.3252px;
@@ -282,7 +305,7 @@ const PostInfos = styled.div`
     }
 
     .author {
-        font-family: 'Poppins';
+        font-family: "Poppins";
         font-style: normal;
         font-weight: 400;
 
@@ -299,7 +322,7 @@ const PostInfos = styled.div`
             line-height: 26px;
             display: flex;
             align-items: center;
-            color: #A9A9A9;
+            color: #a9a9a9;
         }
     }
 `;
@@ -309,7 +332,7 @@ const PostText = styled.div`
     flex-direction: column;
     width: 50vw;
     margin: 0 auto;
-    font-family: 'Poppins';
+    font-family: "Poppins";
     font-style: normal;
     font-weight: 400;
     font-size: 20px;

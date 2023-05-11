@@ -3,34 +3,24 @@ import usePostsAsync from "../usePostsAsync";
 import * as postsApi from "../../services/postsApi";
 
 export function usePosts() {
-    const {
-        data: post,
-        loading: postLoading,
-        error: postError,
-        act: postAct
-    } = useAsync(postsApi.getPost, true);
+    const { data: post, loading: postLoading, error: postError, act: postAct } = useAsync(postsApi.getPost, true);
 
     return {
         post,
         postLoading,
         postError,
-        postAct
+        postAct,
     };
 }
 
 export function useLikes() {
-    const {
-        data: likes,
-        loading: likesLoading,
-        error: likesError,
-        act: likesAct
-    } = useAsync(postsApi.getLikes, true);
+    const { data: likes, loading: likesLoading, error: likesError, act: likesAct } = useAsync(postsApi.getLikes, true);
 
     return {
         likes,
         likesLoading,
         likesError,
-        likesAct
+        likesAct,
     };
 }
 
@@ -67,5 +57,21 @@ export function useSuggestedPosts() {
         suggestionPostsError,
         suggestionPostsAct,
         setsuggestionPosts,
+    };
+}
+
+export function useRecentlyVisited() {
+    const {
+        data: recentlyVisited,
+        loading: recentlyVisitedLoading,
+        error: recentlyVisitedError,
+        act: recentlyVisitedAct,
+    } = useAsync(postsApi.postRecentlyVisited, false);
+
+    return {
+        recentlyVisited,
+        recentlyVisitedLoading,
+        recentlyVisitedError,
+        recentlyVisitedAct,
     };
 }

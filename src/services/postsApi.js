@@ -56,3 +56,16 @@ export async function getSuggestedPosts(filteredArray, inputFilterValue, config 
         return [];
     }
 }
+export async function postRecentlyVisited(postId, config) {
+    const body = {
+        postId,
+    };
+
+    try {
+        const response = await api.put("/posts/recent", body, config);
+
+        return response.data;
+    } catch (error) {
+        return error;
+    }
+}
