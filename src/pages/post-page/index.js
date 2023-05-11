@@ -10,10 +10,10 @@ import { BsHeartFill, BsHeart } from "react-icons/bs";
 import axios from "axios";
 import Swal from "sweetalert2";
 import useToken from "../../hooks/useToken";
+import useUserId from "../../hooks/useUserId";
 
 export default function PostPage() {
-    const localData = localStorage.getItem("userData");
-    const userId = JSON.parse(localData).user.id;
+    const userId = useUserId();
     const { postId } = useParams();
     const [status, setStatus] = useState(true);
     const [likeStatus, setLikeStatus] = useState(false);
@@ -27,6 +27,7 @@ export default function PostPage() {
     });
     const isLiked = likes?.filter((l) => l.userId === userId);
 
+    //eslint-disable-next-line
     useEffect(async () => {
         try {
             if (tokenRef.current) {
