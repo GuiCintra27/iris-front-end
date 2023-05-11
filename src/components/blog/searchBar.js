@@ -38,7 +38,7 @@ export default function CustomSearchBar({ setInputFilterValue, topicFilter, inpu
     async function handleOnSearch() {
         const parsedFilteredArray = topicFilter.map((item) => Number(item));
         try {
-            const config = token ? { headers: { Authorization: `Bearer ${token.current}` } } : {};
+            const config = token.current ? { headers: { Authorization: `Bearer ${token.current}` } } : {};
             const posts = await suggestionPostsAct(parsedFilteredArray, inputElementRef.current.value, config);
             const parsedPosts = parseSuggestions(posts);
             setItemsSuggestions(parsedPosts);
