@@ -2,39 +2,20 @@ import { ReactSearchAutocomplete } from "react-search-autocomplete";
 import styled from "styled-components";
 import SearchIcon from "../../assets/Icons/search-icon.svg";
 import { useState, useRef } from "react";
-import { useFilteredPosts } from "../../hooks/api/usePosts";
+import { useSuggestedPosts } from "../../hooks/api/usePosts";
 import { useNavigate } from "react-router-dom";
 import { Tooltip, tooltipClasses } from "@mui/material";
 import { useEffect } from "react";
 import SearchBarSuggestion from "./searchBarSuggestion";
 import GraySearchIcon from "../../assets/Icons/search-icon-gray.svg";
+import useToken from "../../hooks/useToken";
 
 export default function CustomSearchBar({ setInputFilterValue, topicFilter, inputFilterValue }) {
-    const { postsAct } = useFilteredPosts();
+    const { suggestionPostsAct } = useSuggestedPosts();
     const [itemsSuggestions, setItemsSuggestions] = useState([]);
     const inputElementRef = useRef();
     const navigate = useNavigate();
     const MAX_RESULT = useRef(6);
-
-    const mockedSuggestions = [
-        { id: 1, title: "Como fazer um bom café", type: "recent" },
-        { id: 3, title: "Como fazer um bom chá", type: "new" },
-        { id: 4, title: "Como fazer um bom suco", type: "new" },
-        { id: 6, title: "Como fazer um bom café preto", type: "recent" },
-        { id: 7, title: "Como fazer um bom alguma coisa", type: "recent" },
-        { id: 8, title: "Como fazer um bom delicinha", type: "new" },
-        { id: 9, title: "Como fazer um bom sexo", type: "new" },
-        {
-            id: 10,
-            title: "Como fazer um bom teclado",
-            type: "recent",
-        },
-    ];
-
-    useEffect(() => {
-        const result = parseSuggestions(mockedSuggestions);
-        setItemsSuggestions(result);
-    }, []);
 
     function parseSuggestions(suggestions) {
         const parsedSuggestions = suggestions.map((suggestion) => {
@@ -57,8 +38,11 @@ export default function CustomSearchBar({ setInputFilterValue, topicFilter, inpu
     async function handleOnSearch() {
         const parsedFilteredArray = topicFilter.map((item) => Number(item));
         try {
-            // const posts = await postsAct(parsedFilteredArray, inputElementRef.current.value);
-            // setItemsSuggestions(posts);
+            const token = useToken();
+            const config = token ? { headers: { Authorization: `Bearer ${token}` } } : {};
+            const posts = await suggestionPostsAct(parsedFilteredArray, inputElementRef.current.value, config);
+            const parsedPosts = parseSuggestions(posts);
+            setItemsSuggestions(parsedPosts);
         } catch (err) {}
     }
 
@@ -131,9 +115,9 @@ const CustomStyledSearchBar = styled(ReactSearchAutocomplete)`
     width: 100%;
     height: 100%;
 
-    input{
+    input {
         margin-left: 34px;
-        font-family: 'Poppins';
+        font-family: "Poppins";
         font-size: 16px;
     }
 
@@ -145,7 +129,6 @@ const CustomStyledSearchBar = styled(ReactSearchAutocomplete)`
     .wrapper:has(div + div) {
         border-radius: 24px 15px 24px 24px;
     }
-    
 
     .wrapper li:has([Title]) {
         cursor: pointer;

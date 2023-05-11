@@ -1,3 +1,4 @@
+import useToken from "../hooks/useToken";
 import api from "./api";
 
 export async function getPost(postId) {
@@ -33,6 +34,21 @@ export async function getFilteredPosts(filteredArray, inputFilterValue, config =
 
     try {
         const response = await api.post("/posts/filter", body, config);
+
+        return response.data;
+    } catch (error) {
+        return [];
+    }
+}
+
+export async function getSuggestedPosts(filteredArray, inputFilterValue, config = {}) {
+    const body = {
+        topicFilterIdsArray: filteredArray,
+        inputFilterValue,
+    };
+    
+    try {
+        const response = await api.post("/search", body, config);
 
         return response.data;
     } catch (error) {

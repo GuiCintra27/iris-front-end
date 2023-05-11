@@ -51,3 +51,21 @@ export function useFilteredPosts() {
         setPosts,
     };
 }
+
+export function useSuggestedPosts() {
+    const {
+        data: suggestionPosts,
+        loading: suggestionPostsLoading,
+        error: suggestionPostsError,
+        act: suggestionPostsAct,
+        setData: setsuggestionPosts,
+    } = usePostsAsync(postsApi.getSuggestedPosts, false);
+
+    return {
+        suggestionPosts,
+        suggestionPostsLoading,
+        suggestionPostsError,
+        suggestionPostsAct,
+        setsuggestionPosts,
+    };
+}
