@@ -3,7 +3,7 @@ import RecentIcon from "../../assets/Icons/recent-icon-gray.svg";
 import styled from "styled-components";
 
 export default function SearchBarSuggestion({ suggestionObject }) {
-    const { id, title, type } = suggestionObject;
+    const { title, type } = suggestionObject;
 
     return (
         <StyledSuggestion>

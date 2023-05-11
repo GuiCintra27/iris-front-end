@@ -5,7 +5,6 @@ import { useState, useRef } from "react";
 import { useSuggestedPosts } from "../../hooks/api/usePosts";
 import { useNavigate } from "react-router-dom";
 import { Tooltip, tooltipClasses } from "@mui/material";
-import { useEffect } from "react";
 import SearchBarSuggestion from "./searchBarSuggestion";
 import GraySearchIcon from "../../assets/Icons/search-icon-gray.svg";
 import useToken from "../../hooks/useToken";
@@ -16,6 +15,7 @@ export default function CustomSearchBar({ setInputFilterValue, topicFilter, inpu
     const inputElementRef = useRef();
     const navigate = useNavigate();
     const MAX_RESULT = useRef(6);
+    const token = useRef(useToken());
 
     function parseSuggestions(suggestions) {
         const parsedSuggestions = suggestions.map((suggestion) => {
@@ -38,8 +38,7 @@ export default function CustomSearchBar({ setInputFilterValue, topicFilter, inpu
     async function handleOnSearch() {
         const parsedFilteredArray = topicFilter.map((item) => Number(item));
         try {
-            const token = useToken();
-            const config = token ? { headers: { Authorization: `Bearer ${token}` } } : {};
+            const config = token ? { headers: { Authorization: `Bearer ${token.current}` } } : {};
             const posts = await suggestionPostsAct(parsedFilteredArray, inputElementRef.current.value, config);
             const parsedPosts = parseSuggestions(posts);
             setItemsSuggestions(parsedPosts);

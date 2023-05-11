@@ -1,11 +1,10 @@
-import useToken from "../hooks/useToken";
 import api from "./api";
 
 export async function getPost(postId) {
     if (postId === undefined) {
         return {
             text: "undefined",
-            title: "undefined"
+            title: "undefined",
         };
     }
 
@@ -29,7 +28,7 @@ export async function getFilteredPosts(filteredArray, inputFilterValue, config =
         topicFilterIds: {
             topicId: filteredArray,
         },
-        inputFilterValue,
+        inputFilterValue: inputFilterValue || "",
     };
 
     try {
@@ -43,12 +42,14 @@ export async function getFilteredPosts(filteredArray, inputFilterValue, config =
 
 export async function getSuggestedPosts(filteredArray, inputFilterValue, config = {}) {
     const body = {
-        topicFilterIdsArray: filteredArray,
+        topicFilterIds: {
+            topicId: filteredArray,
+        },
         inputFilterValue,
     };
-    
+
     try {
-        const response = await api.post("/search", body, config);
+        const response = await api.post("/posts/search", body, config);
 
         return response.data;
     } catch (error) {
