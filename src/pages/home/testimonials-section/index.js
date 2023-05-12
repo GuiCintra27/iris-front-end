@@ -8,6 +8,7 @@ import LumaPng from "../../../assets/Fundadores/luma.png";
 import LuisPng from "../../../assets/Fundadores/luis.png";
 
 export default function TestimonialSection(props) {
+    const founders = [CauaPng, LumaPng, LuisPng, FranciscoPng, LuizaPng];
     return (
         <>
             <StyledTestimonialSection id="testimonial">
@@ -25,21 +26,17 @@ export default function TestimonialSection(props) {
                         <p>Seja parte da iniciativa e venha comemorar mais conquistas conosco!</p>
                     </div>
                     <div className="participants">
-                        <div className="profile-ball">
-                            <img src={LuisPng} alt="profile-icon" />
-                        </div>
-                        <div className="profile-ball">
-                            <img src={LumaPng} alt="profile-icon" />
-                        </div>
-                        <div className="profile-ball">
-                            <img src={FranciscoPng} alt="profile-icon" />
-                        </div>
-                        <div className="profile-ball">
-                            <img src={CauaPng} alt="profile-icon" />
-                        </div>
-                        <div className="profile-ball">
-                            <img src={LuizaPng} alt="profile-icon" />
-                        </div>
+                        {founders.map((item, key) => (
+                            <div className="profile-ball" key={key}>
+                                {key === 0 ? (
+                                    <img src={item} className="caua-exposure" alt="profile-icon" />
+                                ) : key === 4 ? (
+                                    <img src={item} className="luisa-exposure" alt="profile-icon" />
+                                ) : (
+                                    <img src={item} alt="profile-icon" />
+                                )}
+                            </div>
+                        ))}
                     </div>
                 </div>
                 <div className="right-side-container">
@@ -52,67 +49,93 @@ export default function TestimonialSection(props) {
 
 const StyledTestimonialSection = styled.div`
     display: flex;
-    height: 865px;
+    height: 840px;
     width: 100%;
-    padding: 100px 6vw 100px 6vw;
-    gap: 10%;
+    padding: 80px 5vw 60px 9.5vw;
+    gap: 7.5%;
+
     .left-side-container {
         display: flex;
+        flex-direction: column;
         width: 40%;
-        flex-wrap: wrap;
+
         .introduction {
             display: flex;
+            height: fit-content;
+            margin-top: 20px;
             width: 100%;
             .chat-ballons {
-                width: 30px;
-                height: 30px;
+                width: 24px;
+                height: 24px;
             }
             p {
                 margin-left: 10px;
                 display: flex;
                 align-items: center;
-                height: 30px;
+                letter-spacing: 2.5px;
+                font-size: 20px;
             }
         }
+
         .see-what-they-say-about-us {
+            margin-top: 10%;
+            width: 90%;
+            height: fit-content;
+            font-family: "Lato", sans-serif;
+            letter-spacing: 1.45px;
+            line-height: 56px;
+            font-size: 22px;
             span {
                 color: var(--pink);
             }
         }
+
         .call-to-action {
-            font-weight: 600;
+            width: 80%;
+            margin-top: 8%;
+            line-height: 40px;
+            font-family: "Lato", sans-serif;
+            font-weight: 700;
+            font-size: 22px;
         }
+
         .participants {
             display: flex;
+            margin-top: 10%;
+            .caua-exposure {
+                filter: brightness(1.8);
+                margin-left: 0;
+            }
+            .luisa-exposure {
+                filter: brightness(1.1);
+            }
             img {
+                filter: brightness(1);
                 margin-left: -20px;
-                width: 100px;
-                height: 100px;
-                border-radius: 50%;
+                width: 97px;
+                height: 97px;
+                border-radius: 100%;
             }
         }
     }
+
     .right-side-container {
-        width: 50%;
-        min-width: 512px;
-        max-width: 720px;
-        display: flex;
-        flex-direction: row-reverse;
-        flex-grow: 1;
+        margin-top: 12px;
+        width: 824px;
         position: relative;
-        display: flex;
-        overflow-x: hidden;
+
         .testimonial-carousel {
             width: 100%;
-            position: relative;
             .carousel {
-                height: 100%;
+                height: 740px;
                 .slider-wrapper {
+                    width: 800px;
+                    height: 505px;
+                    background-color: red;
                     cursor: pointer;
-                    border-radius: 15px;
-                    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-                    height: calc(100% - 12vw);
-                    min-height: 425px ;
+                    box-shadow: 0px 4px 4px rgba(0, 0, 0, .25);
+                    border: 3px solid var(--white);
+                    border-radius: 18px;
                     ul {
                         height: 100%;
                     }
@@ -125,10 +148,10 @@ const StyledTestimonialSection = styled.div`
                 }
 
                 button {
-                    width: 60px;
-                    height: 55px;
+                    width: 74px;
+                    height: 69px;
                     background-color: var(--pink);
-                    top: calc(110% - 12vw);
+                    top: calc(110% - 10.5vw);
                     box-sizing: content-box;
                     border: 2px solid var(--white);
 
@@ -145,6 +168,7 @@ const StyledTestimonialSection = styled.div`
             }
         }
     }
+
     @media (min-width: 2000px) {
         .control-dots {
             top: 425px !important;
@@ -158,37 +182,37 @@ const StyledTestimonialSection = styled.div`
         & {
             flex-direction: column;
             height: 1200px;
-             align-items: center;
+            align-items: center;
         }
-        .left-side-container{
+        .left-side-container {
             flex-direction: column;
             align-items: center;
             width: 100%;
 
-            .introduction{
+            .introduction {
                 margin-bottom: 5vh;
             }
 
-            .see-what-they-say-about-us{
+            .see-what-they-say-about-us {
                 text-align: center;
             }
-            
-            .participants{
+
+            .participants {
                 margin-top: 5vh;
             }
         }
-        .right-side-container{
+        .right-side-container {
             width: 100%;
             height: 200px;
             .slider-wrapper {
-                    height: 0 !important;
-                }
-                .control-dots {
-                    top: 78% !important;
-                }
-                button{
-                    top: 90% !important;
-                }
+                height: 0 !important;
+            }
+            .control-dots {
+                top: 78% !important;
+            }
+            button {
+                top: 90% !important;
+            }
         }
     }
 `;
