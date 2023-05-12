@@ -79,15 +79,15 @@ const Background = styled.div`
         position: absolute;
         color: var(--white);
         background: var(--black);
-        height: clamp(68px, 8vw, 190px);
-        width: clamp(273px, 30.5vw, 703px);
+        height: clamp(68px, 6vw, 190px);
+        width: clamp(273px, 25vw, 703px);
         display: flex;
         align-items: center;
         justify-content: center;
 
         & span {
             text-align: center;
-            font-size: clamp(24px, .25em + 3vw, 96px);
+            font-size: clamp(24px, .25em + 2.5vw, 96px);
             font-weight: 700;
         }
 
