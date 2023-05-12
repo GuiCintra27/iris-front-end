@@ -74,20 +74,20 @@ const Background = styled.div`
     }
 
     #Subscribe {
-        bottom: -4vh;
-        right: 40px;
+        bottom: -6vh;
+        right: 57px;
         position: absolute;
         color: var(--white);
         background: var(--black);
-        height: 118px;
-        width: 437px;
+        height: clamp(68px, 8vw, 190px);
+        width: clamp(273px, 30.5vw, 703px);
         display: flex;
         align-items: center;
         justify-content: center;
 
         & span {
             text-align: center;
-            font-size: 48px;
+            font-size: clamp(24px, .25em + 3vw, 96px);
             font-weight: 700;
         }
 
