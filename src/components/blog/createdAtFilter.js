@@ -2,30 +2,30 @@ import styled from "styled-components";
 import { Tooltip, tooltipClasses } from "@mui/material";
 import React from "react";
 
-export default function DataFilter({ filteredArray, setFilteredArray, setStatus }) {
+export default function DataFilter({ orderPost, setOrderPost, setStatus, showFilters }) {
     const dataArray = [
         {
             id: 1,
-            value: "asc",
+            value: "desc",
             name: "Mais Recente"
         }, 
         {
             id: 2,
-            value: "desc",
+            value: "asc",
             name: "Mais Antigo"
         },
     ];
 
-    function selectFilter(topicId) {
-        if (!filteredArray.includes(String(topicId))) {
-            let newArray = [...filteredArray, topicId];
-            setFilteredArray(newArray);
+    function selectFilter(value) {
+        if (!orderPost.includes(value)) {
+            let newArray = [value];
+            setOrderPost(newArray);
             setStatus([]);
         }
 
-        if (filteredArray.includes(String(topicId))) {
-            let newArray = filteredArray.filter((id) => id !== String(topicId));
-            setFilteredArray(newArray);
+        if (orderPost.includes(value)) {
+            let newArray = orderPost.filter((v) => v !== value);
+            setOrderPost(newArray);
             setStatus([]);
         }
     }
@@ -40,12 +40,14 @@ export default function DataFilter({ filteredArray, setFilteredArray, setStatus 
     );
 
     return (
-        <Container>
+        <Container showFilters={showFilters}>
+            <h1>Data de Inclusão</h1>
+
             <DataList>
                 {dataArray.map((d, idx) => {
                     return (
                         <DataTooltip key={idx} title={"Filtrar por " + d.name} arrow>
-                            <Data onClick={() => selectFilter(d.id)} filteredArray={filteredArray} dataId={d.id}>
+                            <Data onClick={() => selectFilter(d.value)} orderPost={orderPost} value={d.value}>
                                 <div className="horizontal" />
                                 <div className="vertical" />
                                 <span>{d.name}</span>
@@ -60,12 +62,21 @@ export default function DataFilter({ filteredArray, setFilteredArray, setStatus 
 
 //Styled Components
 const Container = styled.div`
-    //Essa margin-top pode e provavelmente deve ser retirada, coloquei pra ter uma melhor visualização de como ficou, a filtragem colada no header estava me dando agonia
-    margin-top: 30px;
-    height: 70px;
+    transform: ${ props => props.showFilters ? "translate(0px, 0%)" : "translate(0px, -100%)" };
     display: flex;
-    align-items: center;
-    justify-content: center;
+    gap: 20px;
+    flex-direction: column;
+    align-items: start;
+    box-sizing: border-box;
+    transition: 1s;
+
+    h1 {
+        font-family: 'Poppins';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 18px;
+        color: #000000;
+    }
 `;
 
 const DataList = styled.ul`
@@ -73,8 +84,6 @@ const DataList = styled.ul`
     align-items: center;
     justify-content: center;
     gap: 15px;
-    box-sizing: border-box;
-    padding: 15px;
     flex-wrap: wrap;
 `;
 
@@ -94,7 +103,7 @@ const Data = styled.li`
     gap: 11px;
     box-sizing: border-box;
     padding: 10px;
-    background: ${(props) => (props.filteredArray.includes(String(props.dataId)) ? "var(--blue)" : "var(--grey)")};
+    background: ${(props) => (props.orderPost.includes(props.value) ? "var(--blue)" : "var(--grey)")};
     border-radius: 4px;
     cursor: pointer;
     position: relative;
@@ -109,12 +118,12 @@ const Data = styled.li`
     }
 
     .vertical {
-        transform: ${(props) => (props.filteredArray.includes(String(props.dataId)) ? "rotate(0deg)" : "rotate(-90deg)")};
+        transform: ${(props) => (props.orderPost.includes(props.value) ? "rotate(0deg)" : "rotate(-90deg)")};
         transition: 0.3s;
     }
 
     .horizontal {
-        transform: ${(props) => (props.filteredArray.includes(String(props.dataId)) ? "rotate(0deg)" : "rotate(-180deg)")};
+        transform: ${(props) => (props.orderPost.includes(props.value) ? "rotate(0deg)" : "rotate(-180deg)")};
         transition: 0.3s;
     }
 `;

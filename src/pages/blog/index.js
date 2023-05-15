@@ -11,6 +11,7 @@ import UIInfiniteScroll from "../../components/blog/infiniteScroller";
 import { useFilteredPosts } from "../../hooks/api/usePosts";
 import { ColorRing } from "react-loader-spinner";
 import filterImg from "../../assets/Icons/filters.png";
+import { Tooltip, tooltipClasses } from "@mui/material";
 
 const Filters = withDefault(ArrayParam, []);
 
@@ -21,11 +22,14 @@ export default function Blog({ page }) {
     const [pageCount, setPageCount] = useState(1);
     const [throttle, setThrottle] = useState(true);
     const { posts, postsAct, postsLoading, setPosts } = useFilteredPosts();
+    const [showFilters, setShowFilters] = useState(false);
+    const [orderPost, setOrderPost] = useState([]);
+    const orderValue = !orderPost[0] ? "desc" : orderPost[0];
 
     //eslint-disable-next-line
     useEffect(async () => {
         const filteredArray = parseFilteredArray();
-        const responsePosts = await postsAct(filteredArray, inputFilterValue);
+        const responsePosts = await postsAct(filteredArray, orderValue, inputFilterValue);
         setPosts(responsePosts);
         setPageCount(1);
     }, [status, filteredArray, inputFilterValue]);
@@ -56,24 +60,35 @@ export default function Blog({ page }) {
         setPosts((posts) => [...posts, ...newPosts]);
     }
 
+    const FilterTooltip = styled(({ className, ...props }) => <Tooltip {...props} classes={{ popper: className }} />)(
+        ({ theme }) => ({
+            [`& .${tooltipClasses.tooltip}`]: {
+                color: "white",
+                fontSize: 13,
+            },
+        }),
+    );
+
     return (
         <>
             <Header page={page} />
 
-            <FilterArea>
+            <InputArea>
                 <CustomSearchBar
                     setInputFilterValue={setInputFilterValue}
                     topicFilter={filteredArray}
                     inputFilterValue={inputFilterValue}
                 />
 
-                <img className="filterImg" src={filterImg} alt="Filtro dos posts" />
-            </FilterArea>
+                <FilterTooltip title={ showFilters ? "Fechar filtros de pesquisa" : "Mostrar filtros de pesquisa" } arrow>
+                    <img onClick={() => { if (!showFilters) setShowFilters(true); if (showFilters) setShowFilters(false); }} className="filterImg" src={filterImg} alt="Filtro dos posts" />
+                </FilterTooltip>
+            </InputArea>
 
-            <div>
-                <DataFilter filteredArray={filteredArray} setFilteredArray={setFilteredArray} setStatus={setStatus} />
-                <TopicsFilter filteredArray={filteredArray} setFilteredArray={setFilteredArray} setStatus={setStatus} />
-            </div>
+            <FilterArea showFilters={showFilters}>
+                <DataFilter showFilters={showFilters} orderPost={orderPost} setOrderPost={setOrderPost} setStatus={setStatus} />
+                <TopicsFilter showFilters={showFilters} filteredArray={filteredArray} setFilteredArray={setFilteredArray} setStatus={setStatus} />
+            </FilterArea>
 
             <PostScrollerWrapper>
                 {posts && posts.length !== 0 ? (
@@ -140,6 +155,20 @@ const PostScrollerWrapper = styled.div`
 `;
 
 const FilterArea = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 30px;
+    width: 58.26%;
+    min-height: ${ props => props.showFilters ? "190px" : "0px" };
+    height: ${ props => props.showFilters ? "fit-content" : "0px" };
+    margin: 0px auto;
+    margin-top: ${ props => props.showFilters ? "30px" : "10px" };
+    overflow: hidden;
+    transition: 1.7s ease-out;
+`;
+
+const InputArea = styled.div`
     margin-top: 50px;
     gap: 30px;
     display: flex;

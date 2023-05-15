@@ -4,7 +4,7 @@ import useTopics from "../../hooks/api/useTopics";
 import { Tooltip, tooltipClasses } from "@mui/material";
 import React from "react";
 
-export default function TopicFilter({ filteredArray, setFilteredArray, setStatus }) {
+export default function TopicFilter({ filteredArray, setFilteredArray, setStatus, showFilters }) {
     const [topics, setTopics] = useState([]);
     const { topicsData } = useTopics();
 
@@ -36,7 +36,9 @@ export default function TopicFilter({ filteredArray, setFilteredArray, setStatus
     );
 
     return (
-        <Container>
+        <Container showFilters={showFilters}>
+            <h1>Tópicos</h1>
+
             <TopicList>
                 {topics?.map((t, idx) => {
                     return (
@@ -56,21 +58,25 @@ export default function TopicFilter({ filteredArray, setFilteredArray, setStatus
 
 //Styled Components
 const Container = styled.div`
-    //Essa margin-top pode e provavelmente deve ser retirada, coloquei pra ter uma melhor visualização de como ficou, a filtragem colada no header estava me dando agonia
-    margin-top: 30px;
-    height: 70px;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    transform: ${ props => props.showFilters ? "translate(0px, 0%)" : "translate(0px, -250%)" };
+    gap: 20px;
+    flex-direction: column;
+    transition: 1s cubic-bezier(.55, .02, .53, .89);
+
+    h1 {
+        font-family: 'Poppins';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 18px;
+        color: #000000;
+    }
 `;
 
 const TopicList = styled.ul`
     display: flex;
     align-items: center;
-    justify-content: center;
     gap: 15px;
-    box-sizing: border-box;
-    padding: 15px;
     flex-wrap: wrap;
 `;
 
