@@ -32,6 +32,10 @@ export default function Blog({ page }) {
         const responsePosts = await postsAct(filteredArray, orderValue, inputFilterValue);
         setPosts(responsePosts);
         setPageCount(1);
+
+        if (filteredArray.length > 0) {
+            setShowFilters(true);
+        }
     }, [status, filteredArray, inputFilterValue]);
 
     useEffect(() => {
@@ -133,7 +137,7 @@ export default function Blog({ page }) {
 
 //Styled Component
 const AlertSpan = styled.span`
-    margin-top: 50px;
+    margin-top: 60px;
     font-family: "Poppins";
     font-style: normal;
     font-weight: 600;
