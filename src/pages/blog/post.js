@@ -4,7 +4,19 @@ import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import { useLikes } from "../../hooks/api/usePosts";
 
-export default function Post({ author, authorImg, text, postImg, title, topicName, publishedAt, postId, status }) {
+export default function Post({
+    author,
+    authorImg,
+    text,
+    postImg,
+    title,
+    topicName,
+    publishedAt,
+    postId,
+    status,
+    topicId,
+    setFilteredArray,
+}) {
     const textToFormat = text.split("\n")[0].split(" ");
     const formatedText = [];
     const { likesAct, likes } = useLikes();
@@ -25,6 +37,16 @@ export default function Post({ author, authorImg, text, postImg, title, topicNam
         }
     }
 
+    function selectFilter(topicId) {
+        setFilteredArray((oldArray) => {
+            if (!oldArray.includes(String(topicId))) {
+                return [...oldArray, topicId];
+            } else {
+                return oldArray.filter((id) => id !== String(topicId));
+            }
+        });
+    }
+
     return (
         <Main authorImg={authorImg} postImg={postImg}>
             <Link to={`/blog/post/${postId}`}>
@@ -41,7 +63,7 @@ export default function Post({ author, authorImg, text, postImg, title, topicNam
                 </div>
 
                 <div className="Post-description">
-                    <p># {topicName}</p>
+                    <p onClick={() => selectFilter(topicId)}># {topicName}</p>
                     <div>
                         <BsHeartFill />
                         {likes?.length}
@@ -128,12 +150,19 @@ const Main = styled.div`
         }
 
         p {
-            padding-right: 15px;
+            margin-right: 15px;
+            padding: 2px 5px 2px 5px;
             font-family: "Poppins";
             font-style: normal;
             font-weight: 500;
             line-height: 21px;
             color: #000000;
+            cursor: pointer;
+
+            &:hover {
+                border-radius: 10px;
+                background: var(--soft-grey);
+            }
         }
 
         svg {
