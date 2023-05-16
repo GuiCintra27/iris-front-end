@@ -56,7 +56,7 @@ export default function Header({ page }) {
 }
 
 const PageHeader = styled.header`
-    height: 13vh;
+    height: 11vh;
     width: 100%;
     padding: 0.5rem;
     display: flex;
@@ -118,16 +118,13 @@ const Nav = styled.nav`
     }
 
     #Login-Logout {
-        width: 5rem;
-        height: 4rem;
-        margin-inline: 3vw;
+        margin-inline: 2vw;
         display: flex;
         justify-content: center;
         align-items: center;
         cursor: pointer;
-        font-size: 42px;
         ion-icon {
-            font-size: 3vw;
+            font-size: 2.5vw;
         }
         ion-icon[name="log-out-outline"] {
             color: var(--pink);
@@ -152,7 +149,7 @@ const Nav = styled.nav`
 `;
 
 const Menu = styled.div`
-    font-size: clamp(0.6em, 0.3em + 1vw, 2.5vw);
+    font-size: clamp(0.6em, 0.25em + 1vw, 2.5vw);
     font-weight: 600;
     gap: 0.8vw;
     align-items: center;

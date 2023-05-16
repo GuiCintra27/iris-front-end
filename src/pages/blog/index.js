@@ -110,6 +110,8 @@ export default function Blog({ page }) {
                                 publishedAt={dayjs(item.created_at).format("DD/MM/YYYY")}
                                 postId={item.id}
                                 status={status}
+                                topicId={item.topics.id}
+                                setFilteredArray={setFilteredArray}
                             />
                         ))}
                         {postsLoading ? (

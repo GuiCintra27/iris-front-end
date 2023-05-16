@@ -2,21 +2,46 @@ import { ReactSearchAutocomplete } from "react-search-autocomplete";
 import styled from "styled-components";
 import SearchIcon from "../../assets/Icons/search-icon.svg";
 import { useState, useRef } from "react";
-import { useFilteredPosts } from "../../hooks/api/usePosts";
+import { useSuggestedPosts } from "../../hooks/api/usePosts";
 import { useNavigate } from "react-router-dom";
 import { Tooltip, tooltipClasses } from "@mui/material";
+import SearchBarSuggestion from "./searchBarSuggestion";
+import GraySearchIcon from "../../assets/Icons/search-icon-gray.svg";
+import useToken from "../../hooks/useToken";
 
 export default function CustomSearchBar({ setInputFilterValue, topicFilter, inputFilterValue }) {
-    const { postsAct } = useFilteredPosts();
+    const { suggestionPostsAct } = useSuggestedPosts();
     const [itemsSuggestions, setItemsSuggestions] = useState([]);
     const inputElementRef = useRef();
     const navigate = useNavigate();
+    const MAX_RESULT = useRef(6);
+    const token = useRef(useToken());
+
+    function parseSuggestions(suggestions) {
+        const parsedSuggestions = suggestions.map((suggestion) => {
+            return {
+                ...suggestion,
+                render: <SearchBarSuggestion suggestionObject={suggestion} />,
+            };
+        });
+        return parsedSuggestions;
+    }
+
+    function sortByType(a, b) {
+        if (a.item[1].v === "recent") {
+            return -1;
+        } else {
+            return 1;
+        }
+    }
 
     async function handleOnSearch() {
         const parsedFilteredArray = topicFilter.map((item) => Number(item));
         try {
-            const posts = await postsAct(parsedFilteredArray, inputElementRef.current.value);
-            setItemsSuggestions(posts);
+            const config = token.current ? { headers: { Authorization: `Bearer ${token.current}` } } : {};
+            const posts = await suggestionPostsAct(parsedFilteredArray, inputElementRef.current.value, config);
+            const parsedPosts = parseSuggestions(posts);
+            setItemsSuggestions(parsedPosts);
         } catch (err) {}
     }
 
@@ -30,10 +55,11 @@ export default function CustomSearchBar({ setInputFilterValue, topicFilter, inpu
             <CustomStyledSearchBar
                 items={itemsSuggestions}
                 onSearch={handleOnSearch}
-                fuseOptions={{ keys: ["title"] }}
+                fuseOptions={{ keys: ["title", "type"], sortFn: sortByType }}
                 inputSearchString={inputFilterValue}
                 onSelect={handleOnSelect}
-                resultStringKeyName="title"
+                resultStringKeyName="render"
+                maxResults={MAX_RESULT.current}
                 onClear={() => {
                     setInputFilterValue("");
                     setItemsSuggestions([]);
@@ -52,12 +78,16 @@ export default function CustomSearchBar({ setInputFilterValue, topicFilter, inpu
                 styling={{
                     zIndex: 2,
                 }}
+                showIcon={false}
             />
             <SearchIconContainer onClick={() => setInputFilterValue(inputElementRef.current.value)}>
                 <TopicTooltip title={"Pesquisar"} arrow classes={{ popper: tooltipClasses.tooltip }}>
                     <img src={SearchIcon} alt="" />
                 </TopicTooltip>
             </SearchIconContainer>
+            <InputSearchIconContainer>
+                <img src={GraySearchIcon} alt="" />
+            </InputSearchIconContainer>
         </SearchBarContainer>
     );
 }
@@ -69,20 +99,34 @@ const SearchBarContainer = styled("div")`
     position: relative;
 `;
 
+const InputSearchIconContainer = styled("div")`
+    position: absolute;
+    left: 20px;
+    top: 12px;
+    width: 14px;
+    height: 14px;
+    z-index: 3;
+`;
+
 const CustomStyledSearchBar = styled(ReactSearchAutocomplete)`
     position: absolute;
-    top: 0;
     left: 0;
     width: 100%;
     height: 100%;
+
+    input {
+        margin-left: 34px;
+        font-family: "Poppins";
+        font-size: 16px;
+    }
 
     .wrapper {
         background-color: var(--blue);
         border: 0;
     }
 
-    .wrapper:has(div:nth-child(2)) {
-        border-radius: 50px 10px 50px 50px;
+    .wrapper:has(div + div) {
+        border-radius: 24px 15px 24px 24px;
     }
 
     .wrapper li:has([Title]) {
@@ -109,8 +153,8 @@ const CustomStyledSearchBar = styled(ReactSearchAutocomplete)`
 
 const SearchIconContainer = styled("button")`
     position: absolute;
-    right: 0;
-    width: 70px;
+    right: 10px;
+    width: 60px;
     height: 96%;
     z-index: 3;
     background-color: var(--blue);
@@ -121,7 +165,6 @@ const SearchIconContainer = styled("button")`
     img {
         width: 15px;
         height: 15px;
-        margin-right: 10px;
     }
 `;
 const TopicTooltip = styled(({ className, ...props }) => <Tooltip {...props} classes={{ popper: className }} />)(
