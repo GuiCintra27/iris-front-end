@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import Footer from "../../components/footer/footer";
 import Header from "../../components/header/header";
@@ -11,6 +11,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import useToken from "../../hooks/useToken";
 import useUserId from "../../hooks/useUserId";
+import { Tooltip, tooltipClasses } from "@mui/material";
 
 export default function PostPage() {
     const userId = useUserId();
@@ -26,6 +27,7 @@ export default function PostPage() {
         headers: { Authorization: `Bearer ${tokenRef.current}` },
     });
     const isLiked = likes?.filter((l) => l.userId === userId);
+    const navigate = useNavigate();
 
     //eslint-disable-next-line
     useEffect(async () => {
@@ -41,6 +43,15 @@ export default function PostPage() {
         likesAct(postId);
     }, [status]);
 
+    const FilterTooltip = styled(({ className, ...props }) => <Tooltip {...props} classes={{ popper: className }} />)(
+        ({ theme }) => ({
+            [`& .${tooltipClasses.tooltip}`]: {
+                color: "white",
+                fontSize: 13,
+            },
+        }),
+    );
+
     async function setLikeOrDislike() {
         try {
             if (isLiked?.length === 0) {
@@ -51,6 +62,8 @@ export default function PostPage() {
 
             setStatus([]);
         } catch (error) {
+            navigate("/sign-in");
+
             Swal.fire({
                 icon: "error",
                 title: "Você precisa estar logado!",
@@ -96,9 +109,9 @@ export default function PostPage() {
                         </div>
 
                         <div className="topicAndLikesDiv">
-                            <h2>
-                                # <span> {post?.topics?.name}</span>
-                            </h2>
+                            <FilterTooltip title={"Ir para a página do tópico"} arrow>
+                                <h2 onClick={() => { navigate(`/blog?filter=${post?.topics?.id}`); }}># <span> {post?.topics?.name}</span></h2>
+                            </FilterTooltip>
 
                             <div className="heartDiv">
                                 {isLiked?.length === 0 ? (
@@ -152,8 +165,12 @@ const PostContainer = styled.div`
 const CoverDiv = styled.div`
     background-size: 100% 100% !important;
     background: url(${(props) => props.postCover});
-    box-shadow: inset 0px -200px 100px rgba(0, 0, 0, 0.3);
-    height: 500px;
+    box-shadow: inset 0px -100px 100px rgba(0, 0, 0, 0.25);
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 530px;
     width: 100%;
     box-sizing: border-box;
     padding: 30px 40px;
@@ -199,7 +216,7 @@ const PostInfos = styled.div`
     justify-content: space-between;
     align-items: center;
     gap: 40%;
-    margin-left: 15%;
+    margin-left: 10.95%;
     width: 60%;
 
     img {
@@ -293,11 +310,16 @@ const PostInfos = styled.div`
             display: flex;
             align-items: center;
             color: #000000;
+
+            &:hover {
+                cursor: pointer;
+            }
         }
 
         span {
-            font-weight: 400;
+            font-weight: 500;
         }
+
     }
 
     .authorDiv {
@@ -331,7 +353,7 @@ const PostInfos = styled.div`
 const PostText = styled.div`
     display: flex;
     flex-direction: column;
-    width: 50vw;
+    width: 41.9%;
     margin: 0 auto;
     font-family: "Poppins";
     font-style: normal;

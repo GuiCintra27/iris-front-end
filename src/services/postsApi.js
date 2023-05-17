@@ -23,10 +23,13 @@ export async function getLikes(postId) {
     return response.data;
 }
 
-export async function getFilteredPosts(filteredArray, inputFilterValue, config = {}) {
+export async function getFilteredPosts(filteredArray, orderValue, inputFilterValue, config = {}) {
     const body = {
         topicFilterIds: {
             topicId: filteredArray,
+        },
+        postOrder: {
+            id: orderValue
         },
         inputFilterValue: inputFilterValue || "",
     };
