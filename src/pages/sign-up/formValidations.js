@@ -21,7 +21,7 @@ const validations = {
     birthDay: {
         custom: {
             isValid: (value) => isValidDate(value),
-            message: "A idade mínima para criar uma conta é de 8 anos",
+            message: "A idade mínima para criar uma conta é de 13 anos",
         },
     },
     pronounsId: {
@@ -64,8 +64,8 @@ function isValidName(value) {
 }
 
 function isValidDate(value) {
-    if (isNaN(new Date(value?.split("-").join("-")))) return false;
-    if (new Date(value?.split("-").join("-")) > new Date(new Date().setFullYear(new Date().getFullYear() - 8)))
+    if (isNaN(new Date(value))) return false;
+    if (new Date(value) >= new Date(new Date().setFullYear(new Date().getFullYear() - 13)))
         return false;
 
     return value;
