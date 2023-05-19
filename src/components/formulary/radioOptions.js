@@ -1,18 +1,19 @@
+import { forwardRef } from "react";
 import styled from "styled-components";
 
-export default function RadioInput({ label, name, value, onChange }) {
+const RadioInput = forwardRef(function RadioInput({ label, name, value, onChange }, ref) {
     return (
         <Container>
-            <input type="radio" name={name} value={value} onClick={onChange} />
+            <input type="radio" name={name} value={value} onClick={onChange} ref={ref} />
             <p>{label}</p>
         </Container>
     );
-}
+});
 
 const Container = styled.label`
     display: flex;
     position: relative;
-    gap: .5rem;
+    gap: 0.5rem;
 
     input {
         width: 1.75em;
@@ -23,3 +24,5 @@ const Container = styled.label`
         font-weight: 400;
     }
 `;
+
+export default RadioInput;

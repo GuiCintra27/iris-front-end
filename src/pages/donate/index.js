@@ -7,7 +7,7 @@ import Input from "../../components/formulary/input";
 import Swal from "sweetalert2";
 import RadioInput from "../../components/formulary/radioOptions";
 import Buttons from "../../components/formulary/buttons";
-import { useContext } from "react";
+import { useContext, useRef } from "react";
 import UserContext from "../../contexts/UserContext";
 import useDonate from "../../hooks/api/useDonate";
 import styled from "styled-components";
@@ -15,10 +15,16 @@ import styled from "styled-components";
 export default function Donate({ page }) {
     const { userData } = useContext(UserContext);
     const { donate, donateLoading } = useDonate();
+    const yesInputRef = useRef();
+    const initialValues = useRef({
+        amount: "",
+        authorization: "",
+    });
 
     const { handleSubmit, handleChange, data, setData, errors, setErrors } = useForm({
+        initialValues: initialValues.current,
         validations: FormValidations,
-        
+
         //eslint-disable-next-line
         onSubmit: async (data) => {
             const newData = {
@@ -54,12 +60,9 @@ export default function Donate({ page }) {
                     title: "Houve um problema ao registrar doação no servidor",
                     customClass: "sweet-toast",
                 });
+            } finally {
+                yesInputRef.current.checked = false;
             }
-        },
-
-        initialValues: {
-            amount: "",
-            authorization: "",
         },
     });
 
@@ -105,6 +108,7 @@ export default function Donate({ page }) {
                             name={"authorization"}
                             value={"Sim"}
                             onChange={handleChange("authorization")}
+                            ref={yesInputRef}
                         />
                         <RadioInput
                             label={"Não"}
