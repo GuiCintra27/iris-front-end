@@ -60,7 +60,7 @@ export default function Blog({ page }) {
         };
         const filteredArray = parseFilteredArray();
         setPageCount(requestNewPage);
-        const newPosts = await postsAct(filteredArray, inputFilterValue, configurateHeaders);
+        const newPosts = await postsAct(filteredArray, orderValue, inputFilterValue, configurateHeaders);
         setPosts((posts) => [...posts, ...newPosts]);
     }
 
@@ -84,14 +84,32 @@ export default function Blog({ page }) {
                     inputFilterValue={inputFilterValue}
                 />
 
-                <FilterTooltip title={ showFilters ? "Fechar filtros de pesquisa" : "Mostrar filtros de pesquisa" } arrow>
-                    <img onClick={() => { if (!showFilters) setShowFilters(true); if (showFilters) setShowFilters(false); }} className="filterImg" src={filterImg} alt="Filtro dos posts" />
+                <FilterTooltip title={showFilters ? "Fechar filtros de pesquisa" : "Mostrar filtros de pesquisa"} arrow>
+                    <img
+                        onClick={() => {
+                            if (!showFilters) setShowFilters(true);
+                            if (showFilters) setShowFilters(false);
+                        }}
+                        className="filterImg"
+                        src={filterImg}
+                        alt="Filtro dos posts"
+                    />
                 </FilterTooltip>
             </InputArea>
 
             <FilterArea showFilters={showFilters}>
-                <DataFilter showFilters={showFilters} orderPost={orderPost} setOrderPost={setOrderPost} setStatus={setStatus} />
-                <TopicsFilter showFilters={showFilters} filteredArray={filteredArray} setFilteredArray={setFilteredArray} setStatus={setStatus} />
+                <DataFilter
+                    showFilters={showFilters}
+                    orderPost={orderPost}
+                    setOrderPost={setOrderPost}
+                    setStatus={setStatus}
+                />
+                <TopicsFilter
+                    showFilters={showFilters}
+                    filteredArray={filteredArray}
+                    setFilteredArray={setFilteredArray}
+                    setStatus={setStatus}
+                />
             </FilterArea>
 
             <PostScrollerWrapper>
@@ -166,10 +184,10 @@ const FilterArea = styled.div`
     justify-content: space-between;
     gap: 30px;
     width: 58.26%;
-    min-height: ${ props => props.showFilters ? "190px" : "0px" };
-    height: ${ props => props.showFilters ? "fit-content" : "0px" };
+    min-height: ${(props) => (props.showFilters ? "190px" : "0px")};
+    height: ${(props) => (props.showFilters ? "fit-content" : "0px")};
     margin: 0px auto;
-    margin-top: ${ props => props.showFilters ? "30px" : "10px" };
+    margin-top: ${(props) => (props.showFilters ? "30px" : "10px")};
     overflow: hidden;
     transition: 1.7s ease-out;
 `;
