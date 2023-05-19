@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import Footer from "../../components/footer/footer";
 import Header from "../../components/header/header";
-import { useLikes, usePosts, useRecentlyVisited } from "../../hooks/api/usePosts";
+import { useLikes, usePosts } from "../../hooks/api/usePosts";
 import whiteArrow from "../../assets/Icons/white-arrow.png";
 import dayjs from "dayjs";
 import { BsHeartFill, BsHeart } from "react-icons/bs";
@@ -21,22 +21,12 @@ export default function PostPage() {
     const { postAct, post } = usePosts();
     const { likesAct, likes } = useLikes();
     const formatedText = post?.text.split("\n");
-    const { recentlyVisitedAct } = useRecentlyVisited();
     const tokenRef = useRef(useToken());
     const configRef = useRef({
         headers: { Authorization: `Bearer ${tokenRef.current}` },
     });
     const isLiked = likes?.filter((l) => l.userId === userId);
     const navigate = useNavigate();
-
-    //eslint-disable-next-line
-    useEffect(async () => {
-        try {
-            if (tokenRef.current) {
-                await recentlyVisitedAct(postId, configRef.current);
-            }
-        } catch (err) {}
-    }, []);
 
     useEffect(() => {
         postAct(postId);
@@ -110,7 +100,13 @@ export default function PostPage() {
 
                         <div className="topicAndLikesDiv">
                             <FilterTooltip title={"Ir para a página do tópico"} arrow>
-                                <h2 onClick={() => { navigate(`/blog?filter=${post?.topics?.id}`); }}># <span> {post?.topics?.name}</span></h2>
+                                <h2
+                                    onClick={() => {
+                                        navigate(`/blog?filter=${post?.topics?.id}`);
+                                    }}
+                                >
+                                    # <span> {post?.topics?.name}</span>
+                                </h2>
                             </FilterTooltip>
 
                             <div className="heartDiv">
@@ -319,7 +315,6 @@ const PostInfos = styled.div`
         span {
             font-weight: 500;
         }
-
     }
 
     .authorDiv {

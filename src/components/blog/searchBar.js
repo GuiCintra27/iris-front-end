@@ -1,21 +1,34 @@
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
 import styled from "styled-components";
 import SearchIcon from "../../assets/Icons/search-icon.svg";
-import { useState, useRef } from "react";
-import { useSuggestedPosts } from "../../hooks/api/usePosts";
-import { useNavigate } from "react-router-dom";
+import { useState, useRef, useMemo } from "react";
+import { useRecentlyVisited, useSuggestedPosts } from "../../hooks/api/usePosts";
 import { Tooltip, tooltipClasses } from "@mui/material";
 import SearchBarSuggestion from "./searchBarSuggestion";
 import GraySearchIcon from "../../assets/Icons/search-icon-gray.svg";
 import useToken from "../../hooks/useToken";
+import { useEffect } from "react";
 
 export default function CustomSearchBar({ setInputFilterValue, topicFilter, inputFilterValue }) {
     const { suggestionPostsAct } = useSuggestedPosts();
     const [itemsSuggestions, setItemsSuggestions] = useState([]);
     const inputElementRef = useRef();
-    const navigate = useNavigate();
     const MAX_RESULT = useRef(6);
-    const token = useRef(useToken());
+    const tokenRef = useRef(useToken());
+    const { recentlyVisitedAct } = useRecentlyVisited();
+
+    const config = useMemo(() => {
+        return tokenRef.current ? { headers: { Authorization: `Bearer ${tokenRef.current}` } } : {};
+    }, [tokenRef.current]);
+
+    //eslint-disable-next-line
+    useEffect(async () => {
+        try {
+            if (tokenRef.current) {
+                await recentlyVisitedAct(inputFilterValue, config);
+            }
+        } catch (err) {}
+    }, [inputFilterValue]);
 
     function parseSuggestions(suggestions) {
         const parsedSuggestions = suggestions.map((suggestion) => {
@@ -38,7 +51,6 @@ export default function CustomSearchBar({ setInputFilterValue, topicFilter, inpu
     async function handleOnSearch() {
         const parsedFilteredArray = topicFilter.map((item) => Number(item));
         try {
-            const config = token.current ? { headers: { Authorization: `Bearer ${token.current}` } } : {};
             const posts = await suggestionPostsAct(parsedFilteredArray, inputElementRef.current.value, config);
             const parsedPosts = parseSuggestions(posts);
             setItemsSuggestions(parsedPosts);
@@ -46,8 +58,8 @@ export default function CustomSearchBar({ setInputFilterValue, topicFilter, inpu
     }
 
     function handleOnSelect(card) {
-        setInputFilterValue(inputElementRef.current.value);
-        navigate(`${card.id}`);
+        inputElementRef.current.value = card.title;
+        setInputFilterValue(card.title);
     }
 
     return (
@@ -97,6 +109,7 @@ const SearchBarContainer = styled("div")`
     width: 50%;
     height: 46px;
     position: relative;
+    align-items: center;
 `;
 
 const InputSearchIconContainer = styled("div")`
@@ -154,8 +167,9 @@ const CustomStyledSearchBar = styled(ReactSearchAutocomplete)`
 const SearchIconContainer = styled("button")`
     position: absolute;
     right: 10px;
-    width: 60px;
-    height: 96%;
+    aspect-ratio: 1;
+    margin-right: 9px;
+    min-height: 80%;
     z-index: 3;
     background-color: var(--blue);
     display: flex;
