@@ -23,7 +23,7 @@ const validations = {
     birthDay: {
         custom: {
             isValid: (value) => isValidDate(value),
-            message: "A idade mínima para criar uma conta é de 8 anos",
+            message: "A idade mínima para criar uma conta é de 13 anos",
         },
     },
     pronounsId: {
