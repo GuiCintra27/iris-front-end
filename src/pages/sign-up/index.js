@@ -129,7 +129,7 @@ export default function SignUp() {
     }
 
     return (
-        <AuthLayout topFrame={topFrame} mainFrame={mainFrame}>
+        <AuthLayout topFrame={topFrame} mainFrame={mainFrame} arrowIndicator={!secondPage}>
             <main>
                 <div>
                     <h4>
@@ -140,7 +140,7 @@ export default function SignUp() {
                     <h2>{tempData.email ? "Nos Conte Mais Sobre Você" : "Cadastre-se em segundos!"}</h2>
                     <div id="page-counter">
                         <div>
-                            <p id={!secondPage && "black"}>{!secondPage ? "1" : "2"}</p>
+                            <p id="arrow-indicator">{!secondPage ? "1" : "2"}</p>
                             <p>/2</p>
                         </div>
                         <img
