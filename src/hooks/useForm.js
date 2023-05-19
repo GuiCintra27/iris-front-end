@@ -77,7 +77,8 @@ export const useForm = (options) => {
         });
     };
 
-    const handleSubmit = async(event) => {
+    //eslint-disable-next-line
+    const handleSubmit = async (event) => {
         event.preventDefault();
         const validations = options?.validations;
         if (validations) {

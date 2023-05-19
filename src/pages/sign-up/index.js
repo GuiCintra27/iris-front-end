@@ -18,7 +18,7 @@ import Swal from "sweetalert2";
 import { Link, useNavigate } from "react-router-dom";
 import GoogleOauth from "../../components/open-authorization/google";
 import FacebookOauth from "../../components/open-authorization/facebook";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CustomRadioButton from "../../components/formulary/customRadioButton";
 import Select from "../../components/formulary/select";
 import useSignUp from "../../hooks/api/useSignUp";
@@ -27,7 +27,6 @@ import { useContext } from "react";
 import UserContext from "../../contexts/UserContext";
 import useSignIn from "../../hooks/api/useSignIn";
 import TempContext from "../../contexts/TempContext";
-import { useEffect } from "react";
 
 dayjs.extend(CustomParseFormat);
 
@@ -54,7 +53,8 @@ export default function SignUp() {
     const { handleSubmit, handleChange, phoneHandleChange, customHandleChange, data, errors, setErrors } = useForm({
         validations: FormValidations,
 
-        onSubmit: async(data) => {
+        //eslint-disable-next-line
+        onSubmit: async (data) => {
             const newData = {
                 name: data.name,
                 email: data.email,
@@ -155,24 +155,28 @@ export default function SignUp() {
                     <form onSubmit={handleSubmit}>
                         {!secondPage ? (
                             <>
-                                <MaterialInputBox
-                                    type={"text"}
-                                    name={"name"}
-                                    value={data?.name || ""}
-                                    onChange={handleChange("name")}
-                                    label={"Nome"}
-                                    required
-                                />
+                                {!tempData.name && (
+                                    <MaterialInputBox
+                                        type={"text"}
+                                        name={"name"}
+                                        value={data?.name || ""}
+                                        onChange={handleChange("name")}
+                                        label={"Nome"}
+                                        required
+                                    />
+                                )}
 
-                                {!tempData.email && <MaterialInputBox
-                                    type={"email"}
-                                    name={"email"}
-                                    value={data?.email || ""}
-                                    onChange={handleChange("email")}
-                                    disabled={tempData.email}
-                                    label={"Email"}
-                                    required
-                                />}
+                                {!tempData.email && (
+                                    <MaterialInputBox
+                                        type={"email"}
+                                        name={"email"}
+                                        value={data?.email || ""}
+                                        onChange={handleChange("email")}
+                                        disabled={tempData.email}
+                                        label={"Email"}
+                                        required
+                                    />
+                                )}
 
                                 <MaterialInputBox
                                     type={"tel"}
@@ -219,6 +223,7 @@ export default function SignUp() {
                                             name={"pronounsId"}
                                             label={item.name}
                                             value={item.id}
+                                            checked={Number(data.pronounsId) === item.id}
                                             onChange={handleChange("pronounsId")}
                                             key={key}
                                         />

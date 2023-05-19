@@ -1,3 +1,5 @@
+import dayjs from "dayjs";
+
 const validations = {
     name: {
         custom: {
@@ -64,9 +66,8 @@ function isValidName(value) {
 }
 
 function isValidDate(value) {
-    if (isNaN(new Date(value?.split("-").join("-")))) return false;
-    if (new Date(value?.split("-").join("-")) > new Date(new Date().setFullYear(new Date().getFullYear() - 8)))
-        return false;
+    if (!dayjs(value?.$d).isValid()) return false;
+    if (dayjs().diff(value?.$d, "year") < 8) return false;
 
-    return value;
+    return true;
 }
