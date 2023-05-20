@@ -23,7 +23,7 @@ export default function VolunteerForm({ page }) {
     const { handleSubmit, handleChange, data, setData, errors, setErrors } = useForm({
         validations: FormValidations,
 
-        onSubmit: async(data) => {
+        onSubmit: async (data) => {
             const newData = {
                 linkedIn: data.linkedIn,
                 occupation: data.occupation,
@@ -119,6 +119,7 @@ export default function VolunteerForm({ page }) {
                         value={data?.linkedIn}
                         name={"linkedIn"}
                         onChange={handleChange("linkedIn")}
+                        disabled={volunteerLoading}
                     />
 
                     <Input
@@ -127,6 +128,7 @@ export default function VolunteerForm({ page }) {
                         value={data?.occupation}
                         name={"occupation"}
                         onChange={handleChange("occupation")}
+                        disabled={volunteerLoading}
                     />
 
                     <h4 className="options-title">Você fez parte da Comunidade Íris?</h4>
@@ -136,12 +138,14 @@ export default function VolunteerForm({ page }) {
                             name={"irisParticipant"}
                             value={"Sim"}
                             onChange={handleChange("irisParticipant")}
+                            disabled={volunteerLoading}
                         />
                         <RadioInput
                             label={"Não"}
                             name={"irisParticipant"}
                             value={"Não"}
                             onChange={handleChange("irisParticipant")}
+                            disabled={volunteerLoading}
                         />
                     </div>
 
@@ -151,6 +155,7 @@ export default function VolunteerForm({ page }) {
                         value={data?.officeId}
                         options={volunteerData?.offices || []}
                         onChange={handleChange("officeId")}
+                        disabled={volunteerLoading}
                     />
 
                     <h4 className="options-title">Como você se identifica?</h4>
@@ -162,6 +167,7 @@ export default function VolunteerForm({ page }) {
                                 value={item.id}
                                 onChange={handleChange("skinColorId")}
                                 key={key}
+                                disabled={volunteerLoading}
                             />
                         ))}
                     </div>
@@ -173,6 +179,7 @@ export default function VolunteerForm({ page }) {
                         onChange={handleChange("applyingReason")}
                         minLength={100}
                         maxLength={200}
+                        disabled={volunteerLoading}
                     />
 
                     <TextArea
@@ -181,6 +188,7 @@ export default function VolunteerForm({ page }) {
                         value={data?.experience}
                         onChange={handleChange("experience")}
                         maxLength={1500}
+                        disabled={volunteerLoading}
                     />
 
                     <h4 className="options-title">
@@ -194,6 +202,7 @@ export default function VolunteerForm({ page }) {
                             name={"authorization"}
                             value={"Sim"}
                             onChange={handleChange("authorization")}
+                            disabled={volunteerLoading}
                         />
 
                         <RadioInput
@@ -201,10 +210,11 @@ export default function VolunteerForm({ page }) {
                             name={"authorization"}
                             value={"Não"}
                             onChange={handleChange("authorization")}
+                            disabled={volunteerLoading}
                         />
                     </div>
 
-                    <Buttons disabled={volunteerLoading && volunteerDataLoading} />
+                    <Buttons disabled={volunteerLoading || volunteerDataLoading} />
                 </form>
             </FormContainer>
 
