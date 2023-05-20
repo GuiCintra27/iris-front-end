@@ -112,7 +112,7 @@ export default function Blog({ page }) {
                 />
             </FilterArea>
 
-            {!posts && (
+            {(!posts || postsLoading) && (
                 <LoadContainer>
                     <ColorRing
                         visible={true}
@@ -126,7 +126,7 @@ export default function Blog({ page }) {
                 </LoadContainer>
             )}
 
-            {posts && (
+            {(posts && !postsLoading) && (
                 <PostScrollerWrapper>
                     {posts.length !== 0 ? (
                         <>
