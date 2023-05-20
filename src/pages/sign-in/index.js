@@ -103,7 +103,7 @@ export default function SignIn() {
                         name={"email"}
                         value={data?.email || ""}
                         onChange={handleChange("email")}
-                        label={"Email"}
+                        label={signInLoading? null : "Email"}
                         disabled={signInLoading}
                         required
                     />
@@ -111,7 +111,7 @@ export default function SignIn() {
                     <MaterialInputBox
                         type={"password"}
                         name={"password"}
-                        label={"Senha"}
+                        label={signInLoading? null : "Senha"}
                         value={data?.password || ""}
                         onChange={handleChange("password")}
                         disabled={signInLoading}
