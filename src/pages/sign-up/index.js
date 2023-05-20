@@ -163,6 +163,7 @@ export default function SignUp() {
                                     onChange={handleChange("name")}
                                     label={"Nome"}
                                     required
+                                    disabled={signUpLoading}
                                 />
 
                                 {!tempData.email && (
@@ -171,7 +172,7 @@ export default function SignUp() {
                                         name={"email"}
                                         value={data?.email || ""}
                                         onChange={handleChange("email")}
-                                        disabled={tempData.email}
+                                        disabled={tempData.email || signUpLoading}
                                         label={"Email"}
                                         required
                                     />
@@ -184,6 +185,7 @@ export default function SignUp() {
                                     value={data?.phoneNumber || ""}
                                     onChange={phoneHandleChange("phoneNumber")}
                                     required
+                                    disabled={signUpLoading}
                                 />
 
                                 <CustomDatePicker
@@ -198,6 +200,7 @@ export default function SignUp() {
                                     onChange={(date) => {
                                         customHandleChange("birthDay", (d) => d && dayjs(d))(date);
                                     }}
+                                    disabled={signUpLoading}
                                 />
 
                                 <MaterialInputBox
@@ -207,6 +210,7 @@ export default function SignUp() {
                                     value={data?.password || ""}
                                     onChange={handleChange("password")}
                                     required
+                                    disabled={signUpLoading}
                                 />
 
                                 <button type="button" name="cadastrar" onClick={() => setSecondPage(true)}>
@@ -224,6 +228,7 @@ export default function SignUp() {
                                             value={item.id}
                                             onChange={handleChange("pronounsId")}
                                             key={key}
+                                            disabled={signUpLoading}
                                         />
                                     ))}
                                 </div>
@@ -234,6 +239,7 @@ export default function SignUp() {
                                     value={data?.sexualityId}
                                     onChange={handleChange("sexualityId")}
                                     options={registerData?.sexualityId || []}
+                                    disabled={signUpLoading}
                                 />
 
                                 <Select
@@ -242,6 +248,7 @@ export default function SignUp() {
                                     value={data?.genderId}
                                     onChange={handleChange("genderId")}
                                     options={registerData?.genderId || []}
+                                    disabled={signUpLoading}
                                 />
 
                                 <button type="submit" name="signUp" disabled={signUpLoading}>

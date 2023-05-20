@@ -104,6 +104,7 @@ export default function SignIn() {
                         value={data?.email || ""}
                         onChange={handleChange("email")}
                         label={"Email"}
+                        disabled={signInLoading}
                         required
                     />
 
@@ -113,6 +114,7 @@ export default function SignIn() {
                         label={"Senha"}
                         value={data?.password || ""}
                         onChange={handleChange("password")}
+                        disabled={signInLoading}
                         required
                     />
 
