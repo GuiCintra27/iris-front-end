@@ -94,7 +94,7 @@ const StyledContainer = styled.div`
         justify-content: center;
         button {
             width: 21.5vw;
-            height: 53px;
+            height: 55px;
             border-radius: 4px;
             color: var(--white);
             background: var(--blue);

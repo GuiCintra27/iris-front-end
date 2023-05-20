@@ -14,6 +14,7 @@ import { useContext } from "react";
 import UserContext from "../../contexts/UserContext";
 import useSignIn from "../../hooks/api/useSignIn";
 import TempContext from "../../contexts/TempContext";
+import Loading from "../../components/loading";
 
 export default function SignIn() {
     const { signInLoading, signIn } = useSignIn();
@@ -116,7 +117,7 @@ export default function SignIn() {
                     />
 
                     <button type="submit" name="signIn" disabled={signInLoading}>
-                        Entrar
+                        {signInLoading ? <Loading /> : "Entrar"}
                     </button>
 
                     <GoogleOauth />

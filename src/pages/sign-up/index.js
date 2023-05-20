@@ -28,12 +28,13 @@ import UserContext from "../../contexts/UserContext";
 import useSignIn from "../../hooks/api/useSignIn";
 import TempContext from "../../contexts/TempContext";
 import { useEffect } from "react";
+import Loading from "../../components/loading";
 
 dayjs.extend(CustomParseFormat);
 
 export default function SignUp() {
-    const { registerDataLoading, registerData } = useSignUp();
-    const { signUp } = useSaveSignUp();
+    const { registerData } = useSignUp();
+    const { signUpLoading, signUp } = useSaveSignUp();
     const { signIn } = useSignIn();
     const { setUserData } = useContext(UserContext);
     const [secondPage, setSecondPage] = useState(false);
@@ -164,15 +165,17 @@ export default function SignUp() {
                                     required
                                 />
 
-                                {!tempData.email && <MaterialInputBox
-                                    type={"email"}
-                                    name={"email"}
-                                    value={data?.email || ""}
-                                    onChange={handleChange("email")}
-                                    disabled={tempData.email}
-                                    label={"Email"}
-                                    required
-                                />}
+                                {!tempData.email && (
+                                    <MaterialInputBox
+                                        type={"email"}
+                                        name={"email"}
+                                        value={data?.email || ""}
+                                        onChange={handleChange("email")}
+                                        disabled={tempData.email}
+                                        label={"Email"}
+                                        required
+                                    />
+                                )}
 
                                 <MaterialInputBox
                                     type={"tel"}
@@ -207,7 +210,7 @@ export default function SignUp() {
                                 />
 
                                 <button type="button" name="cadastrar" onClick={() => setSecondPage(true)}>
-                                    Cadastrar
+                                    {signUpLoading ? <Loading color={"--white"} /> : "Cadastrar"}
                                 </button>
                             </>
                         ) : (
@@ -241,8 +244,8 @@ export default function SignUp() {
                                     options={registerData?.genderId || []}
                                 />
 
-                                <button type="submit" name="signUp" disabled={registerDataLoading}>
-                                    Cadastrar
+                                <button type="submit" name="signUp" disabled={signUpLoading}>
+                                    {signUpLoading ? <Loading color={"--white"} /> : "Cadastrar"}
                                 </button>
                             </>
                         )}
