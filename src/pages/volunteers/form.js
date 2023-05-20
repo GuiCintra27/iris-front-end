@@ -69,11 +69,19 @@ export default function VolunteerForm({ page }) {
                     customClass: "sweet-toast",
                 });
             } catch (err) {
-                Toast.fire({
-                    icon: "error",
-                    title: "Houve um problema ao registrar voluntário",
-                    customClass: "sweet-toast",
-                });
+                if (err.response?.status === 409) {
+                    Toast.fire({
+                        icon: "error",
+                        title: "Usuário já enviou o formulário de voluntário (só é permitido um por pessoa)",
+                        customClass: "sweet-toast",
+                    });
+                } else {
+                    Toast.fire({
+                        icon: "error",
+                        title: "Houve um problema ao registrar usuário",
+                        customClass: "sweet-toast",
+                    });
+                }
             }
         },
 
