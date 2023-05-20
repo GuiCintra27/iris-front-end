@@ -28,7 +28,7 @@ import UserContext from "../../contexts/UserContext";
 import useSignIn from "../../hooks/api/useSignIn";
 import TempContext from "../../contexts/TempContext";
 import { useEffect } from "react";
-import Loading from "../../components/loading";
+import TreeDotsLoading from "../../components/loadings/tree-dots-loading";
 
 dayjs.extend(CustomParseFormat);
 
@@ -214,7 +214,7 @@ export default function SignUp() {
                                 />
 
                                 <button type="button" name="cadastrar" onClick={() => setSecondPage(true)}>
-                                    {signUpLoading ? <Loading color={"--white"} /> : "Cadastrar"}
+                                    {signUpLoading ? <TreeDotsLoading color={"--white"} /> : "Cadastrar"}
                                 </button>
                             </>
                         ) : (
@@ -252,7 +252,7 @@ export default function SignUp() {
                                 />
 
                                 <button type="submit" name="signUp" disabled={signUpLoading}>
-                                    {signUpLoading ? <Loading color={"--white"} /> : "Cadastrar"}
+                                    {signUpLoading ? <TreeDotsLoading color={"--white"} /> : "Cadastrar"}
                                 </button>
                             </>
                         )}

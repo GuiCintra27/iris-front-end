@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export default function Loading({ color }) {
+export default function TreeDotsLoading() {
     return (
         <LoadingGif>
             <Ball>
