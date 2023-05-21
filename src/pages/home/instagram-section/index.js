@@ -35,6 +35,9 @@ export default function InstagramSection() {
 
 const Instagram = styled.div`
     position: relative;
+    height: fit-content;
+    padding-top: 6vh;
+    padding-bottom: 10vh;
     display: grid;
     grid-template-columns: 59vw 40vw;
     grid-template-rows: 9fr 1fr;
@@ -64,7 +67,7 @@ const Instagram = styled.div`
     }
 
     #Ig-text {
-        height: 90vh;
+        height: 79vh;
         width: 100%;
         display: grid;
         grid-template-rows: 1fr 1fr;
@@ -73,7 +76,7 @@ const Instagram = styled.div`
 
         h1 {
             font-size: clamp(1.5em, 1em + 4.7vw, 10vw);
-            margin-top: 15%;
+            margin-top: 9.5%;
         }
 
         p {

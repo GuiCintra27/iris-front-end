@@ -18,9 +18,10 @@ export default function StatisticNumbers() {
 
 const Numbers = styled.div`
     display: flex;
+    height: fit-content;
+    padding: 140px 5vw 140px 5vw;
     align-items: center;
     justify-content: space-around;
-    padding-inline: 5vw;
 
     div {
         height: 35vh;
