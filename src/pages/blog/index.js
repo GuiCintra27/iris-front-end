@@ -103,16 +103,18 @@ export default function Blog({ page }) {
                     orderPost={orderPost}
                     setOrderPost={setOrderPost}
                     setStatus={setStatus}
+                    setPosts={setPosts}
                 />
                 <TopicsFilter
                     showFilters={showFilters}
                     filteredArray={filteredArray}
                     setFilteredArray={setFilteredArray}
                     setStatus={setStatus}
+                    setPosts={setPosts}
                 />
             </FilterArea>
 
-            {(!posts || postsLoading) && (
+            {!posts && (
                 <LoadContainer>
                     <ColorRing
                         visible={true}
@@ -126,7 +128,7 @@ export default function Blog({ page }) {
                 </LoadContainer>
             )}
 
-            {(posts && !postsLoading) && (
+            {posts && (
                 <PostScrollerWrapper>
                     {posts.length !== 0 ? (
                         <>

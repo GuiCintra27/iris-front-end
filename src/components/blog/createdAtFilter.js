@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Tooltip, tooltipClasses } from "@mui/material";
 import React from "react";
 
-export default function DataFilter({ orderPost, setOrderPost, setStatus, showFilters }) {
+export default function DataFilter({ orderPost, setOrderPost, setStatus, showFilters, setPosts }) {
     const dataArray = [
         {
             id: 1,
@@ -17,6 +17,8 @@ export default function DataFilter({ orderPost, setOrderPost, setStatus, showFil
     ];
 
     function selectFilter(value) {
+        setPosts(undefined);
+        
         if (!orderPost.includes(value)) {
             let newArray = [value];
             setOrderPost(newArray);
