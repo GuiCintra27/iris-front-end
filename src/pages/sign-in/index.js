@@ -14,6 +14,7 @@ import { useContext } from "react";
 import UserContext from "../../contexts/UserContext";
 import useSignIn from "../../hooks/api/useSignIn";
 import TempContext from "../../contexts/TempContext";
+import TreeDotsLoading from "../../components/loadings/tree-dots-loading";
 
 export default function SignIn() {
     const { signInLoading, signIn } = useSignIn();
@@ -102,21 +103,23 @@ export default function SignIn() {
                         name={"email"}
                         value={data?.email || ""}
                         onChange={handleChange("email")}
-                        label={"Email"}
+                        label={signInLoading? null : "Email"}
+                        disabled={signInLoading}
                         required
                     />
 
                     <MaterialInputBox
                         type={"password"}
                         name={"password"}
-                        label={"Senha"}
+                        label={signInLoading? null : "Senha"}
                         value={data?.password || ""}
                         onChange={handleChange("password")}
+                        disabled={signInLoading}
                         required
                     />
 
                     <button type="submit" name="signIn" disabled={signInLoading}>
-                        Entrar
+                        {signInLoading ? <TreeDotsLoading /> : "Entrar"}
                     </button>
 
                     <GoogleOauth />

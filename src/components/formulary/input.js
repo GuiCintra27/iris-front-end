@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
-export default function Input({ label, type, value, name, onChange, placeHolder }) {
+export default function Input({ label, type, value, name, onChange, placeHolder, disabled }) {
     return (
         <Container>
             <label htmlFor={name}>{label}</label>
-            <input type={type} value={value} name={name} onChange={onChange} placeholder={placeHolder} />
+            <input type={type} value={value} name={name} onChange={onChange} placeholder={placeHolder} disabled={disabled} />
         </Container>
     );
 }

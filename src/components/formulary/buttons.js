@@ -7,7 +7,7 @@ export default function Buttons({ onPage = -1, setOnPage, lastPage = true, disab
                 <div className="Button">
                     {onPage > 0 && <button className="backBtn" type="button" onClick={() => setOnPage(onPage - 1)}>Voltar</button>}
 
-                    <button type="submit" name="button" disabled={disabled}>Enviar</button>
+                    <button type="submit" name="button" disabled={disabled}>{disabled ? "Enviando..." : "Enviar"}</button>
                 </div>
                 : (
                     <div className="Button">

@@ -69,11 +69,19 @@ export default function VolunteerForm({ page }) {
                     customClass: "sweet-toast",
                 });
             } catch (err) {
-                Toast.fire({
-                    icon: "error",
-                    title: "Houve um problema ao registrar voluntário",
-                    customClass: "sweet-toast",
-                });
+                if (err.response?.status === 409) {
+                    Toast.fire({
+                        icon: "error",
+                        title: "Usuário já enviou o formulário de voluntário (só é permitido um por pessoa)",
+                        customClass: "sweet-toast",
+                    });
+                } else {
+                    Toast.fire({
+                        icon: "error",
+                        title: "Houve um problema ao registrar usuário",
+                        customClass: "sweet-toast",
+                    });
+                }
             }
         },
 
@@ -119,6 +127,7 @@ export default function VolunteerForm({ page }) {
                         value={data?.linkedIn}
                         name={"linkedIn"}
                         onChange={handleChange("linkedIn")}
+                        disabled={volunteerLoading}
                     />
 
                     <Input
@@ -127,6 +136,7 @@ export default function VolunteerForm({ page }) {
                         value={data?.occupation}
                         name={"occupation"}
                         onChange={handleChange("occupation")}
+                        disabled={volunteerLoading}
                     />
 
                     <h4 className="options-title">Você fez parte da Comunidade Íris?</h4>
@@ -136,12 +146,14 @@ export default function VolunteerForm({ page }) {
                             name={"irisParticipant"}
                             value={"Sim"}
                             onChange={handleChange("irisParticipant")}
+                            disabled={volunteerLoading}
                         />
                         <RadioInput
                             label={"Não"}
                             name={"irisParticipant"}
                             value={"Não"}
                             onChange={handleChange("irisParticipant")}
+                            disabled={volunteerLoading}
                         />
                     </div>
 
@@ -151,6 +163,7 @@ export default function VolunteerForm({ page }) {
                         value={data?.officeId}
                         options={volunteerData?.offices || []}
                         onChange={handleChange("officeId")}
+                        disabled={volunteerLoading}
                     />
 
                     <h4 className="options-title">Como você se identifica?</h4>
@@ -162,6 +175,7 @@ export default function VolunteerForm({ page }) {
                                 value={item.id}
                                 onChange={handleChange("skinColorId")}
                                 key={key}
+                                disabled={volunteerLoading}
                             />
                         ))}
                     </div>
@@ -173,6 +187,7 @@ export default function VolunteerForm({ page }) {
                         onChange={handleChange("applyingReason")}
                         minLength={100}
                         maxLength={200}
+                        disabled={volunteerLoading}
                     />
 
                     <TextArea
@@ -181,6 +196,7 @@ export default function VolunteerForm({ page }) {
                         value={data?.experience}
                         onChange={handleChange("experience")}
                         maxLength={1500}
+                        disabled={volunteerLoading}
                     />
 
                     <h4 className="options-title">
@@ -194,6 +210,7 @@ export default function VolunteerForm({ page }) {
                             name={"authorization"}
                             value={"Sim"}
                             onChange={handleChange("authorization")}
+                            disabled={volunteerLoading}
                         />
 
                         <RadioInput
@@ -201,10 +218,11 @@ export default function VolunteerForm({ page }) {
                             name={"authorization"}
                             value={"Não"}
                             onChange={handleChange("authorization")}
+                            disabled={volunteerLoading}
                         />
                     </div>
 
-                    <Buttons disabled={volunteerLoading && volunteerDataLoading} />
+                    <Buttons disabled={volunteerLoading || volunteerDataLoading} />
                 </form>
             </FormContainer>
 

@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 import FormValidations from "./newsletterFormValidations";
 
 export default function Newsletter() {
-    const { newsLetter } = useNewsLetter();
+    const { newsLetter, newsLetterLoading } = useNewsLetter();
 
     const { handleSubmit, handleChange, data, errors } = useForm({
         validations: FormValidations,
@@ -79,6 +79,7 @@ export default function Newsletter() {
                         placeholder="Insira seu email aqui*"
                         value={data?.email || ""}
                         onChange={handleChange("email")}
+                        disabled={newsLetterLoading}
                         required
                     />
                     {errors.email && err(errors.email)}
