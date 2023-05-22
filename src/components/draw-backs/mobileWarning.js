@@ -21,8 +21,8 @@ export default function HandleMobileWarning() {
         const sessionStorage = window.sessionStorage.getItem("mobile-warning");
         if (!sessionStorage) {
             Swal.fire({
-                title: "Estamos em desenvolvimento",
-                icon: "question",
+                title: "Em Desenvolvimento",
+                icon: "info",
                 text: "Esta é uma versão em desenvolvimento do site. Para uma melhor qualidade de navegação, recomendamos o acesso a partir de um computador",
                 heightAuto: true,
                 customClass: "mobile-alert",
