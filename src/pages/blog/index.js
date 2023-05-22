@@ -84,54 +84,90 @@ export default function Blog({ page }) {
                     inputFilterValue={inputFilterValue}
                 />
 
-                <FilterTooltip title={ showFilters ? "Fechar filtros de pesquisa" : "Mostrar filtros de pesquisa" } arrow>
-                    <img onClick={() => { if (!showFilters) setShowFilters(true); if (showFilters) setShowFilters(false); }} className="filterImg" src={filterImg} alt="Filtro dos posts" />
+                <FilterTooltip title={showFilters ? "Fechar filtros de pesquisa" : "Mostrar filtros de pesquisa"} arrow>
+                    <img
+                        onClick={() => {
+                            if (!showFilters) setShowFilters(true);
+                            if (showFilters) setShowFilters(false);
+                        }}
+                        className="filterImg"
+                        src={filterImg}
+                        alt="Filtro dos posts"
+                    />
                 </FilterTooltip>
             </InputArea>
 
             <FilterArea showFilters={showFilters}>
-                <DataFilter showFilters={showFilters} orderPost={orderPost} setOrderPost={setOrderPost} setStatus={setStatus} />
-                <TopicsFilter showFilters={showFilters} filteredArray={filteredArray} setFilteredArray={setFilteredArray} setStatus={setStatus} />
+                <DataFilter
+                    showFilters={showFilters}
+                    orderPost={orderPost}
+                    setOrderPost={setOrderPost}
+                    setStatus={setStatus}
+                    setPosts={setPosts}
+                />
+                <TopicsFilter
+                    showFilters={showFilters}
+                    filteredArray={filteredArray}
+                    setFilteredArray={setFilteredArray}
+                    setStatus={setStatus}
+                    setPosts={setPosts}
+                />
             </FilterArea>
 
-            <PostScrollerWrapper>
-                {posts && posts.length !== 0 ? (
-                    <>
-                        {posts.map((item, index) => (
-                            <Post
-                                key={index}
-                                author={item.admins.name}
-                                authorImg={item.admins.photo}
-                                text={item.text}
-                                postImg={item.image}
-                                likes={item.likes}
-                                title={item.title}
-                                topicName={item.topics.name}
-                                publishedAt={dayjs(item.created_at).format("DD/MM/YYYY")}
-                                postId={item.id}
-                                status={status}
-                                topicId={item.topics.id}
-                                setFilteredArray={setFilteredArray}
-                            />
-                        ))}
-                        {postsLoading ? (
-                            <ColorRing
-                                visible={true}
-                                height="80"
-                                width="80"
-                                ariaLabel="blocks-loading"
-                                wrapperStyle={{}}
-                                wrapperClass="blocks-wrapper"
-                                colors={["#429EA6", "#429EA6", "#429EA6", "#429EA6", "#429EA6"]}
-                            />
-                        ) : (
-                            throttle && <UIInfiniteScroll fetchMore={() => handleInfiniteScroll()} />
-                        )}
-                    </>
-                ) : (
-                    <AlertSpan>Nenhum post foi encontrado seguindo esta filtragem!</AlertSpan>
-                )}
-            </PostScrollerWrapper>
+            {!posts && (
+                <LoadContainer>
+                    <ColorRing
+                        visible={true}
+                        height="150"
+                        width="150"
+                        ariaLabel="blocks-loading"
+                        wrapperStyle={{}}
+                        wrapperClass="blocks-wrapper"
+                        colors={["#D9D9D9", "#D9D9D9", "#D9D9D9", "#D9D9D9", "#D9D9D9"]}
+                    />
+                </LoadContainer>
+            )}
+
+            {posts && (
+                <PostScrollerWrapper>
+                    {posts.length !== 0 ? (
+                        <>
+                            {posts.map((item, index) => (
+                                <Post
+                                    key={index}
+                                    author={item.admins.name}
+                                    authorImg={item.admins.photo}
+                                    text={item.text}
+                                    postImg={item.image}
+                                    likes={item.likes}
+                                    title={item.title}
+                                    topicName={item.topics.name}
+                                    publishedAt={dayjs(item.created_at).format("DD/MM/YYYY")}
+                                    postId={item.id}
+                                    status={status}
+                                    topicId={item.topics.id}
+                                    setFilteredArray={setFilteredArray}
+                                />
+                            ))}
+                            {postsLoading ? (
+                                <ColorRing
+                                    visible={true}
+                                    height="80"
+                                    width="80"
+                                    ariaLabel="blocks-loading"
+                                    wrapperStyle={{}}
+                                    wrapperClass="blocks-wrapper"
+                                    colors={["#D9D9D9", "#D9D9D9", "#D9D9D9", "#D9D9D9", "#D9D9D9"]}
+                                />
+                            ) : (
+                                throttle && <UIInfiniteScroll fetchMore={() => handleInfiniteScroll()} />
+                            )}
+                        </>
+                    ) : (
+                        <AlertSpan>Nenhum post foi encontrado segundo esta filtragem!</AlertSpan>
+                    )}
+                </PostScrollerWrapper>
+            )}
             <MarginBottom />
         </>
     );
@@ -154,6 +190,15 @@ const MarginBottom = styled.div`
     margin-bottom: 75px;
 `;
 
+const LoadContainer = styled.div`
+    width: 100%;
+    height: 50vh;
+    margin-top: 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`;
+
 const PostScrollerWrapper = styled.div`
     display: flex;
     flex-direction: column;
@@ -166,10 +211,10 @@ const FilterArea = styled.div`
     justify-content: space-between;
     gap: 30px;
     width: 58.26%;
-    min-height: ${ props => props.showFilters ? "190px" : "0px" };
-    height: ${ props => props.showFilters ? "fit-content" : "0px" };
+    min-height: ${(props) => (props.showFilters ? "190px" : "0px")};
+    height: ${(props) => (props.showFilters ? "fit-content" : "0px")};
     margin: 0px auto;
-    margin-top: ${ props => props.showFilters ? "30px" : "10px" };
+    margin-top: ${(props) => (props.showFilters ? "30px" : "10px")};
     overflow: hidden;
     transition: 1.7s ease-out;
 `;

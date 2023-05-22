@@ -24,6 +24,7 @@ export default function ParallaxBackground() {
 }
 
 const Background = styled.div`
+    height: 84vh;
     display: flex;
     position: relative;
     align-items: center;
@@ -87,7 +88,7 @@ const Background = styled.div`
 
         & span {
             text-align: center;
-            font-size: clamp(24px, .25em + 2.5vw, 96px);
+            font-size: clamp(24px, 0.25em + 2.5vw, 96px);
             font-weight: 700;
         }
 
@@ -97,5 +98,4 @@ const Background = styled.div`
             transition: 0.5s;
         }
     }
-    
 `;

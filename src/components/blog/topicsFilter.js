@@ -4,7 +4,7 @@ import useTopics from "../../hooks/api/useTopics";
 import { Tooltip, tooltipClasses } from "@mui/material";
 import React from "react";
 
-export default function TopicFilter({ filteredArray, setFilteredArray, setStatus, showFilters }) {
+export default function TopicFilter({ filteredArray, setFilteredArray, setStatus, showFilters, setPosts }) {
     const [topics, setTopics] = useState([]);
     const { topicsData } = useTopics();
 
@@ -13,6 +13,8 @@ export default function TopicFilter({ filteredArray, setFilteredArray, setStatus
     }, [topicsData]);
 
     function selectFilter(topicId) {
+        setPosts(undefined);
+
         if (!filteredArray.includes(String(topicId))) {
             let newArray = [...filteredArray, topicId];
             setFilteredArray(newArray);

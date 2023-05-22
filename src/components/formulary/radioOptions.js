@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
-export default function RadioInput({ label, name, value, onChange }) {
+export default function RadioInput({ label, name, value, onChange, disabled }) {
     return (
         <Container>
-            <input type="radio" name={name} value={value} onClick={onChange} />
+            <input type="radio" name={name} value={value} onClick={onChange} disabled={disabled} />
             <p>{label}</p>
         </Container>
     );

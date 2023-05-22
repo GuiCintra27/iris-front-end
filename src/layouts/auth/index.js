@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
-export default function AuthLayout({ topFrame, mainFrame, children }) {
+export default function AuthLayout({ topFrame, mainFrame, arrowIndicator, children }) {
     return (
-        <StyledContainer>
+        <StyledContainer arrowIndicator={arrowIndicator ? "--black" : "--blue"}>
             {children}
             <div id="background">
                 <img id="topFrame" src={topFrame} alt="Imagem topo" />
@@ -67,8 +67,8 @@ const StyledContainer = styled.div`
             gap: 1rem;
             color: var(--blue);
 
-            #black{
-                color: #000;
+            #arrow-indicator{
+                color: var(${props => props.arrowIndicator});
             }
 
             div{
@@ -94,7 +94,7 @@ const StyledContainer = styled.div`
         justify-content: center;
         button {
             width: 21.5vw;
-            height: 53px;
+            height: 55px;
             border-radius: 4px;
             color: var(--white);
             background: var(--blue);
