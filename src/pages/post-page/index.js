@@ -1,9 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import Footer from "../../components/footer/footer";
 import Header from "../../components/header/header";
-import { useLikes, usePosts, useRecentlyVisited } from "../../hooks/api/usePosts";
+import { useCreatePostComment, useDeletePostComment, useLikes, usePostComments, usePosts, useRecentlyVisited } from "../../hooks/api/usePosts";
 import whiteArrow from "../../assets/Icons/white-arrow.png";
 import dayjs from "dayjs";
 import { BsHeartFill, BsHeart } from "react-icons/bs";
@@ -12,6 +12,13 @@ import Swal from "sweetalert2";
 import useToken from "../../hooks/useToken";
 import useUserId from "../../hooks/useUserId";
 import { Tooltip, tooltipClasses } from "@mui/material";
+import commentIcon from "../../assets/Icons/comment-icon.png";
+import sendIcon from "../../assets/Icons/send-icon.png";
+import smileIcon from "../../assets/Icons/smile-icon.png";
+import { CommentItem } from "./commentItem";
+import UserContext from "../../contexts/UserContext";
+import { useValue } from "../../hooks/useValue";
+import EmojiPicker, { EmojiStyle } from "emoji-picker-react";
 import PostSuggestions from "../../components/blog/postSuggestions";
 
 export default function PostPage() {
@@ -29,6 +36,22 @@ export default function PostPage() {
     });
     const isLiked = likes?.filter((l) => l.userId === userId);
     const navigate = useNavigate();
+
+    const { userData: { user } } = useContext(UserContext);
+    const { postComments, getPostComments } = usePostComments();
+    const { createPostComment, createCommentsLoading } = useCreatePostComment();
+    const { deletePostComment, deleteCommentsLoading } = useDeletePostComment();
+    const [commentText, updateCommentText, setCommentText] = useValue();
+    const [displayEmojis, setDisplayEmojis] = useState(false);
+    const [commentSort, setCommentSort] = useState("desc");
+    const commentRef = useRef();
+    const sortComments = (arr) => commentSort === "asc" ? arr.toReversed() : arr;
+
+    useEffect(() => {
+        if (!createCommentsLoading || !deleteCommentsLoading) {
+            getPostComments(postId);
+        }
+    }, [createCommentsLoading, deleteCommentsLoading]);
 
     //eslint-disable-next-line
     useEffect(async () => {
@@ -80,7 +103,7 @@ export default function PostPage() {
             setLikeStatus(false);
         }, 1000);
     }
-
+    
     return (
         <Container>
             <Header />
@@ -151,14 +174,82 @@ export default function PostPage() {
                         <PostSuggestions postId={postId} topicId={post?.topics?.id} topicName={post?.topics?.name}/>
                     </PostContent>
                 </PostContainer>
-            </MidContent>
 
+                <PostCommentStyle>
+                    <header className="comment-header">
+                        <img src={commentIcon} alt="Message Icon" />
+                        <h3>Comentários</h3>
+                    </header>
+
+                    <div className="comment-container">
+                        <label htmlFor="comment-box">{user.name}#{user.id}</label>
+                        <div className="box-container">
+                            <textarea 
+                                name="comment-box" id="comment-box" rows="1" placeholder="Faça seu comentário..."
+                                ref={commentRef}
+                                value={commentText}
+                                onChange={updateCommentText}
+                                onInput={(e) => {
+                                    const textarea = e.target;
+                                    textarea.style.height = "";
+                                    textarea.style.height = Math.min(textarea.scrollHeight+2, 300) + "px";
+                                }}
+                                onClick={() => setDisplayEmojis(false)}
+                            />
+                            <div className="options">
+                                <img src={smileIcon} alt="Emojis" onClick={() => setDisplayEmojis(!displayEmojis)}/>
+                                <img src={sendIcon} alt="Send" onClick={() => {
+                                    createPostComment(postId, commentText);
+                                    setCommentText("");
+                                    commentRef.current.style.height = "55px";
+                                    setDisplayEmojis(false);
+                                }}/>
+                            </div>
+                            {displayEmojis && 
+                                <EmojiPicker
+                                    autoFocusSearch={false}
+                                    previewConfig={{ showPreview: false }}
+                                    searchDisabled
+                                    height="350px"
+                                    emojiStyle={EmojiStyle.NATIVE}
+                                    onEmojiClick={emojiData => {
+                                        setCommentText(t => t + emojiData.emoji);
+                                    }}
+                                />
+                            }
+                        </div>
+                        <div className="sort">
+                            <p 
+                                className={commentSort === "desc" && "selected"}
+                                onClick={() => setCommentSort("desc")}
+                            >
+                                Mais Recentes
+                            </p>
+                            <p 
+                                className={commentSort === "asc" && "selected"}
+                                onClick={() => setCommentSort("asc")}
+                            >
+                                Mais Antigos
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className="comments">
+                        {postComments && sortComments(postComments).map((c) => 
+                            <CommentItem key={c.id} data={c} username={user.name} deletePostComment={deletePostComment}/>
+                        )}
+                    </div>
+
+                </PostCommentStyle>
+            </MidContent>
+            
             <Footer />
         </Container>
     );
 }
 
-//Styled Components
+// Styled Components
+
 const Container = styled.div``;
 
 const MidContent = styled.div`
@@ -376,4 +467,139 @@ const PostContent = styled.div`
     gap: 60px;
     padding-right: 4.4%;
     justify-content: end;
+`
+
+const PostCommentStyle = styled(PostText)`
+    align-items: baseline;
+
+    img {
+        font-size: 12px;
+        width: fit-content;
+        height: fit-content;
+    }
+
+    .comment-header {
+        width: 100%;
+        display: flex;
+        align-items: flex-start;
+        align-items: center;
+        gap: 1rem;
+        border-bottom: 1px solid #D9D9D9;
+        margin-bottom: 25px;
+
+        h3 {
+            font-weight: 600;
+            font-size: 30px;
+            line-height: 40px;
+        }
+    }
+
+    .comment-container {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+
+        label {
+            font-weight: 500;
+            font-size: 22px;
+            margin: 6px;
+        }
+
+        textarea {
+            font-size: 18px;
+            padding: 13px;
+            padding-right: 90px;
+            border: 1px solid #D9D9D9;
+            border-radius: 10px;
+            width: 100%;
+            resize: none;
+            margin-bottom: 10px;
+
+            ::placeholder {
+                color: #A8A8A8;
+            }
+        }
+
+        .box-container {
+            position: relative;
+            padding-left: 40px;
+
+            .options {
+                position: absolute;
+                display: flex;
+                gap: 2rem;
+                top: 17px;
+                right: 24px;
+
+                * {
+                    cursor: pointer;
+                    :hover {
+                        filter: invert(40%) sepia(11%) saturate(0%) hue-rotate(251deg) brightness(91%) contrast(78%);
+                    }
+                }
+            }
+
+            .epr-main {
+                position: absolute;
+                right: 0;
+                top: -358px;
+                border: 1px solid #D9D9D9;
+                border-radius: 10px;
+
+                .epr-body {
+                    margin-bottom: 16px;
+                }
+            }
+        }
+
+        .sort {
+            font-weight: 500;
+            font-size: 18px;
+            align-self: flex-end;
+            display: flex;
+            gap: 16px;
+            margin-bottom: 16px;
+
+            .selected {
+                color: black;
+                :after { width: 100%; }
+            }
+
+            p {
+                cursor: pointer;
+                position: relative;
+                text-decoration: none;
+                color: #a0a0a0;
+                font-size: 18px;
+                letter-spacing: 0.5px;
+                padding: 0 10px;
+
+                :after{
+                    content: "";
+                    position: absolute;
+                    background-color: #ff3c78;
+                    height: 3px;
+                    width: 0;
+                    left: 0;
+                    bottom: -4px;
+                    transition: 0.3s;
+                }
+
+                :hover{
+                    color: black;
+                }
+
+                :hover:after{
+                    width: 100%;
+                }
+            }
+        }
+
+    }
+
+    .comments {
+        display: flex;
+        flex-direction: column;
+        gap: 3rem;
+    }
 `;
