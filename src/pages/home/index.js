@@ -6,6 +6,7 @@ import ParallaxBackground from "./background-section";
 import StatisticNumbers from "./statistic-numbers-section";
 import AboutSection from "./about-section";
 import TestimonialSection from "./testimonials-section";
+import HandleMobileWarning from "../../components/draw-backs/mobileWarning";
 
 export default function Home({ page }) {
     return (
@@ -24,6 +25,7 @@ export default function Home({ page }) {
             </Main>
 
             <Footer />
+            <HandleMobileWarning />
         </>
     );
 }
