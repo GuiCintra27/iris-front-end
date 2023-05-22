@@ -103,14 +103,12 @@ export default function Blog({ page }) {
                     orderPost={orderPost}
                     setOrderPost={setOrderPost}
                     setStatus={setStatus}
-                    setPosts={setPosts}
                 />
                 <TopicsFilter
                     showFilters={showFilters}
                     filteredArray={filteredArray}
                     setFilteredArray={setFilteredArray}
                     setStatus={setStatus}
-                    setPosts={setPosts}
                 />
             </FilterArea>
 

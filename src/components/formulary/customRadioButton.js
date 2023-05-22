@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
-export default function CustomRadioButton({ name, label, value, onChange, disabled }) {
+export default function CustomRadioButton({ label, ...props }) {
     return (
         <StyledRadioButton>
-            <input type="radio" name={name} value={value} onChange={onChange} disabled={disabled} />
+            <input required type="radio" {...props} />
             <span>{label}</span>
         </StyledRadioButton>
     );

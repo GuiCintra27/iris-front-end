@@ -59,9 +59,9 @@ export async function getSuggestedPosts(filteredArray, inputFilterValue, config 
         return [];
     }
 }
-export async function postRecentlyVisited(postId, config) {
+export async function postRecentlyVisited(inputValue, config) {
     const body = {
-        postId,
+        inputValue,
     };
 
     try {

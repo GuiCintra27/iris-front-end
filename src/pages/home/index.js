@@ -33,4 +33,11 @@ export default function Home({ page }) {
 const Main = styled.main`
     display: grid;
     grid-template-columns: 100%;
+    grid-template-rows: 84vh 65vh 110vh 230vh;
+
+    @media screen {
+        @media (max-width: 1280px) {
+            grid-template-rows: 84vh 65vh 110vh 300vh;
+        }
+    }
 `;
