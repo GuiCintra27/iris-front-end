@@ -25,3 +25,17 @@ export function useSignInGoogle() {
         signIn,
     };
 }
+
+export function useSignInFacebook() {
+    const {
+        loading: signInLoading,
+        error: signInError,
+        act: signIn
+    } = useAsync(authApi.signInFacebook, false);
+
+    return {
+        signInLoading,
+        signInError,
+        signIn,
+    };
+}
