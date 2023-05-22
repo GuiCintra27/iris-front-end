@@ -26,6 +26,7 @@ export default function PostPage() {
     const [status, setStatus] = useState(true);
     const [likeStatus, setLikeStatus] = useState(false);
     const { postAct, post } = usePosts();
+    const { recentlyVisitedAct } = useRecentlyVisited();
     const { likesAct, likes } = useLikes();
     const formatedText = post?.text.split("\n");
     const tokenRef = useRef(useToken());

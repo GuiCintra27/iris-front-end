@@ -27,7 +27,6 @@ import { useContext } from "react";
 import UserContext from "../../contexts/UserContext";
 import useSignIn from "../../hooks/api/useSignIn";
 import TempContext from "../../contexts/TempContext";
-import { useEffect } from "react";
 import TreeDotsLoading from "../../components/loadings/tree-dots-loading";
 
 dayjs.extend(CustomParseFormat);
@@ -183,7 +182,7 @@ export default function SignUp() {
                                 <MaterialInputBox
                                     type={"tel"}
                                     name={"phoneNumber"}
-                                    label={signUpLoading? null : "Número de Celular"}
+                                    label={signUpLoading ? null : "Número de Celular"}
                                     value={data?.phoneNumber || ""}
                                     onChange={phoneHandleChange("phoneNumber")}
                                     required
@@ -208,7 +207,7 @@ export default function SignUp() {
                                 <MaterialInputBox
                                     type={"password"}
                                     name={"password"}
-                                    label={signUpLoading? null : "Senha"}
+                                    label={signUpLoading ? null : "Senha"}
                                     value={data?.password || ""}
                                     onChange={handleChange("password")}
                                     required
