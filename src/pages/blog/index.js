@@ -60,7 +60,7 @@ export default function Blog({ page }) {
         };
         const filteredArray = parseFilteredArray();
         setPageCount(requestNewPage);
-        const newPosts = await postsAct(filteredArray, inputFilterValue, configurateHeaders);
+        const newPosts = await postsAct(filteredArray, orderValue, inputFilterValue, configurateHeaders);
         setPosts((posts) => [...posts, ...newPosts]);
     }
 
