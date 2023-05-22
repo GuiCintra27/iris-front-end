@@ -9,3 +9,8 @@ export async function signInGoogle(accessToken) {
     const response = await api.post("/auth/sign-in/google", { accessToken });
     return response.data;
 }
+
+export async function signInFacebook(accessToken) {
+    const response = await api.post("/auth/sign-in/facebook", { accessToken });
+    return response.data;
+}

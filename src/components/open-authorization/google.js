@@ -16,17 +16,21 @@ export default function GoogleOauth() {
     const navigate = useNavigate();
     const location = useLocation();
 
-    const Toast = useMemo(() => Swal.mixin({
-        toast: true,
-        position: "top-end",
-        showConfirmButton: false,
-        timer: 4000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-            toast.addEventListener("mouseenter", Swal.stopTimer);
-            toast.addEventListener("mouseleave", Swal.resumeTimer);
-        },
-    }), []);
+    const Toast = useMemo(
+        () =>
+            Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 4000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener("mouseenter", Swal.stopTimer);
+                    toast.addEventListener("mouseleave", Swal.resumeTimer);
+                },
+            }),
+        [],
+    );
 
     async function onSuccess(res) {
         try {
@@ -57,7 +61,7 @@ export default function GoogleOauth() {
     const login = useGoogleLogin({
         onSuccess,
         onError,
-        scope: "https://www.googleapis.com/auth/user.birthday.read"
+        scope: "https://www.googleapis.com/auth/user.birthday.read",
     });
 
     return (
