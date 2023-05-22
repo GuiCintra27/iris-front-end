@@ -72,3 +72,36 @@ export async function postRecentlyVisited(postId, config) {
         return error;
     }
 }
+
+// Comments ==
+
+export async function getPostComments(postId) {
+    const response = await api.get(`/posts/comments/${postId}`);
+    return response.data;
+}
+
+export async function createPostComment(postId, text) {
+    const body = { postId, text };
+    const { token } = JSON.parse(localStorage.getItem("userData"));
+    const headers = { Authorization: `Bearer ${token}` };
+
+    try {
+        const response = await api.post("/posts/comments", body, { headers });
+        return response.data;
+    } catch (error) {
+        return error;
+    }
+}
+
+export async function deletePostComment(commentId) {
+    const { token } = JSON.parse(localStorage.getItem("userData"));
+    const headers = { Authorization: `Bearer ${token}` };
+
+    try {
+        const response = await api.delete("/posts/comments/" + commentId, { headers });
+        return response.data;
+    } catch (error) {
+        return error;
+    }
+}
+

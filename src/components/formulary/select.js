@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
-export default function Select({ label, name, value, options, onChange }) {
+export default function Select({ label, name, value, options, onChange, disabled }) {
     return (
         <SelectBox>
             <label>{label}</label>
-            <select defaultValue={"Selecione"} name={name} onChange={onChange} required>
+            <select defaultValue={"Selecione"} name={name} onChange={onChange} disabled={disabled} required>
                 <option value={value} disabled>
                     Selecione
                 </option>

@@ -99,6 +99,8 @@ export default function AboutSection() {
 
 const About = styled.div`
     width: 100%;
+    height: fit-content;
+    padding-bottom: 175px;
     background: linear-gradient(to bottom, var(--black), var(--black) 80%, var(--blue));
     padding-top: 14vh;
     text-align: center;

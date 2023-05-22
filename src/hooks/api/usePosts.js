@@ -75,3 +75,67 @@ export function useRecentlyVisited() {
         recentlyVisitedAct,
     };
 }
+
+// Comments ==
+
+export function usePostComments() {
+    const {
+        data: postComments,
+        loading: postCommentsLoading,
+        error: postCommentsError,
+        act: getPostComments,
+    } = useAsync(postsApi.getPostComments, false);
+
+    return {
+        postComments,
+        postCommentsLoading,
+        postCommentsError,
+        getPostComments,
+    };
+}
+
+/* export function usePostComments() {
+    const {
+        data: postComments,
+        setData: setPostComments,
+        loading: postCommentsLoading,
+        error: postCommentsError,
+        act: getPostComments,
+    } = usePostsAsync(postsApi.getPostComments, false);
+
+    return {
+        postComments,
+        setPostComments,
+        postCommentsLoading,
+        postCommentsError,
+        getPostComments,
+    };
+} */
+
+export function useCreatePostComment() {
+    const {
+        loading: createCommentsLoading,
+        error: createCommentsError,
+        act: createPostComment,
+    } = useAsync(postsApi.createPostComment, false);
+
+    return {
+        createCommentsLoading,
+        createCommentsError,
+        createPostComment,
+    };
+}
+
+export function useDeletePostComment() {
+    const {
+        loading: deleteCommentsLoading,
+        error: deleteCommentsError,
+        act: deletePostComment,
+    } = useAsync(postsApi.deletePostComment, false);
+
+    return {
+        deleteCommentsLoading,
+        deleteCommentsError,
+        deletePostComment,
+    };
+}
