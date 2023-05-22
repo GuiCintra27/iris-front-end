@@ -27,12 +27,14 @@ import { useContext } from "react";
 import UserContext from "../../contexts/UserContext";
 import useSignIn from "../../hooks/api/useSignIn";
 import TempContext from "../../contexts/TempContext";
+import { useEffect } from "react";
+import TreeDotsLoading from "../../components/loadings/tree-dots-loading";
 
 dayjs.extend(CustomParseFormat);
 
 export default function SignUp() {
-    const { registerDataLoading, registerData } = useSignUp();
-    const { signUp } = useSaveSignUp();
+    const { registerData } = useSignUp();
+    const { signUpLoading, signUp } = useSaveSignUp();
     const { signIn } = useSignIn();
     const { setUserData } = useContext(UserContext);
     const [secondPage, setSecondPage] = useState(false);
@@ -129,7 +131,7 @@ export default function SignUp() {
     }
 
     return (
-        <AuthLayout topFrame={topFrame} mainFrame={mainFrame}>
+        <AuthLayout topFrame={topFrame} mainFrame={mainFrame} arrowIndicator={!secondPage}>
             <main>
                 <div>
                     <h4>
@@ -140,7 +142,7 @@ export default function SignUp() {
                     <h2>{tempData.email ? "Nos Conte Mais Sobre Você" : "Cadastre-se em segundos!"}</h2>
                     <div id="page-counter">
                         <div>
-                            <p id={!secondPage && "black"}>{!secondPage ? "1" : "2"}</p>
+                            <p id="arrow-indicator">{!secondPage ? "1" : "2"}</p>
                             <p>/2</p>
                         </div>
                         <img
@@ -161,8 +163,8 @@ export default function SignUp() {
                                         name={"name"}
                                         value={data?.name || ""}
                                         onChange={handleChange("name")}
-                                        label={"Nome"}
                                         required
+                                        disabled={signUpLoading}
                                     />
                                 )}
 
@@ -172,7 +174,7 @@ export default function SignUp() {
                                         name={"email"}
                                         value={data?.email || ""}
                                         onChange={handleChange("email")}
-                                        disabled={tempData.email}
+                                        disabled={tempData.email || signUpLoading}
                                         label={"Email"}
                                         required
                                     />
@@ -181,10 +183,11 @@ export default function SignUp() {
                                 <MaterialInputBox
                                     type={"tel"}
                                     name={"phoneNumber"}
-                                    label={"Número de Celular"}
+                                    label={signUpLoading? null : "Número de Celular"}
                                     value={data?.phoneNumber || ""}
                                     onChange={phoneHandleChange("phoneNumber")}
                                     required
+                                    disabled={signUpLoading}
                                 />
 
                                 <CustomDatePicker
@@ -199,19 +202,21 @@ export default function SignUp() {
                                     onChange={(date) => {
                                         customHandleChange("birthDay", (d) => d && dayjs(d))(date);
                                     }}
+                                    disabled={signUpLoading}
                                 />
 
                                 <MaterialInputBox
                                     type={"password"}
                                     name={"password"}
-                                    label={"Senha"}
+                                    label={signUpLoading? null : "Senha"}
                                     value={data?.password || ""}
                                     onChange={handleChange("password")}
                                     required
+                                    disabled={signUpLoading}
                                 />
 
                                 <button type="button" name="cadastrar" onClick={() => setSecondPage(true)}>
-                                    Cadastrar
+                                    {signUpLoading ? <TreeDotsLoading color={"--white"} /> : "Cadastrar"}
                                 </button>
                             </>
                         ) : (
@@ -226,6 +231,7 @@ export default function SignUp() {
                                             checked={Number(data.pronounsId) === item.id}
                                             onChange={handleChange("pronounsId")}
                                             key={key}
+                                            disabled={signUpLoading}
                                         />
                                     ))}
                                 </div>
@@ -236,6 +242,7 @@ export default function SignUp() {
                                     value={data?.sexualityId}
                                     onChange={handleChange("sexualityId")}
                                     options={registerData?.sexualityId || []}
+                                    disabled={signUpLoading}
                                 />
 
                                 <Select
@@ -244,10 +251,11 @@ export default function SignUp() {
                                     value={data?.genderId}
                                     onChange={handleChange("genderId")}
                                     options={registerData?.genderId || []}
+                                    disabled={signUpLoading}
                                 />
 
-                                <button type="submit" name="signUp" disabled={registerDataLoading}>
-                                    Cadastrar
+                                <button type="submit" name="signUp" disabled={signUpLoading}>
+                                    {signUpLoading ? <TreeDotsLoading color={"--white"} /> : "Cadastrar"}
                                 </button>
                             </>
                         )}

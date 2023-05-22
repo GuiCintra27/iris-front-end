@@ -88,10 +88,24 @@ export default function UserContact() {
                 </p>
 
                 <label htmlFor="name">Nome</label>
-                <input type="text" value={data?.name} name="name" onChange={handleChange("name")} required />
+                <input
+                    type="text"
+                    value={data?.name}
+                    name="name"
+                    onChange={handleChange("name")}
+                    disabled={userContactLoading}
+                    required
+                />
 
                 <label htmlFor="email">Email</label>
-                <input type="email" value={data?.email} name="email" onChange={handleChange("email")} required />
+                <input
+                    type="email"
+                    value={data?.email}
+                    name="email"
+                    onChange={handleChange("email")}
+                    disabled={userContactLoading}
+                    required
+                />
 
                 <label htmlFor="telephone">Telefone</label>
                 <input
@@ -99,6 +113,7 @@ export default function UserContact() {
                     value={data?.telephone}
                     name="telephone"
                     onChange={phoneHandleChange("telephone")}
+                    disabled={userContactLoading}
                     required
                 />
 
@@ -108,11 +123,12 @@ export default function UserContact() {
                     value={data?.message}
                     name="message"
                     onChange={handleChange("message")}
+                    disabled={userContactLoading}
                     required
                 />
 
                 <button type="submit" disabled={userContactLoading}>
-                    Enviar
+                    {userContactLoading ? "Enviando..." : "Enviar"}
                 </button>
             </form>
         </UserContactBox>

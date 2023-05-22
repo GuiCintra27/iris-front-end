@@ -97,6 +97,7 @@ export default function Donate({ page }) {
                         name={"amount"}
                         onChange={handleChange("amount")}
                         placeHolder={"(Valor mínimo R$5,00)"}
+                        disabled={donateLoading}
                     />
 
                     <h4 className="options-title">
@@ -109,12 +110,14 @@ export default function Donate({ page }) {
                             value={"Sim"}
                             onChange={handleChange("authorization")}
                             ref={yesInputRef}
+                            disabled={donateLoading}
                         />
                         <RadioInput
                             label={"Não"}
                             name={"authorization"}
                             value={"Não"}
                             onChange={handleChange("authorization")}
+                            disabled={donateLoading}
                         />
                     </div>
 
