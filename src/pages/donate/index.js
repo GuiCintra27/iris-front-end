@@ -110,14 +110,12 @@ export default function Donate({ page }) {
                             value={"Sim"}
                             onChange={handleChange("authorization")}
                             ref={yesInputRef}
-                            disabled={donateLoading}
                         />
                         <RadioInput
                             label={"Não"}
                             name={"authorization"}
                             value={"Não"}
                             onChange={handleChange("authorization")}
-                            disabled={donateLoading}
                         />
                     </div>
 
