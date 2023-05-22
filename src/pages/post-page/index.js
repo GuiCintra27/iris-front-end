@@ -12,6 +12,7 @@ import Swal from "sweetalert2";
 import useToken from "../../hooks/useToken";
 import useUserId from "../../hooks/useUserId";
 import { Tooltip, tooltipClasses } from "@mui/material";
+import PostSuggestions from "../../components/blog/postSuggestions";
 
 export default function PostPage() {
     const userId = useUserId();
@@ -84,7 +85,7 @@ export default function PostPage() {
         <Container>
             <Header />
 
-            <PostContainer>
+            <MidContent>
                 <CoverDiv postCover={post?.postCover}>
                     <img
                         onClick={() => {
@@ -97,7 +98,7 @@ export default function PostPage() {
                     <h1>{post?.title.toUpperCase()}</h1>
                 </CoverDiv>
 
-                <PostContent>
+                <PostContainer>
                     <PostInfos isLiked={isLiked?.length} likeStatus={likeStatus}>
                         <div className="authorDiv">
                             <img src={post?.admins?.photo} alt={"imagem do perfil do autor do post"} />
@@ -136,16 +137,21 @@ export default function PostPage() {
                         </div>
                     </PostInfos>
 
-                    <PostText>
-                        {formatedText?.map((item, index) => (
-                            <span key={index}>
-                                {item}
-                                <br />
-                            </span>
-                        ))}
-                    </PostText>
-                </PostContent>
-            </PostContainer>
+                    <PostContent> 
+                        <PostText>
+                            {formatedText?.map((item, index) => (
+                                <span key={index}>
+                                    {item}
+                                    <br />
+                                </span>
+                            ))}
+
+                        </PostText>
+
+                        <PostSuggestions postId={postId} topicId={post?.topics?.id} topicName={post?.topics?.name}/>
+                    </PostContent>
+                </PostContainer>
+            </MidContent>
 
             <Footer />
         </Container>
@@ -155,7 +161,7 @@ export default function PostPage() {
 //Styled Components
 const Container = styled.div``;
 
-const PostContainer = styled.div`
+const MidContent = styled.div`
     display: flex;
     flex-direction: column;
     gap: 100px;
@@ -205,7 +211,7 @@ const CoverDiv = styled.div`
     }
 `;
 
-const PostContent = styled.div`
+const PostContainer = styled.div`
     display: flex;
     flex-direction: column;
     gap: 40px;
@@ -354,14 +360,20 @@ const PostText = styled.div`
     display: flex;
     flex-direction: column;
     width: 41.9%;
-    margin: 0 auto;
     font-family: "Poppins";
     font-style: normal;
     font-weight: 400;
     font-size: 20px;
     line-height: 30px;
-    display: flex;
     align-items: center;
     text-align: justify;
     color: #000000;
+`;
+
+const PostContent = styled.div`
+    display: flex;
+    width: auto;
+    gap: 60px;
+    padding-right: 4.4%;
+    justify-content: end;
 `;
