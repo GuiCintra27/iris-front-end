@@ -5,7 +5,7 @@ import DataFilter from "../../components/blog/createdAtFilter";
 import Header from "../../components/header/header";
 import Post from "./post";
 import dayjs from "dayjs";
-import { useQueryParam, ArrayParam, withDefault } from "use-query-params";
+import { useQueryParam, ArrayParam, withDefault, StringParam } from "use-query-params";
 import CustomSearchBar from "../../components/blog/searchBar";
 import UIInfiniteScroll from "../../components/blog/infiniteScroller";
 import { useFilteredPosts } from "../../hooks/api/usePosts";
@@ -17,7 +17,7 @@ const Filters = withDefault(ArrayParam, []);
 
 export default function Blog({ page }) {
     const [filteredArray, setFilteredArray] = useQueryParam("filter", Filters);
-    const [inputFilterValue, setInputFilterValue] = useQueryParam("search", String);
+    const [inputFilterValue, setInputFilterValue] = useQueryParam("search", StringParam);
     const [status, setStatus] = useState(true);
     const [pageCount, setPageCount] = useState(1);
     const [throttle, setThrottle] = useState(true);
