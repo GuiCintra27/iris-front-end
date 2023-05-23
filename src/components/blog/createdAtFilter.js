@@ -7,26 +7,20 @@ export default function DataFilter({ orderPost, setOrderPost, setStatus, showFil
         {
             id: 1,
             value: "desc",
-            name: "Mais Recente"
-        }, 
+            name: "Mais Recente",
+        },
         {
             id: 2,
             value: "asc",
-            name: "Mais Antigo"
+            name: "Mais Antigo",
         },
     ];
 
     function selectFilter(value) {
-        setPosts(undefined);
-        
         if (!orderPost.includes(value)) {
-            let newArray = [value];
-            setOrderPost(newArray);
-            setStatus([]);
-        }
+            setPosts(undefined);
 
-        if (orderPost.includes(value)) {
-            let newArray = orderPost.filter((v) => v !== value);
+            let newArray = [value];
             setOrderPost(newArray);
             setStatus([]);
         }
@@ -64,7 +58,7 @@ export default function DataFilter({ orderPost, setOrderPost, setStatus, showFil
 
 //Styled Components
 const Container = styled.div`
-    transform: ${ props => props.showFilters ? "translate(0px, 0%)" : "translate(0px, -100%)" };
+    transform: ${(props) => (props.showFilters ? "translate(0px, 0%)" : "translate(0px, -100%)")};
     display: flex;
     gap: 20px;
     flex-direction: column;
@@ -73,7 +67,7 @@ const Container = styled.div`
     transition: 1s;
 
     h1 {
-        font-family: 'Poppins';
+        font-family: "Poppins";
         font-style: normal;
         font-weight: 400;
         font-size: 18px;
@@ -93,7 +87,6 @@ const Data = styled.li`
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: blue;
     height: 32px;
     width: fit-content;
     font-family: "Poppins";

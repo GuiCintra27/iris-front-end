@@ -23,7 +23,7 @@ export default function Blog({ page }) {
     const [throttle, setThrottle] = useState(true);
     const { posts, postsAct, postsLoading, setPosts } = useFilteredPosts();
     const [showFilters, setShowFilters] = useState(false);
-    const [orderPost, setOrderPost] = useState([]);
+    const [orderPost, setOrderPost] = useState(["desc"]);
     const orderValue = !orderPost[0] ? "desc" : orderPost[0];
 
     //eslint-disable-next-line
@@ -103,12 +103,14 @@ export default function Blog({ page }) {
                     orderPost={orderPost}
                     setOrderPost={setOrderPost}
                     setStatus={setStatus}
+                    setPosts={setPosts}
                 />
                 <TopicsFilter
                     showFilters={showFilters}
                     filteredArray={filteredArray}
                     setFilteredArray={setFilteredArray}
                     setStatus={setStatus}
+                    setPosts={setPosts}
                 />
             </FilterArea>
 
