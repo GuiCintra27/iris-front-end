@@ -82,7 +82,7 @@ export async function getPostComments(postId) {
 
 export async function createPostComment(postId, text) {
     const body = { postId, text };
-    const { token } = JSON.parse(localStorage.getItem("userData"));
+    const { token } = JSON.parse(localStorage.getItem("userData") ? "{}" : localStorage.getItem("userData"));
     const headers = { Authorization: `Bearer ${token}` };
 
     try {

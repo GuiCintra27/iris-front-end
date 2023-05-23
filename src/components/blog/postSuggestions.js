@@ -4,11 +4,13 @@ import IrisLogo from "../../assets/Icons/logo.png";
 import whiteLogo from "../../assets/Icons/logoWhite.png";
 import styled from "styled-components";
 import useTopics from "../../hooks/api/useTopics";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function PostSuggestions({ postId, topicId, topicName }) {
     const [suggestions, setSuggestions] = useState([]);
     const [otherTopics, setOtherTopics] = useState([]);
     const { topicsData } = useTopics();
+    const navigate = useNavigate();
 
     useEffect(() => {
         async function getSuggestions() {
@@ -20,9 +22,9 @@ export default function PostSuggestions({ postId, topicId, topicName }) {
 
         if (topicId) { 
             getSuggestions();
-            setOtherTopics(topicsData.filter((t) => t.id !== topicId).sort(() => Math.random() - 0.5).slice(0, 3));
+            setOtherTopics(topicsData?.filter((t) => t.id !== topicId).sort(() => Math.random() - 0.5).slice(0, 3));
         }        
-    }, [topicId, topicsData]);
+    }, [topicId, topicsData, postId]);
 
     return (
         <Container>
@@ -39,7 +41,10 @@ export default function PostSuggestions({ postId, topicId, topicName }) {
 
                                 <div>
                                     <span> <img src={IrisLogo} alt="logo iniciativa iris"/> {s.topics.name} </span>
-                                    <h2>{s.title}</h2>
+                                    
+                                    <Link to={"/blog/post/" + s.id}>
+                                        {s.title}
+                                    </Link>
                                 </div>
                             </Suggestions>
                         );
@@ -58,7 +63,7 @@ export default function PostSuggestions({ postId, topicId, topicName }) {
                     {
                         otherTopics.map((ot, idx) => {
                             return (
-                                <li key={idx}>
+                                <li key={idx} onClick={() => { navigate(`/blog?filter=${ot.id}`); }}>
                                     {ot.name}
                                 </li>);
                         })
@@ -74,7 +79,7 @@ export default function PostSuggestions({ postId, topicId, topicName }) {
 const Container = styled.div`
     position: sticky;
     top: 20px;
-    width: fit-content;
+    width: 318px;
     height: fit-content;
 `;
 
@@ -88,6 +93,7 @@ const Title = styled.div`
     display: flex;
     align-items: center;
     margin-bottom: 20px;
+    flex-wrap: wrap;
 
     span {
         color: #FF408E;
@@ -136,7 +142,7 @@ const Suggestions = styled.li`
             }
         }
 
-        h2 {
+        a {
             font-family: 'Inter';
             font-style: normal;
             font-weight: 700;
@@ -145,13 +151,13 @@ const Suggestions = styled.li`
             width: fit-content;
             display: flex;
             align-items: center;
+            color: #000000;
 
             &:hover {
                 color: #FF408E;
                 cursor: pointer
             }
         }
-
     }
 `;
 
@@ -172,6 +178,11 @@ const OtherTopicsList = styled.ul`
         display: flex;
         align-items: center;
         color: #FFFFFF;
+
+        &:hover {
+            color: #FF86B7;
+            cursor: pointer
+        }
     }
 `;
 

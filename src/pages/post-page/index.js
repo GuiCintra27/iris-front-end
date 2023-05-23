@@ -21,6 +21,15 @@ import { useValue } from "../../hooks/useValue";
 import EmojiPicker, { EmojiStyle } from "emoji-picker-react";
 import PostSuggestions from "../../components/blog/postSuggestions";
 
+const FilterTooltip = styled(({ className, ...props }) => <Tooltip {...props} classes={{ popper: className }} />)(
+    ({ theme }) => ({
+        [`& .${tooltipClasses.tooltip}`]: {
+            color: "white",
+            fontSize: 13,
+        },
+    }),
+);
+
 export default function PostPage() {
     const userId = useUserId();
     const { postId } = useParams();
@@ -36,8 +45,7 @@ export default function PostPage() {
     });
     const isLiked = likes?.filter((l) => l.userId === userId);
     const navigate = useNavigate();
-
-    const { userData: { user } } = useContext(UserContext);
+    const { userData } = useContext(UserContext);
     const { postComments, getPostComments } = usePostComments();
     const { createPostComment, createCommentsLoading } = useCreatePostComment();
     const { deletePostComment, deleteCommentsLoading } = useDeletePostComment();
@@ -51,7 +59,7 @@ export default function PostPage() {
         if (!createCommentsLoading || !deleteCommentsLoading) {
             getPostComments(postId);
         }
-    }, [createCommentsLoading, deleteCommentsLoading]);
+    }, [createCommentsLoading, deleteCommentsLoading, postId]);
 
     //eslint-disable-next-line
     useEffect(async () => {
@@ -60,21 +68,12 @@ export default function PostPage() {
                 await recentlyVisitedAct(postId, configRef.current);
             }
         } catch (err) {}
-    }, []);
+    }, [postId]);
 
     useEffect(() => {
         postAct(postId);
         likesAct(postId);
-    }, [status]);
-
-    const FilterTooltip = styled(({ className, ...props }) => <Tooltip {...props} classes={{ popper: className }} />)(
-        ({ theme }) => ({
-            [`& .${tooltipClasses.tooltip}`]: {
-                color: "white",
-                fontSize: 13,
-            },
-        }),
-    );
+    }, [status, postId]);
 
     async function setLikeOrDislike() {
         try {
@@ -182,7 +181,7 @@ export default function PostPage() {
                     </header>
 
                     <div className="comment-container">
-                        <label htmlFor="comment-box">{user.name}#{user.id}</label>
+                        { userData?.user && <label htmlFor="comment-box">{userData.user.name}#{userData.user.id}</label> }
                         <div className="box-container">
                             <textarea 
                                 name="comment-box" id="comment-box" rows="1" placeholder="Faça seu comentário..."
@@ -218,6 +217,7 @@ export default function PostPage() {
                                 />
                             }
                         </div>
+
                         <div className="sort">
                             <p 
                                 className={commentSort === "desc" && "selected"}
@@ -236,7 +236,7 @@ export default function PostPage() {
 
                     <div className="comments">
                         {postComments && sortComments(postComments).map((c) => 
-                            <CommentItem key={c.id} data={c} username={user.name} deletePostComment={deletePostComment}/>
+                            <CommentItem key={c.id} data={c} username={userData?.user?.name} deletePostComment={deletePostComment}/>
                         )}
                     </div>
 
@@ -249,7 +249,6 @@ export default function PostPage() {
 }
 
 // Styled Components
-
 const Container = styled.div``;
 
 const MidContent = styled.div`
@@ -304,6 +303,7 @@ const CoverDiv = styled.div`
 
 const PostContainer = styled.div`
     display: flex;
+    align-items: center;
     flex-direction: column;
     gap: 40px;
 `;
@@ -312,9 +312,8 @@ const PostInfos = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 40%;
-    margin-left: 10.95%;
-    width: 60%;
+    width: 55%;
+    margin-right: 13%;
 
     img {
         width: 60px;
@@ -407,6 +406,7 @@ const PostInfos = styled.div`
             display: flex;
             align-items: center;
             color: #000000;
+            width: fit-content;
 
             &:hover {
                 cursor: pointer;
@@ -467,10 +467,11 @@ const PostContent = styled.div`
     gap: 60px;
     padding-right: 4.4%;
     justify-content: end;
-`
+`;
 
 const PostCommentStyle = styled(PostText)`
     align-items: baseline;
+    margin: 0 auto;
 
     img {
         font-size: 12px;
