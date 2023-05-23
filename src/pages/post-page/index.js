@@ -36,9 +36,9 @@ export default function PostPage() {
     const [status, setStatus] = useState(true);
     const [likeStatus, setLikeStatus] = useState(false);
     const { postAct, post } = usePosts();
+    const { recentlyVisitedAct } = useRecentlyVisited();
     const { likesAct, likes } = useLikes();
     const formatedText = post?.text.split("\n");
-    const { recentlyVisitedAct } = useRecentlyVisited();
     const tokenRef = useRef(useToken());
     const configRef = useRef({
         headers: { Authorization: `Bearer ${tokenRef.current}` },
@@ -133,7 +133,13 @@ export default function PostPage() {
 
                         <div className="topicAndLikesDiv">
                             <FilterTooltip title={"Ir para a página do tópico"} arrow>
-                                <h2 onClick={() => { navigate(`/blog?filter=${post?.topics?.id}`); }}># <span> {post?.topics?.name}</span></h2>
+                                <h2
+                                    onClick={() => {
+                                        navigate(`/blog?filter=${post?.topics?.id}`);
+                                    }}
+                                >
+                                    # <span> {post?.topics?.name}</span>
+                                </h2>
                             </FilterTooltip>
 
                             <div className="heartDiv">
@@ -416,7 +422,6 @@ const PostInfos = styled.div`
         span {
             font-weight: 500;
         }
-
     }
 
     .authorDiv {

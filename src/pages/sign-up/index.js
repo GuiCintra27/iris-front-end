@@ -156,15 +156,16 @@ export default function SignUp() {
                     <form onSubmit={handleSubmit}>
                         {!secondPage ? (
                             <>
-                                <MaterialInputBox
-                                    type={"text"}
-                                    name={"name"}
-                                    value={data?.name || ""}
-                                    onChange={handleChange("name")}
-                                    label={signUpLoading? null : "Nome"}
-                                    required
-                                    disabled={signUpLoading}
-                                />
+                                {!tempData.name && (
+                                    <MaterialInputBox
+                                        type={"text"}
+                                        name={"name"}
+                                        value={data?.name || ""}
+                                        onChange={handleChange("name")}
+                                        required
+                                        disabled={signUpLoading}
+                                    />
+                                )}
 
                                 {!tempData.email && (
                                     <MaterialInputBox
@@ -173,7 +174,7 @@ export default function SignUp() {
                                         value={data?.email || ""}
                                         onChange={handleChange("email")}
                                         disabled={tempData.email || signUpLoading}
-                                        label={signUpLoading? null : "Email"}
+                                        label={"Email"}
                                         required
                                     />
                                 )}
@@ -181,7 +182,7 @@ export default function SignUp() {
                                 <MaterialInputBox
                                     type={"tel"}
                                     name={"phoneNumber"}
-                                    label={signUpLoading? null : "Número de Celular"}
+                                    label={signUpLoading ? null : "Número de Celular"}
                                     value={data?.phoneNumber || ""}
                                     onChange={phoneHandleChange("phoneNumber")}
                                     required
@@ -206,7 +207,7 @@ export default function SignUp() {
                                 <MaterialInputBox
                                     type={"password"}
                                     name={"password"}
-                                    label={signUpLoading? null : "Senha"}
+                                    label={signUpLoading ? null : "Senha"}
                                     value={data?.password || ""}
                                     onChange={handleChange("password")}
                                     required

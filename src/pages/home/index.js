@@ -6,6 +6,7 @@ import ParallaxBackground from "./background-section";
 import StatisticNumbers from "./statistic-numbers-section";
 import AboutSection from "./about-section";
 import TestimonialSection from "./testimonials-section";
+import HandleMobileWarning from "../../components/draw-backs/mobileWarning";
 
 export default function Home({ page }) {
     return (
@@ -24,6 +25,7 @@ export default function Home({ page }) {
             </Main>
 
             <Footer />
+            <HandleMobileWarning />
         </>
     );
 }
@@ -31,4 +33,11 @@ export default function Home({ page }) {
 const Main = styled.main`
     display: grid;
     grid-template-columns: 100%;
+    grid-template-rows: 84vh 65vh 110vh 230vh;
+
+    @media screen {
+        @media (max-width: 1280px) {
+            grid-template-rows: 84vh 65vh 110vh 300vh;
+        }
+    }
 `;

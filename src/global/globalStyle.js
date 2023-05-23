@@ -31,6 +31,15 @@ const GlobalStyle = createGlobalStyle`
     font-size: 14px;
   }
 
+  @media (max-width: 425px) {
+
+    .mobile-alert{
+    position: absolute;
+    top: 50px;
+    left: 5%;
+  }
+  }
+
   ::-webkit-scrollbar{
     width: 12px;
     height: 12px;
