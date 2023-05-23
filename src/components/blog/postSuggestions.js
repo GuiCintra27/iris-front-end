@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import IrisLogo from "../../assets/Icons/logo.png";
+import IrisLogo from "../../assets/Icons/logo.svg";
 import whiteLogo from "../../assets/Icons/logoWhite.png";
 import styled from "styled-components";
 import useTopics from "../../hooks/api/useTopics";
@@ -180,7 +180,6 @@ const OtherTopicsList = styled.ul`
         color: #FFFFFF;
 
         &:hover {
-            color: #FF86B7;
             cursor: pointer
         }
     }
@@ -211,7 +210,8 @@ const SecondSession = styled.div`
         position: absolute;
         width: 75px;
         height: 75px;
-        left: 71px;
+        left: 50%;
+        transform: translateX(-50%);
         top: -37px;
         background: #FFFFFF;
         box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);

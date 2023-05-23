@@ -312,8 +312,8 @@ const PostInfos = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 55%;
-    margin-right: 13%;
+    width: 60%;
+    margin-right: 18%;
 
     img {
         width: 60px;
@@ -450,7 +450,7 @@ const PostInfos = styled.div`
 const PostText = styled.div`
     display: flex;
     flex-direction: column;
-    width: 41.9%;
+    width: 800px;
     font-family: "Poppins";
     font-style: normal;
     font-weight: 400;
@@ -465,8 +465,7 @@ const PostContent = styled.div`
     display: flex;
     width: auto;
     gap: 60px;
-    padding-right: 4.4%;
-    justify-content: end;
+    padding-left: 20%;
 `;
 
 const PostCommentStyle = styled(PostText)`
