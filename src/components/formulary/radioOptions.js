@@ -1,10 +1,10 @@
 import { forwardRef } from "react";
 import styled from "styled-components";
 
-const RadioInput = forwardRef(function RadioInput({ label, name, value, onChange, disabled }, ref) {
+const RadioInput = forwardRef(function RadioInput({ label, ...props }, ref) {
     return (
         <Container>
-            <input type="radio" name={name} value={value} onClick={onChange} disabled={disabled} ref={ref} />
+            <input type="radio" {...props} ref={ref} />
             <p>{label}</p>
         </Container>
     );

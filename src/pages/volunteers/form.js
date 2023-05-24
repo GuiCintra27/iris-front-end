@@ -23,7 +23,7 @@ export default function VolunteerForm({ page }) {
     const { handleSubmit, handleChange, data, setData, errors, setErrors } = useForm({
         validations: FormValidations,
 
-        onSubmit: async(data) => {
+        onSubmit: async (data) => {
             const newData = {
                 linkedIn: data.linkedIn,
                 occupation: data.occupation,
@@ -141,20 +141,24 @@ export default function VolunteerForm({ page }) {
 
                     <h4 className="options-title">Você fez parte da Comunidade Íris?</h4>
                     <div className="options">
-                        <RadioInput
-                            label={"Sim"}
-                            name={"irisParticipant"}
-                            value={"Sim"}
-                            onChange={handleChange("irisParticipant")}
-                            disabled={volunteerLoading}
-                        />
-                        <RadioInput
-                            label={"Não"}
-                            name={"irisParticipant"}
-                            value={"Não"}
-                            onChange={handleChange("irisParticipant")}
-                            disabled={volunteerLoading}
-                        />
+                        {!volunteerLoading && (
+                            <>
+                                <RadioInput
+                                    label={"Sim"}
+                                    name={"irisParticipant"}
+                                    value={"Sim"}
+                                    onChange={handleChange("irisParticipant")}
+                                    disabled={volunteerLoading}
+                                />
+                                <RadioInput
+                                    label={"Não"}
+                                    name={"irisParticipant"}
+                                    value={"Não"}
+                                    onChange={handleChange("irisParticipant")}
+                                    disabled={volunteerLoading}
+                                />
+                            </>
+                        )}
                     </div>
 
                     <Select
@@ -168,16 +172,17 @@ export default function VolunteerForm({ page }) {
 
                     <h4 className="options-title">Como você se identifica?</h4>
                     <div className="options">
-                        {volunteerData?.skinColors.map((item, key) => (
-                            <RadioInput
-                                label={item.name}
-                                name={"skinColorId"}
-                                value={item.id}
-                                onChange={handleChange("skinColorId")}
-                                key={key}
-                                disabled={volunteerLoading}
-                            />
-                        ))}
+                        {!volunteerLoading &&
+                            volunteerData?.skinColors.map((item, key) => (
+                                <RadioInput
+                                    label={item.name}
+                                    name={"skinColorId"}
+                                    value={item.id}
+                                    onChange={handleChange("skinColorId")}
+                                    key={key}
+                                    disabled={volunteerLoading}
+                                />
+                            ))}
                     </div>
 
                     <TextArea
@@ -205,21 +210,24 @@ export default function VolunteerForm({ page }) {
                         são verdadeiras!
                     </h4>
                     <div className="options">
-                        <RadioInput
-                            label={"Sim"}
-                            name={"authorization"}
-                            value={"Sim"}
-                            onChange={handleChange("authorization")}
-                            disabled={volunteerLoading}
-                        />
-
-                        <RadioInput
-                            label={"Não"}
-                            name={"authorization"}
-                            value={"Não"}
-                            onChange={handleChange("authorization")}
-                            disabled={volunteerLoading}
-                        />
+                        {!volunteerLoading && (
+                            <>
+                                <RadioInput
+                                    label={"Sim"}
+                                    name={"authorization"}
+                                    value={"Sim"}
+                                    onChange={handleChange("authorization")}
+                                    disabled={volunteerLoading}
+                                />
+                                <RadioInput
+                                    label={"Não"}
+                                    name={"authorization"}
+                                    value={"Não"}
+                                    onChange={handleChange("authorization")}
+                                    disabled={volunteerLoading}
+                                />
+                            </>
+                        )}
                     </div>
 
                     <Buttons disabled={volunteerLoading || volunteerDataLoading} />
