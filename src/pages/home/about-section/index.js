@@ -151,6 +151,7 @@ const About = styled.div`
 
     .Text {
         width: 50%;
+        min-width: 350px;
         max-width: 606px;
         height: 50%;
         height: 591px;
@@ -219,6 +220,7 @@ const About = styled.div`
             margin-top: 7.5%;
             margin-inline: auto;
             width: 90%;
+            font-size: clamp(1.3rem, 1.2vw, 1.7rem);
         }
     }
 `;

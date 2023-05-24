@@ -18,7 +18,10 @@ export default function TestimonialSection(props) {
                         <p>VEJA O QUE FALAM SOBRE NÓS</p>
                     </div>
                     <div className="see-what-they-say-about-us">
-                        <h1>Veja o que <span>voluntários</span> e <span>ex-estudantes</span> tem a dizer sobre a <span>Íris</span> </h1>
+                        <h1>
+                            Veja o que <span>voluntários</span> e <span>ex-estudantes</span> tem a dizer sobre a{" "}
+                            <span>Íris</span>{" "}
+                        </h1>
                     </div>
                     <div className="call-to-action">
                         <p>Seja parte da iniciativa e venha construir um presente mais amoroso!</p>
@@ -47,7 +50,7 @@ export default function TestimonialSection(props) {
 
 const StyledTestimonialSection = styled.div`
     display: flex;
-    height: 840px;
+    height: 100%;
     width: 100%;
     padding: 80px 5vw 60px 9.5vw;
     gap: 7.5%;
@@ -179,13 +182,17 @@ const StyledTestimonialSection = styled.div`
     @media (max-width: 1280px) {
         & {
             flex-direction: column;
-            height: 1200px;
             align-items: center;
+            height: 100%;
         }
         .left-side-container {
             flex-direction: column;
             align-items: center;
             width: 100%;
+
+            p{
+                text-align: center;
+            }
 
             .introduction {
                 margin-bottom: 5vh;
@@ -202,14 +209,32 @@ const StyledTestimonialSection = styled.div`
         .right-side-container {
             width: 100%;
             height: 200px;
-            .slider-wrapper {
-                height: 0 !important;
-            }
-            .control-dots {
-                top: 78% !important;
-            }
-            button {
-                top: 90% !important;
+
+            .testimonial-carousel {
+                width: 100%;
+                .carousel {
+                    height: 740px;
+                    .slider-wrapper {
+                        width: 700px !important;
+                        height: auto;
+                        background-color: red;
+                        cursor: pointer;
+                        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+                        border: 3px solid var(--white);
+                        border-radius: 18px;
+                        ul {
+                            height: 100%;
+                        }
+                    }
+                }
+                .control-dots {
+                    top: 78% !important;
+                    display: none;
+                }
+                button {
+                    top: 90% !important;
+                    display: none;
+                }
             }
         }
     }
