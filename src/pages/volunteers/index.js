@@ -52,7 +52,7 @@ export default function Volunteers({ page }) {
         {
             title: "Requisitos", paragraphs: [
                 {
-                    subtitle: "Podem  participar do nosso processo seletivo as pessoas que:", list: [
+                    subtitle: "Podem  participar do processo seletivo as pessoas que:", list: [
                         "Tenham 16 anos ou mais;",
                         "Disponham de disponibilidade de 3 a 5 horas semanais;",
                         "Sejam LGBTQIA+;",
@@ -65,7 +65,7 @@ export default function Volunteers({ page }) {
         },
         {
             title: "Cronogramas", paragraphs: [
-                { subtitle: "Inscrições fechadas", text: "As inscrições para voluntariado no processo seletivo de 2022 já acabaram, mas voltarão a acontecer em 2023. O cronograma será divulgado conjuntamente com o edital." },
+                { subtitle: "Inscrições fechadas", text: "No momento as inscrições para voluntariado não estão abertas. Fique atento às redes sociais da Iniciativa Íris pois quando novos editais forem abertos, serão divulgados por lá, primeiramente" },
                 { text: "Caso queira ajudar a Iniciativa com o seu trabalho mesmo nesse período, preencha o formulário do banco de talentos." }
             ]
         },
