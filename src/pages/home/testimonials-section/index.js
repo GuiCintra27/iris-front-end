@@ -190,7 +190,7 @@ const StyledTestimonialSection = styled.div`
             align-items: center;
             width: 100%;
 
-            p{
+            p {
                 text-align: center;
             }
 
