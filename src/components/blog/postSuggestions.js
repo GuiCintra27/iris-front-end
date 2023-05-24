@@ -61,7 +61,7 @@ export default function PostSuggestions({ postId, topicId, topicName }) {
 
                 <OtherTopicsList>
                     {
-                        otherTopics.map((ot, idx) => {
+                        otherTopics && otherTopics.map((ot, idx) => {
                             return (
                                 <li key={idx} onClick={() => { navigate(`/blog?filter=${ot.id}`); }}>
                                     {ot.name}

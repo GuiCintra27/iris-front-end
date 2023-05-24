@@ -89,7 +89,7 @@ export async function createPostComment(postId, text) {
         const response = await api.post("/posts/comments", body, { headers });
         return response.data;
     } else {
-        throw { response: { status: 401 } };
+        throw Error("Unauthorized");
     }
 }
 

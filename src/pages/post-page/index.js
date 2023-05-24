@@ -42,7 +42,7 @@ export default function PostPage() {
     const [loadingLike, setLoadingLike] = useState(false);
     const { postId } = useParams();
     const [status, setStatus] = useState(true);
-    const [likeStatus, setLikeStatus] = useState(false);
+    const [likeStatus, setLikeStatus] = useState("none");
     const { postAct, post } = usePosts();
     const { recentlyVisitedAct } = useRecentlyVisited();
     const { likesAct, likes } = useLikes();
@@ -108,10 +108,10 @@ export default function PostPage() {
     }
 
     function likeAnimation() {
-        setLikeStatus(true);
+        setLikeStatus("initial");
 
         setTimeout(() => {
-            setLikeStatus(false);
+            setLikeStatus("none");
         }, 1000);
     }
 
@@ -119,7 +119,7 @@ export default function PostPage() {
         try {
             await createPostComment(postId, commentText);
         } catch (error) {
-            if (error.response?.status === 401) {
+            if (error.response?.status === 401 || error?.message === "Unauthorized") {
                 navigate("/sign-in");
 
                 Swal.fire({
@@ -135,7 +135,7 @@ export default function PostPage() {
                 });
             }
         }
-        
+
         setCommentText("");
         commentRef.current.style.height = "55px";
         setDisplayEmojis(false);
@@ -270,12 +270,21 @@ export default function PostPage() {
                         </div>
 
                         <div className="sort">
-                            <p className={commentSort === "desc" && "selected"} onClick={() => setCommentSort("desc")}>
-                                Mais Recentes
-                            </p>
-                            <p className={commentSort === "asc" && "selected"} onClick={() => setCommentSort("asc")}>
-                                Mais Antigos
-                            </p>
+                            {commentSort === "desc" ? (
+                                <>
+                                    <p className={"selected"} onClick={() => setCommentSort("desc")}>
+                                        Mais Recentes
+                                    </p>
+                                    <p onClick={() => setCommentSort("asc")}>Mais Antigos</p>
+                                </>
+                            ) : (
+                                <>
+                                    <p onClick={() => setCommentSort("desc")}>Mais Recentes</p>
+                                    <p className={"selected"} onClick={() => setCommentSort("asc")}>
+                                        Mais Antigos
+                                    </p>
+                                </>
+                            )}
                         </div>
                     </div>
 
@@ -372,7 +381,7 @@ const PostInfos = styled.div`
     }
 
     .heart {
-        display: ${(props) => (props.likeStatus ? "initial" : "none")};
+        display: ${(props) => props.likeStatus};
         position: absolute;
         width: 17px;
         height: 17px;
