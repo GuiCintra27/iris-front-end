@@ -35,7 +35,6 @@ export default function Blog({ page }) {
     const [orderPost, setOrderPost] = useState(["desc"]);
     const orderValue = !orderPost[0] ? "desc" : orderPost[0];
 
-    console.log(typeof posts);
     //eslint-disable-next-line
     useEffect(async () => {
         const filteredArray = parseFilteredArray();
