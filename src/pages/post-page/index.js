@@ -3,7 +3,14 @@ import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import Footer from "../../components/footer/footer";
 import Header from "../../components/header/header";
-import { useCreatePostComment, useDeletePostComment, useLikes, usePostComments, usePosts, useRecentlyVisited } from "../../hooks/api/usePosts";
+import {
+    useCreatePostComment,
+    useDeletePostComment,
+    useLikes,
+    usePostComments,
+    usePosts,
+    useRecentlyVisited,
+} from "../../hooks/api/usePosts";
 import whiteArrow from "../../assets/Icons/white-arrow.png";
 import dayjs from "dayjs";
 import { BsHeartFill, BsHeart } from "react-icons/bs";
@@ -19,12 +26,24 @@ import { CommentItem } from "./commentItem";
 import UserContext from "../../contexts/UserContext";
 import { useValue } from "../../hooks/useValue";
 import EmojiPicker, { EmojiStyle } from "emoji-picker-react";
+import PostSuggestions from "../../components/blog/postSuggestions";
+import luis from "../../assets/Fundadores/luis.png";
+
+const FilterTooltip = styled(({ className, ...props }) => <Tooltip {...props} classes={{ popper: className }} />)(
+    ({ theme }) => ({
+        [`& .${tooltipClasses.tooltip}`]: {
+            color: "white",
+            fontSize: 13,
+        },
+    }),
+);
 
 export default function PostPage() {
     const userId = useUserId();
+    const [loadingLike, setLoadingLike] = useState(false);
     const { postId } = useParams();
     const [status, setStatus] = useState(true);
-    const [likeStatus, setLikeStatus] = useState(false);
+    const [likeStatus, setLikeStatus] = useState("none");
     const { postAct, post } = usePosts();
     const { recentlyVisitedAct } = useRecentlyVisited();
     const { likesAct, likes } = useLikes();
@@ -35,8 +54,7 @@ export default function PostPage() {
     });
     const isLiked = likes?.filter((l) => l.userId === userId);
     const navigate = useNavigate();
-
-    const { userData: { user } } = useContext(UserContext);
+    const { userData } = useContext(UserContext);
     const { postComments, getPostComments } = usePostComments();
     const { createPostComment, createCommentsLoading } = useCreatePostComment();
     const { deletePostComment, deleteCommentsLoading } = useDeletePostComment();
@@ -44,13 +62,13 @@ export default function PostPage() {
     const [displayEmojis, setDisplayEmojis] = useState(false);
     const [commentSort, setCommentSort] = useState("desc");
     const commentRef = useRef();
-    const sortComments = (arr) => commentSort === "asc" ? arr.toReversed() : arr;
+    const sortComments = (arr) => (commentSort === "asc" ? arr.toReversed() : arr);
 
     useEffect(() => {
         if (!createCommentsLoading || !deleteCommentsLoading) {
             getPostComments(postId);
         }
-    }, [createCommentsLoading, deleteCommentsLoading]);
+    }, [createCommentsLoading, deleteCommentsLoading, postId]);
 
     //eslint-disable-next-line
     useEffect(async () => {
@@ -59,21 +77,12 @@ export default function PostPage() {
                 await recentlyVisitedAct(postId, configRef.current);
             }
         } catch (err) {}
-    }, []);
+    }, [postId]);
 
     useEffect(() => {
         postAct(postId);
         likesAct(postId);
-    }, [status]);
-
-    const FilterTooltip = styled(({ className, ...props }) => <Tooltip {...props} classes={{ popper: className }} />)(
-        ({ theme }) => ({
-            [`& .${tooltipClasses.tooltip}`]: {
-                color: "white",
-                fontSize: 13,
-            },
-        }),
-    );
+    }, [status, postId]);
 
     async function setLikeOrDislike() {
         try {
@@ -85,29 +94,59 @@ export default function PostPage() {
 
             setStatus([]);
         } catch (error) {
-            navigate("/sign-in");
+            if (error.response?.status === 401) {
+                navigate("/sign-in");
 
-            Swal.fire({
-                icon: "error",
-                title: "Você precisa estar logado!",
-                text: "Como vamos saber quem deixou o like? :)",
-            });
+                Swal.fire({
+                    icon: "error",
+                    title: "Você precisa estar logado para realizar esta ação!",
+                    text: "Como vamos saber quem deixou o like? :)",
+                });
+            }
+        } finally {
+            setLoadingLike(false);
         }
     }
 
     function likeAnimation() {
-        setLikeStatus(true);
+        setLikeStatus("initial");
 
         setTimeout(() => {
-            setLikeStatus(false);
+            setLikeStatus("none");
         }, 1000);
     }
-    
+
+    async function sendComment() {
+        try {
+            await createPostComment(postId, commentText);
+        } catch (error) {
+            if (error.response?.status === 401 || error?.message === "Unauthorized") {
+                navigate("/sign-in");
+
+                Swal.fire({
+                    icon: "error",
+                    title: "Você precisa estar logado para realizar esta ação!",
+                });
+
+                return;
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Não foi possível registrar seu comentário!",
+                });
+            }
+        }
+
+        setCommentText("");
+        commentRef.current.style.height = "55px";
+        setDisplayEmojis(false);
+    }
+
     return (
         <Container>
             <Header />
 
-            <PostContainer>
+            <MidContent>
                 <CoverDiv postCover={post?.postCover}>
                     <img
                         onClick={() => {
@@ -117,13 +156,24 @@ export default function PostPage() {
                         src={whiteArrow}
                         alt={"seta branca para voltar de página"}
                     />
-                    <h1>{post?.title.toUpperCase()}</h1>
+                    <h1
+                        postCover={post?.postCover}
+                        onClick={() => {
+                            // eslint-disable-next-line no-restricted-globals
+                            history.back();
+                        }}
+                    >
+                        {post?.title.toUpperCase()}
+                    </h1>
                 </CoverDiv>
 
-                <PostContent>
+                <PostContainer>
                     <PostInfos isLiked={isLiked?.length} likeStatus={likeStatus}>
                         <div className="authorDiv">
-                            <img src={post?.admins?.photo} alt={"imagem do perfil do autor do post"} />
+                            <img
+                                src={post?.admins?.name === "Luís Guilherme" ? luis : post?.admins?.photo}
+                                alt={"imagem do perfil do autor do post"}
+                            />
 
                             <div className="author">
                                 <h2>Escrito por {post?.admins?.name}</h2>
@@ -146,14 +196,20 @@ export default function PostPage() {
                                 {isLiked?.length === 0 ? (
                                     <BsHeart
                                         onClick={() => {
-                                            likeAnimation();
-                                            setLikeOrDislike();
+                                            if (!loadingLike) {
+                                                setLoadingLike(true);
+                                                likeAnimation();
+                                                setLikeOrDislike();
+                                            }
                                         }}
                                     />
                                 ) : (
                                     <BsHeartFill
                                         onClick={() => {
-                                            setLikeOrDislike();
+                                            if (!loadingLike) {
+                                                setLoadingLike(true);
+                                                setLikeOrDislike();
+                                            }
                                         }}
                                     />
                                 )}
@@ -165,84 +221,98 @@ export default function PostPage() {
                         </div>
                     </PostInfos>
 
-                    <PostText>
-                        {formatedText?.map((item, index) => (
-                            <span key={index}>
-                                {item}
-                                <br />
-                            </span>
-                        ))}
-                    </PostText>
+                    <PostContent>
+                        <PostText>
+                            {formatedText?.map((item, index) => (
+                                <span key={index}>
+                                    {item}
+                                    <br />
+                                </span>
+                            ))}
+                        </PostText>
 
-                    <PostCommentStyle>
-                        <header className="comment-header">
-                            <img src={commentIcon} alt="Message Icon" />
-                            <h3>Comentários</h3>
-                        </header>
+                        <PostSuggestions postId={postId} topicId={post?.topics?.id} topicName={post?.topics?.name} />
+                    </PostContent>
+                </PostContainer>
 
-                        <div className="comment-container">
-                            <label htmlFor="comment-box">{user.name}#{user.id}</label>
-                            <div className="box-container">
-                                <textarea 
-                                    name="comment-box" id="comment-box" rows="1" placeholder="Faça seu comentário..."
-                                    ref={commentRef}
-                                    value={commentText}
-                                    onChange={updateCommentText}
-                                    onInput={(e) => {
-                                        const textarea = e.target;
-                                        textarea.style.height = "";
-                                        textarea.style.height = Math.min(textarea.scrollHeight+2, 300) + "px";
+                <PostCommentStyle>
+                    <header className="comment-header">
+                        <img src={commentIcon} alt="Message Icon" />
+                        <h3>Comentários</h3>
+                    </header>
+
+                    <div className="comment-container">
+                        {userData?.user && (
+                            <label htmlFor="comment-box">
+                                {userData.user.name}#{userData.user.id}
+                            </label>
+                        )}
+                        <div className="box-container">
+                            <textarea
+                                name="comment-box"
+                                id="comment-box"
+                                rows="1"
+                                placeholder="Faça seu comentário..."
+                                ref={commentRef}
+                                value={commentText}
+                                onChange={updateCommentText}
+                                onInput={(e) => {
+                                    const textarea = e.target;
+                                    textarea.style.height = "";
+                                    textarea.style.height = Math.min(textarea.scrollHeight + 2, 300) + "px";
+                                }}
+                                onClick={() => setDisplayEmojis(false)}
+                            />
+                            <div className="options">
+                                <img src={smileIcon} alt="Emojis" onClick={() => setDisplayEmojis(!displayEmojis)} />
+                                <img src={sendIcon} alt="Send" onClick={sendComment} />
+                            </div>
+                            {displayEmojis && (
+                                <EmojiPicker
+                                    autoFocusSearch={false}
+                                    previewConfig={{ showPreview: false }}
+                                    searchDisabled
+                                    height="350px"
+                                    emojiStyle={EmojiStyle.NATIVE}
+                                    onEmojiClick={(emojiData) => {
+                                        setCommentText((t) => t + emojiData.emoji);
                                     }}
-                                    onClick={() => setDisplayEmojis(false)}
                                 />
-                                <div className="options">
-                                    <img src={smileIcon} alt="Emojis" onClick={() => setDisplayEmojis(!displayEmojis)}/>
-                                    <img src={sendIcon} alt="Send" onClick={() => {
-                                        createPostComment(postId, commentText);
-                                        setCommentText("");
-                                        commentRef.current.style.height = "55px";
-                                        setDisplayEmojis(false);
-                                    }}/>
-                                </div>
-                                {displayEmojis && 
-                                    <EmojiPicker
-                                        autoFocusSearch={false}
-                                        previewConfig={{ showPreview: false }}
-                                        searchDisabled
-                                        height="350px"
-                                        emojiStyle={EmojiStyle.NATIVE}
-                                        onEmojiClick={emojiData => {
-                                            setCommentText(t => t + emojiData.emoji);
-                                        }}
-                                    />
-                                }
-                            </div>
-                            <div className="sort">
-                                <p 
-                                    className={commentSort === "desc" && "selected"}
-                                    onClick={() => setCommentSort("desc")}
-                                >
-                                    Mais Recentes
-                                </p>
-                                <p 
-                                    className={commentSort === "asc" && "selected"}
-                                    onClick={() => setCommentSort("asc")}
-                                >
-                                    Mais Antigos
-                                </p>
-                            </div>
-                        </div>
-
-                        <div className="comments">
-                            {postComments && sortComments(postComments).map((c) => 
-                                <CommentItem key={c.id} data={c} username={user.name} deletePostComment={deletePostComment}/>
                             )}
                         </div>
 
-                    </PostCommentStyle>
-                </PostContent>
+                        <div className="sort">
+                            {commentSort === "desc" ? (
+                                <>
+                                    <p className={"selected"} onClick={() => setCommentSort("desc")}>
+                                        Mais Recentes
+                                    </p>
+                                    <p onClick={() => setCommentSort("asc")}>Mais Antigos</p>
+                                </>
+                            ) : (
+                                <>
+                                    <p onClick={() => setCommentSort("desc")}>Mais Recentes</p>
+                                    <p className={"selected"} onClick={() => setCommentSort("asc")}>
+                                        Mais Antigos
+                                    </p>
+                                </>
+                            )}
+                        </div>
+                    </div>
 
-            </PostContainer>
+                    <div className="comments">
+                        {postComments &&
+                            sortComments(postComments).map((c) => (
+                                <CommentItem
+                                    key={c.id}
+                                    data={c}
+                                    username={userData?.user?.name}
+                                    deletePostComment={deletePostComment}
+                                />
+                            ))}
+                    </div>
+                </PostCommentStyle>
+            </MidContent>
 
             <Footer />
         </Container>
@@ -250,10 +320,9 @@ export default function PostPage() {
 }
 
 // Styled Components
-
 const Container = styled.div``;
 
-const PostContainer = styled.div`
+const MidContent = styled.div`
     display: flex;
     flex-direction: column;
     gap: 100px;
@@ -264,9 +333,6 @@ const CoverDiv = styled.div`
     background-size: 100% 100% !important;
     background: url(${(props) => props.postCover});
     box-shadow: inset 0px -100px 100px rgba(0, 0, 0, 0.25);
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
     background-size: cover;
     height: 530px;
     width: 100%;
@@ -291,6 +357,7 @@ const CoverDiv = styled.div`
     }
 
     h1 {
+        cursor: pointer;
         font-family: "Poppins";
         font-style: normal;
         font-weight: 700;
@@ -303,8 +370,9 @@ const CoverDiv = styled.div`
     }
 `;
 
-const PostContent = styled.div`
+const PostContainer = styled.div`
     display: flex;
+    align-items: center;
     flex-direction: column;
     gap: 40px;
 `;
@@ -313,9 +381,8 @@ const PostInfos = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 40%;
-    margin-left: 10.95%;
     width: 60%;
+    margin-right: 18%;
 
     img {
         width: 60px;
@@ -324,7 +391,7 @@ const PostInfos = styled.div`
     }
 
     .heart {
-        display: ${(props) => (props.likeStatus ? "initial" : "none")};
+        display: ${(props) => props.likeStatus};
         position: absolute;
         width: 17px;
         height: 17px;
@@ -408,6 +475,7 @@ const PostInfos = styled.div`
             display: flex;
             align-items: center;
             color: #000000;
+            width: fit-content;
 
             &:hover {
                 cursor: pointer;
@@ -450,21 +518,27 @@ const PostInfos = styled.div`
 const PostText = styled.div`
     display: flex;
     flex-direction: column;
-    width: 41.9%;
-    margin: 0 auto;
+    width: 800px;
     font-family: "Poppins";
     font-style: normal;
     font-weight: 400;
     font-size: 20px;
     line-height: 30px;
-    display: flex;
     align-items: center;
     text-align: justify;
     color: #000000;
 `;
 
+const PostContent = styled.div`
+    display: flex;
+    width: auto;
+    gap: 60px;
+    padding-left: 20%;
+`;
+
 const PostCommentStyle = styled(PostText)`
     align-items: baseline;
+    margin: 0 auto;
 
     img {
         font-size: 12px;
@@ -478,7 +552,7 @@ const PostCommentStyle = styled(PostText)`
         align-items: flex-start;
         align-items: center;
         gap: 1rem;
-        border-bottom: 1px solid #D9D9D9;
+        border-bottom: 1px solid #d9d9d9;
         margin-bottom: 25px;
 
         h3 {
@@ -503,14 +577,14 @@ const PostCommentStyle = styled(PostText)`
             font-size: 18px;
             padding: 13px;
             padding-right: 90px;
-            border: 1px solid #D9D9D9;
+            border: 1px solid #d9d9d9;
             border-radius: 10px;
             width: 100%;
             resize: none;
             margin-bottom: 10px;
 
             ::placeholder {
-                color: #A8A8A8;
+                color: #a8a8a8;
             }
         }
 
@@ -537,7 +611,7 @@ const PostCommentStyle = styled(PostText)`
                 position: absolute;
                 right: 0;
                 top: -358px;
-                border: 1px solid #D9D9D9;
+                border: 1px solid #d9d9d9;
                 border-radius: 10px;
 
                 .epr-body {
@@ -556,7 +630,9 @@ const PostCommentStyle = styled(PostText)`
 
             .selected {
                 color: black;
-                :after { width: 100%; }
+                :after {
+                    width: 100%;
+                }
             }
 
             p {
@@ -568,7 +644,7 @@ const PostCommentStyle = styled(PostText)`
                 letter-spacing: 0.5px;
                 padding: 0 10px;
 
-                :after{
+                :after {
                     content: "";
                     position: absolute;
                     background-color: #ff3c78;
@@ -579,16 +655,15 @@ const PostCommentStyle = styled(PostText)`
                     transition: 0.3s;
                 }
 
-                :hover{
+                :hover {
                     color: black;
                 }
 
-                :hover:after{
+                :hover:after {
                     width: 100%;
                 }
             }
         }
-
     }
 
     .comments {

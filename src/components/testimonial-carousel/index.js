@@ -47,33 +47,28 @@ export default function TestimonialCarousel() {
     const testimonialCards = [
         {
             profilePicturePath: LumaPng,
-            name: "Luiza Guimarães",
-            testimonial: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus semper est vehicula mauris feugiat aliquam. Suspendisse vel tincidunt est. Duis fermentum, quam sed posuere condimentum, enim sem placerat libero, quis volutpat est ipsum eget mi. Donec nec neque tristique, pretium est quis, dignissim est. Aliquam at suscipit ex. Vestibulum non leo ante. Maecenas convallis ex sit amet imperdiet convallis. Suspendisse potenti. Praesent aliquet convallis laoreet. Fusce blandit viverra rutrum.",
+            name: "Rodrigo Borges",
+            testimonial: "Quando me inscrevi no processo seletivo da Íris, minha motivação principal era me conhecer. Conhecer a história da comunidade a qual faço parte. De amar, me expressar e de ser quem eu sou. A Iniciativa me proporcionou tudo isso. Ela não apenas compartilhou parte de minha história, ela me mudou. E não digo apenas em um âmbito interpessoal. A Íris me ajudou a conquistar uma bolsa integral de intercâmbio na Índia, resultado das potentes reuniões com o pilar de Oportunidades. Aqui criei amizades com pessoas extraordinárias, que diariamente buscam e fazem a mudança. Hoje, para mim, a Íris é uma família.",
         },
         {
             profilePicturePath: LumaPng,
-            name: "Luiza Guimarães",
-            testimonial: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus semper est vehicula mauris feugiat aliquam. Suspendisse vel tincidunt est. Duis fermentum, quam sed posuere condimentum, enim sem placerat libero, quis volutpat est ipsum eget mi. Donec nec neque tristique, pretium est quis, dignissim est. Aliquam at suscipit ex. Vestibulum non leo ante. Maecenas convallis ex sit amet imperdiet convallis. Suspendisse potenti. Praesent aliquet convallis laoreet. Fusce blandit viverra rutrum.",
+            name: "Andriély Fraga",
+            testimonial: "Foi uma experiência incrível! Eu aprendi muito e consegui conhecer diversas pessoas. Além do voluntariado, a Íris me mostrou o verdadeiro significado de familia. Familia é o nosso laço mais querido, não precisa ter o mesmo sangue basta sentir o mesmo amor. O meu tempo na Íris acumulou os momentos mais felizes que vivenciei. Pude viver momentos de compartilhamento perfeitos com a comunidade ao mesmo tempo que aprendi muito com os colaboradores da Íris. Eu descreveria essa iniciativa como uma troca de objetivos e realidades que se encontram no final com o mesmo propósito: ser um lugar de conforto.",
         },
         {
             profilePicturePath: LumaPng,
-            name: "Luiza Guimarães",
-            testimonial: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus semper est vehicula mauris feugiat aliquam. Suspendisse vel tincidunt est. Duis fermentum, quam sed posuere condimentum, enim sem placerat libero, quis volutpat est ipsum eget mi. Donec nec neque tristique, pretium est quis, dignissim est. Aliquam at suscipit ex. Vestibulum non leo ante. Maecenas convallis ex sit amet imperdiet convallis. Suspendisse potenti. Praesent aliquet convallis laoreet. Fusce blandit viverra rutrum.",
+            name: "Jay Oliveira",
+            testimonial: "As reuniões da Íris sempre foram muito receptivas e calorosas. Foram momentos para descontrair com temáticas super interessantes e atuais. Refletimos sobre nós mesmos e sobre os nossos amigos, pensando num futuro acolhedor e representativo. A comunidade Íris sempre vai estar guardada na minha memória. Foi uma experiência incrível!",
         },
         {
             profilePicturePath: LumaPng,
-            name: "Luiza Guimarães",
-            testimonial: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus semper est vehicula mauris feugiat aliquam. Suspendisse vel tincidunt est. Duis fermentum, quam sed posuere condimentum, enim sem placerat libero, quis volutpat est ipsum eget mi. Donec nec neque tristique, pretium est quis, dignissim est. Aliquam at suscipit ex. Vestibulum non leo ante. Maecenas convallis ex sit amet imperdiet convallis. Suspendisse potenti. Praesent aliquet convallis laoreet. Fusce blandit viverra rutrum.",
+            name: "Enio Ferreira",
+            testimonial: "Fazer parte do corpo de voluntários da Iniciativa Íris foi uma das melhores coisas que já aconteceram comigo. Poder ajudar a construir esse projeto tão especial, que traz um enorme senso comunitário e um local seguro para tantos jovens LGBTQIA+ é uma honra. A todos que já passaram nesse breve tempo que estamos na ativa, é muito significativo sentir que todos ainda estão conectados como uma família. Só posso sentir orgulho e muito carinho por essa iniciativa e por tantas experiências que me proporcionou. Espero que esse projeto que me impactou como pessoa, venha crescer ainda mais e impactar mais jovens.",
         },
         {
             profilePicturePath: LumaPng,
-            name: "Luiza Guimarães",
-            testimonial: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus semper est vehicula mauris feugiat aliquam. Suspendisse vel tincidunt est. Duis fermentum, quam sed posuere condimentum, enim sem placerat libero, quis volutpat est ipsum eget mi. Donec nec neque tristique, pretium est quis, dignissim est. Aliquam at suscipit ex. Vestibulum non leo ante. Maecenas convallis ex sit amet imperdiet convallis. Suspendisse potenti. Praesent aliquet convallis laoreet. Fusce blandit viverra rutrum.",
-        },
-        {
-            profilePicturePath: LumaPng,
-            name: "Luiza Guimarães",
-            testimonial: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus semper est vehicula mauris feugiat aliquam. Suspendisse vel tincidunt est. Duis fermentum, quam sed posuere condimentum, enim sem placerat libero, quis volutpat est ipsum eget mi. Donec nec neque tristique, pretium est quis, dignissim est. Aliquam at suscipit ex. Vestibulum non leo ante. Maecenas convallis ex sit amet imperdiet convallis. Suspendisse potenti. Praesent aliquet convallis laoreet. Fusce blandit viverra rutrum.",
+            name: "Enzo Ferreira",
+            testimonial: "A Iniciativa Íris é um pedaço de mim, uma verdadeira comunidade em que sempre há espaço para compartilhar medos, felicidades, angústias e vivências do dia de uma pessoa queer. Tenho certeza que qualquer pessoa que teve algum contato com a iniciativa tem um carinho pela entrega da equipe junto a interação da comunidade durantes estes dois primeiros ciclos.",
         },
     ];
 
@@ -145,6 +140,7 @@ const CarouselElement = styled.div`
 
     .testimonial-text {
         padding: 30px;
+        padding-top: 15px;
         display: flex;
         flex-direction: column;
         img{

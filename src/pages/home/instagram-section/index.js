@@ -3,9 +3,9 @@ import Posts from "./instagramPosts";
 
 export default function InstagramSection() {
     const urls = [
-        ["https://www.instagram.com/p/CYuypS-L0hb/", "https://www.instagram.com/p/CY-DNxprNTt/"],
-        ["https://www.instagram.com/p/CXj1uHOLSnc/", "https://www.instagram.com/p/CX1Gl8erNre/"],
-        ["https://www.instagram.com/p/CZUagLDro3D/", "https://www.instagram.com/p/CXeDJehLK3i/"],
+        ["https://www.instagram.com/p/CWyJX2hLipj/", "https://www.instagram.com/p/CSAfrXxLNFh/"],
+        ["https://www.instagram.com/p/CVljqO4ryVx/", "https://www.instagram.com/p/CR7V1Dkrluf/"],
+        ["https://www.instagram.com/p/Cfm4tP6Ojt-/?hl=pt", "https://www.instagram.com/p/Cbvh0QrlVrw/"],
     ];
 
     return (
@@ -13,10 +13,10 @@ export default function InstagramSection() {
             <div id="Ig-text">
                 <h1>Iniciativa Íris</h1>
                 <p>
-                    Empoderando a juventude LGBTQIA+ brasileira e lutando por um presente mais inclusivo, visamos
-                    impactar o maior número de pessoas possíveis disseminando conhecimento sobre a causa LGBTQIA+ para o
-                    público geral e oferecendo capacitação social e acadêmica, além de auxílio psicológico gratuito,
-                    para jovens LGBTQIA+.
+                Desenvolvendo a comunidade LGBTQIA+ brasileira e construindo um presente mais inclusivo. 
+                O objetivo da organização é transformar o Brasil em um lugar mais amoroso e inclusivo para a comunidade queer. 
+                Para esse fim, a Iniciativa Íris é um projeto social que oferece atendimento psicoterapeutico, 
+                orientação profissional e treinamento de habilidades socioemocionais para pessoas LGBTQIA+ de forma gratuita.
                 </p>
             </div>
             <div id="Ig-posts">
@@ -132,27 +132,27 @@ const Instagram = styled.div`
         }
 
         .High-Edge > :first-child a:hover::after {
-            content: "Lin da Quebrada    @iniciativaíris";
+            content: "- Não binarios @iniciativaíris";
         }
 
         .High-Edge > :last-child a:hover::after {
-            content: "Travesti Terminologia @iniciativaíris";
+            content: "- Young royals @iniciativaíris";
         }
 
         div :nth-child(2) > :first-child a:hover::after {
-            content: "Tributo aos Artistas    @iniciativaíris";
+            content: "- Homofobia internalizada @iniciativaíris";
         }
 
         div :nth-child(2) > :last-child a:hover::after {
-            content: "Feliz Ano Novo Íris   @iniciativaíris";
+            content: "- Safo de Lesbos @iniciativaíris";
         }
 
         .Low-Edge > :first-child a:hover::after {
-            content: "Visibilidade Trans    @iniciativaíris";
+            content: "- Comunidade íris @iniciativaíris";
         }
 
         .Low-Edge > :last-child a:hover::after {
-            content: "Combate a Sorofobia   @iniciativaíris";
+            content: "- Meu filho se assumiu @iniciativaíris";
         }
 
         div div div {

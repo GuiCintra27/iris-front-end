@@ -2,6 +2,15 @@ import styled from "styled-components";
 import { Tooltip, tooltipClasses } from "@mui/material";
 import React from "react";
 
+const DataTooltip = styled(({ className, ...props }) => <Tooltip {...props} classes={{ popper: className }} />)(
+    ({ theme }) => ({
+        [`& .${tooltipClasses.tooltip}`]: {
+            color: "white",
+            fontSize: 13,
+        },
+    }),
+);
+
 export default function DataFilter({ orderPost, setOrderPost, setStatus, showFilters, setPosts }) {
     const dataArray = [
         {
@@ -25,15 +34,6 @@ export default function DataFilter({ orderPost, setOrderPost, setStatus, showFil
             setStatus([]);
         }
     }
-
-    const DataTooltip = styled(({ className, ...props }) => <Tooltip {...props} classes={{ popper: className }} />)(
-        ({ theme }) => ({
-            [`& .${tooltipClasses.tooltip}`]: {
-                color: "white",
-                fontSize: 13,
-            },
-        }),
-    );
 
     return (
         <Container showFilters={showFilters}>

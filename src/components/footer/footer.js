@@ -27,7 +27,7 @@ export default function Footer() {
 }
 
 const PageFooter = styled.div`
-    width: 99.3vw;
+    width: auto;
     display: block;
     padding-bottom: 4%;
     background: var(--soft-grey);
