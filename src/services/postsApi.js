@@ -29,7 +29,7 @@ export async function getFilteredPosts(filteredArray, orderValue, inputFilterVal
             topicId: filteredArray,
         },
         postOrder: {
-            id: orderValue
+            id: orderValue,
         },
         inputFilterValue: inputFilterValue || "",
     };
@@ -82,14 +82,14 @@ export async function getPostComments(postId) {
 
 export async function createPostComment(postId, text) {
     const body = { postId, text };
-    const { token } = JSON.parse(localStorage.getItem("userData"));
-    const headers = { Authorization: `Bearer ${token}` };
+    if (localStorage.getItem("userData") !== "undefined") {
+        const { token } = JSON.parse(localStorage.getItem("userData"));
+        const headers = { Authorization: `Bearer ${token}` };
 
-    try {
         const response = await api.post("/posts/comments", body, { headers });
         return response.data;
-    } catch (error) {
-        return error;
+    } else {
+        throw { response: { status: 401 } };
     }
 }
 
@@ -104,4 +104,3 @@ export async function deletePostComment(commentId) {
         return error;
     }
 }
-

@@ -15,6 +15,15 @@ import { Tooltip, tooltipClasses } from "@mui/material";
 
 const Filters = withDefault(ArrayParam, []);
 
+const FilterTooltip = styled(({ className, ...props }) => <Tooltip {...props} classes={{ popper: className }} />)(
+    ({ theme }) => ({
+        [`& .${tooltipClasses.tooltip}`]: {
+            color: "white",
+            fontSize: 13,
+        },
+    }),
+);
+
 export default function Blog({ page }) {
     const [filteredArray, setFilteredArray] = useQueryParam("filter", Filters);
     const [inputFilterValue, setInputFilterValue] = useQueryParam("search", String);
@@ -63,15 +72,6 @@ export default function Blog({ page }) {
         const newPosts = await postsAct(filteredArray, orderValue, inputFilterValue, configurateHeaders);
         setPosts((posts) => [...posts, ...newPosts]);
     }
-
-    const FilterTooltip = styled(({ className, ...props }) => <Tooltip {...props} classes={{ popper: className }} />)(
-        ({ theme }) => ({
-            [`& .${tooltipClasses.tooltip}`]: {
-                color: "white",
-                fontSize: 13,
-            },
-        }),
-    );
 
     return (
         <>

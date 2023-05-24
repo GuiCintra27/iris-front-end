@@ -4,6 +4,15 @@ import useTopics from "../../hooks/api/useTopics";
 import { Tooltip, tooltipClasses } from "@mui/material";
 import React from "react";
 
+const TopicTooltip = styled(({ className, ...props }) => <Tooltip {...props} classes={{ popper: className }} />)(
+    ({ theme }) => ({
+        [`& .${tooltipClasses.tooltip}`]: {
+            color: "white",
+            fontSize: 13,
+        },
+    }),
+);
+
 export default function TopicFilter({ filteredArray, setFilteredArray, setStatus, showFilters, setPosts }) {
     const [topics, setTopics] = useState([]);
     const { topicsData } = useTopics();
@@ -27,15 +36,6 @@ export default function TopicFilter({ filteredArray, setFilteredArray, setStatus
             setStatus([]);
         }
     }
-
-    const TopicTooltip = styled(({ className, ...props }) => <Tooltip {...props} classes={{ popper: className }} />)(
-        ({ theme }) => ({
-            [`& .${tooltipClasses.tooltip}`]: {
-                color: "white",
-                fontSize: 13,
-            },
-        }),
-    );
 
     return (
         <Container showFilters={showFilters}>
