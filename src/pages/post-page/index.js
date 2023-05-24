@@ -93,13 +93,12 @@ export default function PostPage() {
 
             setStatus([]);
         } catch (error) {
-            console.log(error);
             if (error.response?.status === 401) {
                 navigate("/sign-in");
 
                 Swal.fire({
                     icon: "error",
-                    title: "Você precisa estar logado!",
+                    title: "Você precisa estar logado para realizar esta ação!",
                     text: "Como vamos saber quem deixou o like? :)",
                 });
             }
@@ -114,6 +113,32 @@ export default function PostPage() {
         setTimeout(() => {
             setLikeStatus(false);
         }, 1000);
+    }
+
+    async function sendComment() {
+        try {
+            await createPostComment(postId, commentText);
+        } catch (error) {
+            if (error.response?.status === 401) {
+                navigate("/sign-in");
+
+                Swal.fire({
+                    icon: "error",
+                    title: "Você precisa estar logado para realizar esta ação!",
+                });
+
+                return;
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Não foi possível registrar seu comentário!",
+                });
+            }
+        }
+        
+        setCommentText("");
+        commentRef.current.style.height = "55px";
+        setDisplayEmojis(false);
     }
 
     return (
@@ -228,16 +253,7 @@ export default function PostPage() {
                             />
                             <div className="options">
                                 <img src={smileIcon} alt="Emojis" onClick={() => setDisplayEmojis(!displayEmojis)} />
-                                <img
-                                    src={sendIcon}
-                                    alt="Send"
-                                    onClick={() => {
-                                        createPostComment(postId, commentText);
-                                        setCommentText("");
-                                        commentRef.current.style.height = "55px";
-                                        setDisplayEmojis(false);
-                                    }}
-                                />
+                                <img src={sendIcon} alt="Send" onClick={sendComment} />
                             </div>
                             {displayEmojis && (
                                 <EmojiPicker
