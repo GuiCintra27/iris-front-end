@@ -3,7 +3,14 @@ import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import Footer from "../../components/footer/footer";
 import Header from "../../components/header/header";
-import { useCreatePostComment, useDeletePostComment, useLikes, usePostComments, usePosts, useRecentlyVisited } from "../../hooks/api/usePosts";
+import {
+    useCreatePostComment,
+    useDeletePostComment,
+    useLikes,
+    usePostComments,
+    usePosts,
+    useRecentlyVisited,
+} from "../../hooks/api/usePosts";
 import whiteArrow from "../../assets/Icons/white-arrow.png";
 import dayjs from "dayjs";
 import { BsHeartFill, BsHeart } from "react-icons/bs";
@@ -32,6 +39,7 @@ const FilterTooltip = styled(({ className, ...props }) => <Tooltip {...props} cl
 
 export default function PostPage() {
     const userId = useUserId();
+    const [loadingLike, setLoadingLike] = useState(false);
     const { postId } = useParams();
     const [status, setStatus] = useState(true);
     const [likeStatus, setLikeStatus] = useState(false);
@@ -53,7 +61,7 @@ export default function PostPage() {
     const [displayEmojis, setDisplayEmojis] = useState(false);
     const [commentSort, setCommentSort] = useState("desc");
     const commentRef = useRef();
-    const sortComments = (arr) => commentSort === "asc" ? arr.toReversed() : arr;
+    const sortComments = (arr) => (commentSort === "asc" ? arr.toReversed() : arr);
 
     useEffect(() => {
         if (!createCommentsLoading || !deleteCommentsLoading) {
@@ -85,13 +93,18 @@ export default function PostPage() {
 
             setStatus([]);
         } catch (error) {
-            navigate("/sign-in");
+            console.log(error);
+            if (error.response?.status === 401) {
+                navigate("/sign-in");
 
-            Swal.fire({
-                icon: "error",
-                title: "Você precisa estar logado!",
-                text: "Como vamos saber quem deixou o like? :)",
-            });
+                Swal.fire({
+                    icon: "error",
+                    title: "Você precisa estar logado!",
+                    text: "Como vamos saber quem deixou o like? :)",
+                });
+            }
+        } finally {
+            setLoadingLike(false);
         }
     }
 
@@ -102,7 +115,7 @@ export default function PostPage() {
             setLikeStatus(false);
         }, 1000);
     }
-    
+
     return (
         <Container>
             <Header />
@@ -146,14 +159,20 @@ export default function PostPage() {
                                 {isLiked?.length === 0 ? (
                                     <BsHeart
                                         onClick={() => {
-                                            likeAnimation();
-                                            setLikeOrDislike();
+                                            if (!loadingLike) {
+                                                setLoadingLike(true);
+                                                likeAnimation();
+                                                setLikeOrDislike();
+                                            }
                                         }}
                                     />
                                 ) : (
                                     <BsHeartFill
                                         onClick={() => {
-                                            setLikeOrDislike();
+                                            if (!loadingLike) {
+                                                setLoadingLike(true);
+                                                setLikeOrDislike();
+                                            }
                                         }}
                                     />
                                 )}
@@ -165,7 +184,7 @@ export default function PostPage() {
                         </div>
                     </PostInfos>
 
-                    <PostContent> 
+                    <PostContent>
                         <PostText>
                             {formatedText?.map((item, index) => (
                                 <span key={index}>
@@ -173,10 +192,9 @@ export default function PostPage() {
                                     <br />
                                 </span>
                             ))}
-
                         </PostText>
 
-                        <PostSuggestions postId={postId} topicId={post?.topics?.id} topicName={post?.topics?.name}/>
+                        <PostSuggestions postId={postId} topicId={post?.topics?.id} topicName={post?.topics?.name} />
                     </PostContent>
                 </PostContainer>
 
@@ -187,68 +205,78 @@ export default function PostPage() {
                     </header>
 
                     <div className="comment-container">
-                        { userData?.user && <label htmlFor="comment-box">{userData.user.name}#{userData.user.id}</label> }
+                        {userData?.user && (
+                            <label htmlFor="comment-box">
+                                {userData.user.name}#{userData.user.id}
+                            </label>
+                        )}
                         <div className="box-container">
-                            <textarea 
-                                name="comment-box" id="comment-box" rows="1" placeholder="Faça seu comentário..."
+                            <textarea
+                                name="comment-box"
+                                id="comment-box"
+                                rows="1"
+                                placeholder="Faça seu comentário..."
                                 ref={commentRef}
                                 value={commentText}
                                 onChange={updateCommentText}
                                 onInput={(e) => {
                                     const textarea = e.target;
                                     textarea.style.height = "";
-                                    textarea.style.height = Math.min(textarea.scrollHeight+2, 300) + "px";
+                                    textarea.style.height = Math.min(textarea.scrollHeight + 2, 300) + "px";
                                 }}
                                 onClick={() => setDisplayEmojis(false)}
                             />
                             <div className="options">
-                                <img src={smileIcon} alt="Emojis" onClick={() => setDisplayEmojis(!displayEmojis)}/>
-                                <img src={sendIcon} alt="Send" onClick={() => {
-                                    createPostComment(postId, commentText);
-                                    setCommentText("");
-                                    commentRef.current.style.height = "55px";
-                                    setDisplayEmojis(false);
-                                }}/>
+                                <img src={smileIcon} alt="Emojis" onClick={() => setDisplayEmojis(!displayEmojis)} />
+                                <img
+                                    src={sendIcon}
+                                    alt="Send"
+                                    onClick={() => {
+                                        createPostComment(postId, commentText);
+                                        setCommentText("");
+                                        commentRef.current.style.height = "55px";
+                                        setDisplayEmojis(false);
+                                    }}
+                                />
                             </div>
-                            {displayEmojis && 
+                            {displayEmojis && (
                                 <EmojiPicker
                                     autoFocusSearch={false}
                                     previewConfig={{ showPreview: false }}
                                     searchDisabled
                                     height="350px"
                                     emojiStyle={EmojiStyle.NATIVE}
-                                    onEmojiClick={emojiData => {
-                                        setCommentText(t => t + emojiData.emoji);
+                                    onEmojiClick={(emojiData) => {
+                                        setCommentText((t) => t + emojiData.emoji);
                                     }}
                                 />
-                            }
+                            )}
                         </div>
 
                         <div className="sort">
-                            <p 
-                                className={commentSort === "desc" && "selected"}
-                                onClick={() => setCommentSort("desc")}
-                            >
+                            <p className={commentSort === "desc" && "selected"} onClick={() => setCommentSort("desc")}>
                                 Mais Recentes
                             </p>
-                            <p 
-                                className={commentSort === "asc" && "selected"}
-                                onClick={() => setCommentSort("asc")}
-                            >
+                            <p className={commentSort === "asc" && "selected"} onClick={() => setCommentSort("asc")}>
                                 Mais Antigos
                             </p>
                         </div>
                     </div>
 
                     <div className="comments">
-                        {postComments && sortComments(postComments).map((c) => 
-                            <CommentItem key={c.id} data={c} username={userData?.user?.name} deletePostComment={deletePostComment}/>
-                        )}
+                        {postComments &&
+                            sortComments(postComments).map((c) => (
+                                <CommentItem
+                                    key={c.id}
+                                    data={c}
+                                    username={userData?.user?.name}
+                                    deletePostComment={deletePostComment}
+                                />
+                            ))}
                     </div>
-
                 </PostCommentStyle>
             </MidContent>
-            
+
             <Footer />
         </Container>
     );
@@ -489,7 +517,7 @@ const PostCommentStyle = styled(PostText)`
         align-items: flex-start;
         align-items: center;
         gap: 1rem;
-        border-bottom: 1px solid #D9D9D9;
+        border-bottom: 1px solid #d9d9d9;
         margin-bottom: 25px;
 
         h3 {
@@ -514,14 +542,14 @@ const PostCommentStyle = styled(PostText)`
             font-size: 18px;
             padding: 13px;
             padding-right: 90px;
-            border: 1px solid #D9D9D9;
+            border: 1px solid #d9d9d9;
             border-radius: 10px;
             width: 100%;
             resize: none;
             margin-bottom: 10px;
 
             ::placeholder {
-                color: #A8A8A8;
+                color: #a8a8a8;
             }
         }
 
@@ -548,7 +576,7 @@ const PostCommentStyle = styled(PostText)`
                 position: absolute;
                 right: 0;
                 top: -358px;
-                border: 1px solid #D9D9D9;
+                border: 1px solid #d9d9d9;
                 border-radius: 10px;
 
                 .epr-body {
@@ -567,7 +595,9 @@ const PostCommentStyle = styled(PostText)`
 
             .selected {
                 color: black;
-                :after { width: 100%; }
+                :after {
+                    width: 100%;
+                }
             }
 
             p {
@@ -579,7 +609,7 @@ const PostCommentStyle = styled(PostText)`
                 letter-spacing: 0.5px;
                 padding: 0 10px;
 
-                :after{
+                :after {
                     content: "";
                     position: absolute;
                     background-color: #ff3c78;
@@ -590,16 +620,15 @@ const PostCommentStyle = styled(PostText)`
                     transition: 0.3s;
                 }
 
-                :hover{
+                :hover {
                     color: black;
                 }
 
-                :hover:after{
+                :hover:after {
                     width: 100%;
                 }
             }
         }
-
     }
 
     .comments {
