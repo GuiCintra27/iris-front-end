@@ -3,6 +3,7 @@ import eyeCountour from "../../../assets/Icons/contour.png";
 import eye from "../../../assets/Icons/eye.png";
 import instagram from "../../../assets/Icons/instagram-icon.png";
 import mentory from "../../../assets/Icons/mentory-icon.png";
+import consultancy from "../../../assets/Icons/consultancy-icon.png";
 import { useEffect, useRef } from "react";
 
 export default function AboutSection() {
@@ -39,7 +40,7 @@ export default function AboutSection() {
                     <div className="Text">
                         <div>
                             <h1>CONSULTORIA</h1>
-                            <div id="Mentorship"></div>
+                            <div id="Consultancy"></div>
                         </div>
 
                         <p>
@@ -204,6 +205,14 @@ const About = styled.div`
             background: url(${mentory});
             background-size: 190% 140%;
             transform: translateY(0.24vw);
+        }
+
+        #Consultancy {
+            width: 4vw;
+            border-radius: 5px;
+            aspect-ratio: 76 / 65;
+            background: url(${consultancy});
+            background-size: 140% 100%;
         }
 
         & > p {
