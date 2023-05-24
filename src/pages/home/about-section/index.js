@@ -38,37 +38,31 @@ export default function AboutSection() {
                 <div className="information-top">
                     <div className="Text">
                         <div>
-                            <h1>INSTAGRAM</h1>
-                            <div id="Instagram-icon"></div>
+                            <h1>CONSULTORIA</h1>
+                            <div id="Mentorship"></div>
                         </div>
 
                         <p>
-                            Semanalmente são lançadas três postagens sobre assuntos relevantes para o movimento
-                            LGBTQIA+. Como o foco é ultrapassar barreiras e alcançar um público fora da bolha, os
-                            conteúdos utilizam linguagem simples e engajante, passando por temas complexos como "O que
-                            fazer quando seu filho se assumir", a questões que geram dúvidas em muitos como "Qual a
-                            diferença entre Bi e Pan?" e chegando a assuntos aparentemente triviais, mas que geram
-                            ótimas oportunidades de ampliar os espaços de discussão, como a participação da Linn da
-                            Quebrada, uma travesti, no Big Brother Brasil, o maior reality show do país.
+                            Através de nossa consultoria buscamos trazer mais diversidade e inclusão para o mundo
+                            corporativo e organizacional. Para isso, desenvolvemos planos de ação e planejamento
+                            estratégico organizações que desejam ser mais inclusivas. Além disso, oferecemos palestras e
+                            organizamos rodas de conversa sobre tópicos relacionados a diversidade e inclusão. Nosso
+                            objetivo é criar um local de trabalho onde todos se sintam confortáveis independentemente da
+                            orientação sexual ou identidade de gênero.
                         </p>
                     </div>
 
                     <div className="Text">
                         <div>
-                            <h1>MENTORIA</h1>
-                            <div id="Mentorship"></div>
+                            <h1>INSTAGRAM</h1>
+                            <div id="Instagram-icon"></div>
                         </div>
 
                         <p>
-                            Na mentoria, selecionamos uma comunidade de 30 jovens LGBTQIA+ para capacitá-los em três
-                            pilares principais: Oportunidades, Habilidades Socioemocionais e Saúde Mental. <br />
-                            No primeiro pilar capacitamos os jovens para alcançarem experiências educacionais
-                            transformadoras através de encontros temáticos. <br />
-                            No pilar de Socioemocionais estimulamos tudo que é essencial para que as emoções cotidianas
-                            presentes em desafios e vivências sejam lidadas com equilíbrio. <br />
-                            Já no pilar de saúde mental, conectamos os jovens com psicólogos voluntários para que os
-                            participantes recebam o apoio e as ferramentas necessárias para enfrentarem as adversidades
-                            de suas vidas.
+                            Em nossa página, publicamos informações relevantes sobre tópicos constantemente subestimados
+                            na comunidade LGBTQIA+, personalidades essenciais de nossa história, recomendações culturais
+                            e muito mais. Usamos uma linguagem simples e acessível para atingir um público mais amplo,
+                            divulgando informações para combater o preconceito
                         </p>
                     </div>
                 </div>
@@ -80,15 +74,16 @@ export default function AboutSection() {
                         </div>
 
                         <p>
-                            Na mentoria, selecionamos uma comunidade de 30 jovens LGBTQIA+ para capacitá-los em três
-                            pilares principais: Oportunidades, Habilidades Socioemocionais e Saúde Mental. <br />
-                            No primeiro pilar capacitamos os jovens para alcançarem experiências educacionais
-                            transformadoras através de encontros temáticos. <br />
-                            No pilar de Socioemocionais estimulamos tudo que é essencial para que as emoções cotidianas
-                            presentes em desafios e vivências sejam lidadas com equilíbrio. <br />
-                            Já no pilar de saúde mental, conectamos os jovens com psicólogos voluntários para que os
-                            participantes recebam o apoio e as ferramentas necessárias para enfrentarem as adversidades
-                            de suas vidas.
+                            Durante o ciclo de mentoria, capacitamos jovens LGBTQIA+ entre 14 e 18 anos de idade por
+                            meio de três pilares que desenvolvem competências essenciais para o século 21: Saúde Mental,
+                            Habilidades Socioemocionais e Oportunidades. No pilar de Saúde Mental, conectamos os jovens
+                            com psicólogos voluntários para que recebam o apoio e as ferramentas necessárias para
+                            enfrentar as adversidades em suas vidas, inclusive traumas provenientes da LGBTfobia. Já em
+                            Socioemocionais, ajudamos a desenvolver habilidades que são essenciais para lidar com a
+                            experiência de ser queer. Instigamos um processo de autorreflexão para promover a
+                            resiliência, o pensamento crítico e a tomada de decisões positivas. Por fim, em
+                            Oportunidades, conectamos os jovens à experiências educacionais e profissionais
+                            transformadoras.
                         </p>
                     </div>
                 </div>
@@ -215,20 +210,6 @@ const About = styled.div`
             margin-top: 7.5%;
             margin-inline: auto;
             width: 90%;
-        }
-    }
-    @media screen {
-        @media (max-width: 1280px) {
-            .information-top {
-                flex-direction: column;
-                align-items: center;
-                margin-bottom: 0 !important;
-            }
-
-            .Text {
-                width: 606px;
-                margin-bottom: 60px;
-            }
         }
     }
 `;

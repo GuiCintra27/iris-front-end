@@ -1,33 +1,16 @@
-import imageOne from "../../../assets/Posts/1.png";
-import imageTwo from "../../../assets/Posts/2.png";
-import imageThree from "../../../assets/Posts/3.png";
-import imageFour from "../../../assets/Posts/4.png";
-import imageFive from "../../../assets/Posts/5.png";
-import imageSix from "../../../assets/Posts/6.png";
+import imageOne from "../../../assets/Posts/nao-binarios.png";
+import imageTwo from "../../../assets/Posts/young-royals.png";
+import imageThree from "../../../assets/Posts/homofobia-internalizada.png";
+import imageFour from "../../../assets/Posts/safo-de-lesbos.png";
+import imageFive from "../../../assets/Posts/comunidade-iris.png";
+import imageSix from "../../../assets/Posts/meu-filho-se-assumiu.png";
 
 export default function Posts({ urlOne, urlTwo, index }) {
-    const images = [[imageSix, imageFive], [imageFour, imageThree], [imageTwo, imageOne]];
-    let postClass = "";
-
-    switch (index) {
-    case 0:
-
-        postClass = "High-Edge";
-        break;
-
-    case 2:
-
-        postClass = "Low-Edge";
-        break;
-
-    default:
-
-        postClass = "Mid";
-        break;
-    }
+    const images = [[imageOne, imageTwo], [imageThree, imageFour], [imageFive, imageSix]];
+    let postClass = ["High-Edge", "Mid", "Low-Edge"];
 
     return (
-        <div className={postClass}>
+        <div className={postClass[index]}>
             <div>
                 <img src={images[index][0]} alt="" />
                 <a href={urlOne} target="_blank" rel="noreferrer"/>

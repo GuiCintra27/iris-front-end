@@ -18,12 +18,10 @@ export default function TestimonialSection(props) {
                         <p>VEJA O QUE FALAM SOBRE NÓS</p>
                     </div>
                     <div className="see-what-they-say-about-us">
-                        <h1>
-                            Veja o que <span>ex-mentorados</span> tem a dizer sobre <span>a íris</span>{" "}
-                        </h1>
+                        <h1>Veja o que <span>voluntários</span> e <span>ex-estudantes</span> tem a dizer sobre a <span>Íris</span> </h1>
                     </div>
                     <div className="call-to-action">
-                        <p>Seja parte da iniciativa e venha comemorar mais conquistas conosco!</p>
+                        <p>Seja parte da iniciativa e venha construir um presente mais amoroso!</p>
                     </div>
                     <div className="participants">
                         {founders.map((item, key) => (
@@ -133,7 +131,7 @@ const StyledTestimonialSection = styled.div`
                     height: 505px;
                     background-color: red;
                     cursor: pointer;
-                    box-shadow: 0px 4px 4px rgba(0, 0, 0, .25);
+                    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
                     border: 3px solid var(--white);
                     border-radius: 18px;
                     ul {

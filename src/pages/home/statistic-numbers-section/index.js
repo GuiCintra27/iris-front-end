@@ -4,7 +4,7 @@ import PinkNumbers from "./pinkNumbers";
 export default function StatisticNumbers() {
     const numbersInformation = [
         { titleNumber: "+400k", lineOne: "Pessoas", lineTwo: "alcançadas" },
-        { titleNumber: "$8M", lineOne: "Arrecadados em", lineTwo: "Bolsas de estudo" },
+        { titleNumber: "$10M", lineOne: "Arrecadados em", lineTwo: "Bolsas de estudo" },
         { titleNumber: "46", lineOne: "Mentorados" },
         { titleNumber: "5", lineOne: "Regiões", lineTwo: "representadas" }
     ];
