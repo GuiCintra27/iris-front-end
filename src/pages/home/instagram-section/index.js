@@ -35,7 +35,7 @@ export default function InstagramSection() {
 
 const Instagram = styled.div`
     position: relative;
-    height: fit-content;
+    height: 100%;
     padding-top: 6vh;
     padding-bottom: 10vh;
     display: grid;
