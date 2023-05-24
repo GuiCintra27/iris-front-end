@@ -27,6 +27,7 @@ import UserContext from "../../contexts/UserContext";
 import { useValue } from "../../hooks/useValue";
 import EmojiPicker, { EmojiStyle } from "emoji-picker-react";
 import PostSuggestions from "../../components/blog/postSuggestions";
+import luis from "../../assets/Fundadores/luis.png";
 
 const FilterTooltip = styled(({ className, ...props }) => <Tooltip {...props} classes={{ popper: className }} />)(
     ({ theme }) => ({
@@ -82,7 +83,7 @@ export default function PostPage() {
         postAct(postId);
         likesAct(postId);
     }, [status, postId]);
-
+    
     async function setLikeOrDislike() {
         try {
             if (isLiked?.length === 0) {
@@ -161,7 +162,7 @@ export default function PostPage() {
                 <PostContainer>
                     <PostInfos isLiked={isLiked?.length} likeStatus={likeStatus}>
                         <div className="authorDiv">
-                            <img src={post?.admins?.photo} alt={"imagem do perfil do autor do post"} />
+                            <img src={post?.admins?.name === "Luís Guilherme" ? luis : post?.admins?.photo} alt={"imagem do perfil do autor do post"} />
 
                             <div className="author">
                                 <h2>Escrito por {post?.admins?.name}</h2>
