@@ -35,6 +35,7 @@ export default function Blog({ page }) {
     const [orderPost, setOrderPost] = useState(["desc"]);
     const orderValue = !orderPost[0] ? "desc" : orderPost[0];
 
+    console.log(typeof posts);
     //eslint-disable-next-line
     useEffect(async () => {
         const filteredArray = parseFilteredArray();
@@ -130,7 +131,7 @@ export default function Blog({ page }) {
 
             {posts && (
                 <PostScrollerWrapper>
-                    {posts.length !== 0 ? (
+                    {posts.length > 0 ? (
                         <>
                             {posts.map((item, index) => (
                                 <Post
