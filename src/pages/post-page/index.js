@@ -83,7 +83,7 @@ export default function PostPage() {
         postAct(postId);
         likesAct(postId);
     }, [status, postId]);
-    
+
     async function setLikeOrDislike() {
         try {
             if (isLiked?.length === 0) {
@@ -156,13 +156,24 @@ export default function PostPage() {
                         src={whiteArrow}
                         alt={"seta branca para voltar de página"}
                     />
-                    <h1>{post?.title.toUpperCase()}</h1>
+                    <h1
+                        postCover={post?.postCover}
+                        onClick={() => {
+                            // eslint-disable-next-line no-restricted-globals
+                            history.back();
+                        }}
+                    >
+                        {post?.title.toUpperCase()}
+                    </h1>
                 </CoverDiv>
 
                 <PostContainer>
                     <PostInfos isLiked={isLiked?.length} likeStatus={likeStatus}>
                         <div className="authorDiv">
-                            <img src={post?.admins?.name === "Luís Guilherme" ? luis : post?.admins?.photo} alt={"imagem do perfil do autor do post"} />
+                            <img
+                                src={post?.admins?.name === "Luís Guilherme" ? luis : post?.admins?.photo}
+                                alt={"imagem do perfil do autor do post"}
+                            />
 
                             <div className="author">
                                 <h2>Escrito por {post?.admins?.name}</h2>
@@ -322,9 +333,6 @@ const CoverDiv = styled.div`
     background-size: 100% 100% !important;
     background: url(${(props) => props.postCover});
     box-shadow: inset 0px -100px 100px rgba(0, 0, 0, 0.25);
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
     background-size: cover;
     height: 530px;
     width: 100%;
@@ -349,6 +357,7 @@ const CoverDiv = styled.div`
     }
 
     h1 {
+        cursor: pointer;
         font-family: "Poppins";
         font-style: normal;
         font-weight: 700;
