@@ -4,7 +4,6 @@ import styled from "styled-components";
 
 export default function SearchBarSuggestion({ suggestionObject }) {
     const { title, type } = suggestionObject;
-
     return (
         <StyledSuggestion>
             <img src={type === "recent" ? RecentIcon : SearchIcon} alt="icon" />

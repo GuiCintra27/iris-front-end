@@ -46,7 +46,9 @@ export default function SignUp() {
             data.email = tempData.email;
             if (tempData.birthday) {
                 const { year, month, day } = tempData.birthday;
-                data.birthDay = `${year}-${month}-${day}`;
+                const parsedDate = `${year}-${month}-${day}`;
+                data.birthDay = parsedDate;
+                customHandleChange("birthDay", (d) => d && dayjs(d))(parsedDate);
             }
         }
     }, [tempData]);

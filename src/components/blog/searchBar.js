@@ -58,8 +58,11 @@ export default function CustomSearchBar({ setInputFilterValue, topicFilter, inpu
     }
 
     function handleOnSelect(card) {
-        inputElementRef.current.value = card.title;
-        setInputFilterValue(card.title);
+        //handles lib bug where selecting gives [[Object object]],forcing the reload of inputString is necessary
+        setInputFilterValue(card.title === inputFilterValue ? card.title + " " : card.title);
+        setTimeout(() => {
+            setInputFilterValue(card.title);
+        }, 0);
     }
 
     return (

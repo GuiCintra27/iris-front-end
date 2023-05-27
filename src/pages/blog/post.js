@@ -178,8 +178,8 @@ const Main = styled.div`
     }
 
     .Author-img {
-        height: 5.1vh;
-        width: 5.1vh;
+        height: 40px;
+        aspect-ratio: 1;
         clip-path: circle(50% at 50% 50%);
         background: url(${(props) => props.authorImg});
         background-size: 100% 100%;
