@@ -133,7 +133,7 @@ const CarouselElement = styled.div`
         }
         p {
             font-family: 'Inter', sans-serif;
-            font-size: 27px;
+            font-size: clamp(13px, .5em + 1vw, 35px);
             margin-left: 25px;
         }
     }
@@ -150,7 +150,7 @@ const CarouselElement = styled.div`
             margin-top: -10px;
             text-align: left;
             font-weight: 500;
-            font-size: 20px;
+            font-size: clamp(9px, .4em + .7vw, 31px);
             line-height: 31px;
             margin-inline: 32px;
         }

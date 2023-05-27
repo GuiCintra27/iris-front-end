@@ -23,7 +23,7 @@ export default function VolunteerForm({ page }) {
     const { handleSubmit, handleChange, data, setData, errors, setErrors } = useForm({
         validations: FormValidations,
 
-        onSubmit: async (data) => {
+        onSubmit: async(data) => {
             const newData = {
                 linkedIn: data.linkedIn,
                 occupation: data.occupation,

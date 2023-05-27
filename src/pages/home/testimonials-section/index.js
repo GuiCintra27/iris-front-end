@@ -50,7 +50,7 @@ export default function TestimonialSection(props) {
 
 const StyledTestimonialSection = styled.div`
     display: flex;
-    height: 100%;
+    height: fit-content;
     width: 100%;
     padding: 80px 5vw 60px 9.5vw;
     gap: 7.5%;
@@ -122,7 +122,7 @@ const StyledTestimonialSection = styled.div`
 
     .right-side-container {
         margin-top: 12px;
-        width: 824px;
+        width: clamp(680px, 52%, 52%);
         position: relative;
 
         .testimonial-carousel {
@@ -130,7 +130,7 @@ const StyledTestimonialSection = styled.div`
             .carousel {
                 height: 740px;
                 .slider-wrapper {
-                    width: 800px;
+                    width: 98%;
                     height: 505px;
                     background-color: red;
                     cursor: pointer;
@@ -183,7 +183,6 @@ const StyledTestimonialSection = styled.div`
         & {
             flex-direction: column;
             align-items: center;
-            height: 100%;
         }
         .left-side-container {
             flex-direction: column;
@@ -195,10 +194,11 @@ const StyledTestimonialSection = styled.div`
             }
 
             .introduction {
-                margin-bottom: 5vh;
+                justify-content: center;
             }
 
             .see-what-they-say-about-us {
+                margin-top: 3%;
                 text-align: center;
             }
 
@@ -208,7 +208,8 @@ const StyledTestimonialSection = styled.div`
         }
         .right-side-container {
             width: 100%;
-            height: 200px;
+            margin-top: 50px;
+            height: 580px;
 
             .testimonial-carousel {
                 width: 100%;
@@ -228,12 +229,10 @@ const StyledTestimonialSection = styled.div`
                     }
                 }
                 .control-dots {
-                    top: 78% !important;
-                    display: none;
+                    top: 62% !important;
                 }
                 button {
-                    top: 90% !important;
-                    display: none;
+                    top: 72% !important;
                 }
             }
         }

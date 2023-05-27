@@ -11,10 +11,12 @@ export default function AboutSection() {
 
     useEffect(() => {
         const handleMouseMove = function(e) {
-            if (eyeRef.current) {
+            if (eyeRef.current && window.screen.width >= 1024) {
                 const x = e.clientX;
+                const contour = document.getElementById("Contour");
+                const eye = document.getElementById("Eye");
                 const y = e.clientY;
-                eyeRef.current.style.left = x * 0.015 + 22.5 + "px";
+                eyeRef.current.style.left = x * 0.015 + contour.offsetWidth / 2 - eye.offsetWidth / 4 + "px";
                 eyeRef.current.style.top = y * 0.0145 + 7 + "px";
             }
         };
@@ -122,6 +124,8 @@ const About = styled.div`
 
     #Eye {
         position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
         background: url(${eye});
         background-size: 580% 330%;
         height: 2.9vw;
