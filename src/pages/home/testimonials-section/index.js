@@ -1,14 +1,10 @@
 import styled from "styled-components";
 import TestimonialCarousel from "../../../components/testimonial-carousel";
 import ChatBaloons from "../../../assets/Icons/chat-ballons.svg";
-import LuizaPng from "../../../assets/Fundadores/luiza.png";
-import CauaPng from "../../../assets/Fundadores/caua.jpeg";
-import FranciscoPng from "../../../assets/Fundadores/francisco.png";
-import LumaPng from "../../../assets/Fundadores/luma.png";
-import LuisPng from "../../../assets/Fundadores/luis.png";
+import { images } from "../../../components/founders";
 
-export default function TestimonialSection(props) {
-    const founders = [CauaPng, LumaPng, LuisPng, FranciscoPng, LuizaPng];
+export default function TestimonialSection() {
+    const founders = [images.caua, images.luma, images.luis, images.francisco, images.luiza];
     return (
         <>
             <StyledTestimonialSection id="testimonial">
@@ -29,13 +25,7 @@ export default function TestimonialSection(props) {
                     <div className="participants">
                         {founders.map((item, key) => (
                             <div className="profile-ball" key={key}>
-                                {key === 0 ? (
-                                    <img src={item} className="caua-exposure" alt="profile-icon" />
-                                ) : key === 4 ? (
-                                    <img src={item} className="luisa-exposure" alt="profile-icon" />
-                                ) : (
-                                    <img src={item} alt="profile-icon" />
-                                )}
+                                <img src={item} alt="profile-icon" />
                             </div>
                         ))}
                     </div>
@@ -103,13 +93,8 @@ const StyledTestimonialSection = styled.div`
         .participants {
             display: flex;
             margin-top: 10%;
-            .caua-exposure {
-                filter: brightness(1.8);
-                margin-left: 0;
-            }
-            .luisa-exposure {
-                filter: brightness(1.1);
-            }
+            margin-left: 20px;
+            
             img {
                 filter: brightness(1);
                 margin-left: -20px;
