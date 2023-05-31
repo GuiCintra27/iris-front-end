@@ -94,7 +94,7 @@ const StyledTestimonialSection = styled.div`
             display: flex;
             margin-top: 10%;
             margin-left: 20px;
-            
+
             img {
                 filter: brightness(1);
                 margin-left: -20px;
@@ -114,9 +114,13 @@ const StyledTestimonialSection = styled.div`
             width: 100%;
             .carousel {
                 height: 740px;
+                display: grid;
+                grid-template-rows: 12fr 2fr 3fr;
+                align-items: center;
                 .slider-wrapper {
-                    width: 98%;
+                    grid-row: 1;
                     height: 505px;
+                    width: 98%;
                     background-color: red;
                     cursor: pointer;
                     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -127,40 +131,37 @@ const StyledTestimonialSection = styled.div`
                     }
                 }
                 .control-dots {
-                    top: calc(100% - 12vw);
+                    grid-row: 2;
+                    grid-column: 1;
+                    position: static;
+                    align-self: flex-start;
                     li {
                         cursor: pointer;
                     }
                 }
 
                 button {
+                    grid-row: 3;
+                    grid-column: 1;
                     width: 74px;
                     height: 69px;
                     background-color: var(--pink);
-                    top: calc(110% - 10.5vw);
+                    position: static;
                     box-sizing: content-box;
                     border: 2px solid var(--white);
+                    margin: auto;
 
                     &[title="next slide / item"] {
                         border-radius: 0 10px 10px 0;
-                        left: calc(50%);
+                        transform: translateX(50%);
                     }
 
                     &[title="previous slide / item"] {
                         border-radius: 10px 0 0 10px;
-                        right: calc(50%);
+                        transform: translateX(-50%);
                     }
                 }
             }
-        }
-    }
-
-    @media (min-width: 2000px) {
-        .control-dots {
-            top: 425px !important;
-        }
-        button {
-            top: 491px !important;
         }
     }
 
@@ -214,10 +215,12 @@ const StyledTestimonialSection = styled.div`
                     }
                 }
                 .control-dots {
-                    top: 62% !important;
+                    
                 }
                 button {
-                    top: 72% !important;
+                    grid-row: 2 !important;
+                    align-self: flex-end !important;
+                    margin-top: 50px !important;
                 }
             }
         }
