@@ -9,10 +9,10 @@ export function CommentItem({ data, username, deletePostComment }) {
     const [displayOptions, setDisplayOptions] = useState(false);
 
     function timeDiff() {
-        let diff = dayjs().diff(dayjs(createdAt), "minute");
+        let diff = dayjs().diff(dayjs(createdAt), "m");
         if (diff < 60) return (diff + "m");
 
-        diff = dayjs().diff(dayjs(createdAt), "hour");
+        diff = dayjs().diff(dayjs(createdAt), "h");
         if (diff < 24) return (diff + "h");
 
         diff = dayjs().diff(dayjs(createdAt), "d");
