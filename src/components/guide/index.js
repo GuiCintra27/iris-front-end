@@ -22,9 +22,9 @@ export default function Guide({ setBackground, sections, onSection, setOnSection
 }
 
 const GuideSection = styled.div`
-    width: 33rem;
+    width: 17.5vw;
     height: fit-content;
-    margin-left: 19rem;
+    margin-left: 10vw;
     margin-top: -6rem;
     padding-bottom: 3.5rem;
     background: var(--white);
@@ -39,7 +39,7 @@ const GuideSection = styled.div`
         color: var(--white);
         background-color: var(--blue);
         font-size: clamp(.75em, .9em + .7vw, 5vw);
-        height: 10.2rem;
+        height: 6vw;
         padding-top: 10%;
         padding-left: 5%;
     }
