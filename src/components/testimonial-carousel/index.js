@@ -131,6 +131,7 @@ const CarouselElement = styled.div`
         align-items: center;
         height: 124px;
         margin-left: 32px;
+
         img {
             width: 75px;
             height: 75px;
@@ -148,6 +149,7 @@ const CarouselElement = styled.div`
         padding-top: 15px;
         display: flex;
         flex-direction: column;
+        container-type: inline-size;
         img{
             width: 24px;
         }
@@ -155,7 +157,7 @@ const CarouselElement = styled.div`
             margin-top: -10px;
             text-align: left;
             font-weight: 500;
-            font-size: clamp(9px, .3em + .7vw, 31px);
+            font-size: 2.6cqi;
             line-height: 31px;
             margin-inline: 32px;
         }

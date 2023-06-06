@@ -115,7 +115,7 @@ const StyledTestimonialSection = styled.div`
             .carousel {
                 height: 740px;
                 display: grid;
-                grid-template-rows: 12fr 2fr 3fr;
+                grid-template-rows: auto 2fr 3fr;
                 align-items: center;
                 .slider-wrapper {
                     grid-row: 1;
@@ -131,10 +131,10 @@ const StyledTestimonialSection = styled.div`
                     }
                 }
                 .control-dots {
+                    margin-bottom: 30px;
                     grid-row: 2;
                     grid-column: 1;
                     position: static;
-                    align-self: flex-start;
                     li {
                         cursor: pointer;
                     }
@@ -195,15 +195,16 @@ const StyledTestimonialSection = styled.div`
         .right-side-container {
             width: 100%;
             margin-top: 50px;
-            height: 580px;
+            
 
             .testimonial-carousel {
                 width: 100%;
                 .carousel {
-                    height: 740px;
+                    height: auto;
                     .slider-wrapper {
-                        width: 700px !important;
+                        max-width: 700px;
                         height: auto;
+                        align-self: stretch;
                         background-color: red;
                         cursor: pointer;
                         box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -215,7 +216,7 @@ const StyledTestimonialSection = styled.div`
                     }
                 }
                 .control-dots {
-                    
+                    align-self: flex-start;
                 }
                 button {
                     grid-row: 2 !important;
