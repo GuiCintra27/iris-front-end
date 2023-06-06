@@ -24,7 +24,7 @@ export default function ParallaxBackground() {
 }
 
 const Background = styled.div`
-    height: 84vh;
+    height: clamp(25vw, 84vh, 50vw);
     display: flex;
     position: relative;
     align-items: center;
@@ -41,7 +41,7 @@ const Background = styled.div`
     #Bg_filter {
         top: 0;
         left: 0;
-        height: 84vh;
+        height: clamp(25vw, 84vh, 50vw);
         width: 100%;
         position: absolute;
         background-color: var(--black);
@@ -51,7 +51,7 @@ const Background = styled.div`
     #Img_frase {
         display: flex;
         color: var(--soft-grey);
-        font-size: 64px;
+        font-size: clamp(30px, 1.2em + 2.5vw, 110px);
     }
 
     .Iniciative-container {
@@ -62,7 +62,7 @@ const Background = styled.div`
     .Bg_content {
         position: absolute;
         border-top: 5px solid var(--white);
-        width: 562px;
+        width: 30vw;
     }
 
     .Bg_content.Down_bar {

@@ -11,8 +11,8 @@ export default function Section({ onSection, index, sectionData, changeSection }
 }
 
 const SectionArea = styled.li`
-    height: 7.3rem;
-    padding-left: 4.4rem;
+    height: 4.5vw;
+    padding-left: 13%;
     position: relative;
     display: flex;
     align-items: center;
@@ -23,7 +23,7 @@ const SectionArea = styled.li`
 
     img{
         position: absolute;
-        margin-left: 9rem;
+        margin-left: 4.5vw;
         transform: scale(0.06, 0.06);
         opacity: 0;
     }
