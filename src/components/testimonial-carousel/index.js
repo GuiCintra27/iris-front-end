@@ -155,7 +155,7 @@ const CarouselElement = styled.div`
             margin-top: -10px;
             text-align: left;
             font-weight: 500;
-            font-size: clamp(9px, .4em + .7vw, 31px);
+            font-size: clamp(9px, .3em + .7vw, 31px);
             line-height: 31px;
             margin-inline: 32px;
         }
