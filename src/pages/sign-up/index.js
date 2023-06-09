@@ -28,11 +28,12 @@ import UserContext from "../../contexts/UserContext";
 import useSignIn from "../../hooks/api/useSignIn";
 import TempContext from "../../contexts/TempContext";
 import TreeDotsLoading from "../../components/loadings/tree-dots-loading";
+import { ColorRing } from "react-loader-spinner";
 
 dayjs.extend(CustomParseFormat);
 
 export default function SignUp() {
-    const { registerData } = useSignUp();
+    const { registerData, registerDataLoading } = useSignUp();
     const { signUpLoading, signUp } = useSaveSignUp();
     const { signIn } = useSignIn();
     const { setUserData } = useContext(UserContext);
@@ -129,6 +130,24 @@ export default function SignUp() {
             text: error,
         });
         setErrors({});
+    }
+
+    if (!registerData || registerDataLoading) {
+        return (
+            <AuthLayout topFrame={topFrame} mainFrame={mainFrame} arrowIndicator={!secondPage}>
+                <main>
+                    <ColorRing
+                        visible={true}
+                        height="150"
+                        width="150"
+                        ariaLabel="blocks-loading"
+                        wrapperStyle={{}}
+                        wrapperClass="blocks-wrapper"
+                        colors={["#D9D9D9", "#D9D9D9", "#D9D9D9", "#D9D9D9", "#D9D9D9"]}
+                    />
+                </main>
+            </AuthLayout>
+        );
     }
 
     return (
