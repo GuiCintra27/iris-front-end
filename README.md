@@ -2,7 +2,7 @@
 
 An institutional website that brings the iris members closer to the community 
 
-### Login
+### Sign In / Sign Up
 
 <img src="./src/assets/GIFs/sign%20up%20and%20sign%20in.gif" />
 
