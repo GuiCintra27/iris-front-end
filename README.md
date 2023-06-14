@@ -1,10 +1,22 @@
 # Iniciativa Íris
 
-An institutional website that brings the iris members closer to the community <br/>
+An institutional website that brings the iris members closer to the community 
 
-<img src="./src/assets/GIFs/Home%20page.gif" /><br/>
-<img src="./src/assets/GIFs/About%20us%20and%20volunteers.gif" /><br/>
+### Login
+### Home
+
+<img src="./src/assets/GIFs/Home%20page.gif" />
+
+### About us and volunteers
+
+<img src="./src/assets/GIFs/About%20us%20and%20volunteers.gif" />
+
+### Blog
+
 <img src="./src/assets/GIFs/Blog.gif" /><br/>
+
+### Donate
+
 <img src="./src/assets/GIFs/Donate.gif" /><br/>
 
 Try it out now at: https://iniciativa-iris.vercel.app/
