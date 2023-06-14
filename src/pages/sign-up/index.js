@@ -181,6 +181,7 @@ export default function SignUp() {
                                     <MaterialInputBox
                                         type={"text"}
                                         name={"name"}
+                                        label={"Nome"}
                                         value={data?.name || ""}
                                         onChange={handleChange("name")}
                                         required

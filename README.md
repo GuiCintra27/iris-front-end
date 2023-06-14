@@ -1,71 +1,61 @@
-# Getting Started with Create React App
+# Iniciativa Íris
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). \
-The website is available at: https://iniciativa-iris.vercel.app/
+An institutional website that brings the iris members closer to the community <br/>
 
-## Available Scripts
+<img src="./src/assets/GIFs/Home%20page.gif" /><br/>
+<img src="./src/assets/GIFs/About%20us%20and%20volunteers.gif" /><br/>
+<img src="./src/assets/GIFs/Blog.gif" /><br/>
+<img src="./src/assets/GIFs/Donate.gif" /><br/>
 
-In the project directory, you can run:
+Try it out now at: https://iniciativa-iris.vercel.app/
 
-### `npm start`
+## About
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+This is a web application that aims to give social and academic support to lgbtqia+ people, through iris initiative.\
+Below are the implemented features:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+-   Sign In / Sign Up
+-   Interactive events with the user
+-   MUI libs
+-   Forms
+-   Data persistence
+-   Connection with our own api
+-   Google and Facebook OAuth methods
+-   Get posts
+-   Filter posts
+-   Search bar navigation
+-   Infinite scroll
+-   Interact with community in posts
 
-### `npm test`
+## Technologies
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The following tools and frameworks were used in the construction of the project: <br/>
 
-### `npm run build`
+<div style="display: inline_block"> 
+        <img align="center" alt="Gui-Js" height="30" src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=white">
+        <img align="center" alt="Gui-React" height="30" src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB">
+        <img align="center" alt="Gui-Styled-Components" height="30" src="https://img.shields.io/badge/styled--components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white">  
+        <img align="center" alt="Gui-Figma" height="20" src="https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white">
+        <img align="center" alt="Gui-Canva" height="20" src="https://img.shields.io/badge/Canva-%2300C4CC.svg?&style=for-the-badge&logo=Canva&logoColor=white">
+        <img align="center" alt="Gui-Trello" height="20" src="https://img.shields.io/badge/Trello-0052CC?style=for-the-badge&logo=trello&logoColor=white">
+        <img align="center" alt="Gui-Notion" height="20" src="https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=notion&logoColor=white">
+</div>
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## How to run
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+1. Clone this repository
+2. Clone the back-end repository at https://github.com/GuiCintra27/iris-back-end
+3. Follow instructions to run back-end at https://github.com/GuiCintra27/iris-back-end
+4. Install dependencies
+```bash
+npm i
+```
+5. Run the front-end with
+```bash
+npm start
+```
+6. You can optionally build the project running
+```bash
+npm run build
+```
+7. Finally access http://localhost:3000 on your favorite browser (unless it is Internet Explorer. In this case, review your life decisions)
