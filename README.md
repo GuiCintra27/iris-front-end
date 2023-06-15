@@ -23,6 +23,7 @@ An institutional website that brings the iris members closer to the community
 <img src="./src/assets/GIFs/Donate.gif" /><br/>
 
 Try it out now at: https://iniciativa-iris.vercel.app/
+(The site is still under development, and is maintained by free means, so for the first contact with the server information there may be some delay)
 
 ## About
 
